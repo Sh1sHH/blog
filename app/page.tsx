@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import { getAllPosts, getFeaturedPosts } from '@/lib/blog';
-import BlogList from '@/components/blog/BlogList';
+import BlogList from "@/components/blog/BlogList";
+import RoomCategories from "@/components/RoomCategories";
+import HomeCarousel from "@/components/ui/carousel";
 import { Button } from '@/components/ui/button';
-import { ArrowRight, BookOpen, Coffee } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 export default function Home() {
   const allPosts = getAllPosts();
@@ -10,79 +12,52 @@ export default function Home() {
   const recentPosts = allPosts.slice(0, 6);
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section - Yaşlı Kitleye Uygun */}
-      <section className="bg-gradient-to-b from-slate-50 to-white py-24">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center max-w-4xl mx-auto">
-            {/* Güvenilir ve Sakin Başlık */}
-            <h1 className="text-5xl md:text-6xl font-semibold text-slate-800 mb-8 leading-tight">
-              Kaliteli İçerikler ve{' '}
-              <span className="text-slate-600">
-                Güvenilir Bilgiler
-              </span>
-            </h1>
-            
-            {/* Açık ve Net Açıklama */}
-            <p className="text-2xl text-slate-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Deneyimli yazarların kaleme aldığı detaylı makaleler, 
-              uzman görüşleri ve pratik bilgilerle size değer katmayı hedefliyoruz.
-            </p>
-
-            {/* Büyük ve Anlaşılır Butonlar */}
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Button 
-                asChild 
-                size="lg" 
-                className="bg-slate-700 hover:bg-slate-800 text-lg px-8 py-4 h-14"
-              >
-                <Link href="/blog" className="flex items-center gap-3">
-                  <BookOpen className="h-5 w-5" />
-                  Yazıları İncele
-                </Link>
-              </Button>
-              <Button 
-                asChild 
-                variant="outline" 
-                size="lg"
-                className="border-slate-300 text-slate-700 hover:bg-slate-50 text-lg px-8 py-4 h-14"
-              >
-                <Link href="/categories" className="flex items-center gap-3">
-                  <Coffee className="h-5 w-5" />
-                  Kategoriler
-                </Link>
-              </Button>
-            </div>
+    <main className="min-h-screen">
+      {/* Hero Section - Carousel and Categories Side by Side */}
+      <section className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+          {/* Carousel - Takes 2/3 of the space */}
+          <div className="lg:col-span-2">
+            <HomeCarousel
+              baseWidth={800}
+              autoplay={true}
+              autoplayDelay={3000}
+              pauseOnHover={true}
+            />
+          </div>
+          
+          {/* Room Categories - Takes 1/3 of the space */}
+          <div className="lg:col-span-1">
+            <RoomCategories />
           </div>
         </div>
       </section>
 
-      {/* Featured & Recent Posts */}
-      <section className="py-20 bg-slate-50/50">
-        <div className="max-w-6xl mx-auto px-6">
-          <BlogList 
-            posts={recentPosts} 
-            title="Son Yazılar" 
-            showFeatured={featuredPosts.length > 0}
-          />
-          
-          {recentPosts.length > 6 && (
-            <div className="text-center mt-16">
-              <Button 
-                asChild 
-                variant="outline" 
-                size="lg"
-                className="text-lg px-8 py-4 h-14"
-              >
-                <Link href="/blog" className="flex items-center gap-3">
-                  Tüm Yazıları Görüntüle
-                  <ArrowRight className="h-5 w-5" />
-                </Link>
-              </Button>
-            </div>
-          )}
-        </div>
+      {/* Blog Posts */}
+      <section className="container mx-auto px-4 py-12">
+        
+        <BlogList 
+          posts={recentPosts} 
+          title="For You" 
+          showFeatured={featuredPosts.length > 0}
+        />
+        
+        {recentPosts.length > 6 && (
+          <div className="text-center mt-16">
+            <Button 
+              asChild 
+              variant="outline" 
+              size="lg"
+              className="text-lg px-8 py-4 h-14"
+            >
+              <Link href="/blog" className="flex items-center gap-3">
+                Tüm Yazıları Görüntüle
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </Button>
+          </div>
+        )}
       </section>
-    </div>
+    </main>
   );
 }

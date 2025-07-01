@@ -1,117 +1,107 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, Search } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { NavigationMenu } from '@/components/ui/navigation-menu';
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  // Sade navigasyon menüsü
-  const navigation = [
-    { name: 'Blog', href: '/blog' },
-    { name: 'Kategoriler', href: '/categories' },
-    { name: 'Hakkımda', href: '/about' },
-  ];
+  // Scroll durumunu takip et
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
 
-  const handleMenuToggle = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const handleLinkClick = () => {
-    setIsMenuOpen(false);
-  };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <header className="border-b border-border/50">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="flex justify-between items-center h-16">
-          {/* Minimalist Logo */}
-          <Link 
-            href="/" 
-            className="text-2xl font-semibold text-foreground hover:text-foreground/80 transition-colors"
-            aria-label="Ana sayfaya git"
-          >
-            Blog
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isScrolled 
+        ? 'bg-white/80 backdrop-blur-md shadow-sm' 
+        : 'bg-white'
+    }`}>
+      <div className="container mx-auto px-4">
+        <nav className="flex items-center h-16">
+          {/* Logo */}
+          <Link href="/" className="font-bold text-xl text-slate-800 hover:text-slate-600 transition-colors">
+            NishHome
           </Link>
 
-          {/* Desktop Navigation - Sade */}
-          <nav className="hidden md:flex items-center space-x-8" aria-label="Ana navigasyon">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium"
-                aria-label={item.name}
-              >
-                {item.name}
+          {/* Ana Menü - Ortalanmış */}
+          <div className="hidden md:flex flex-1 items-center justify-center">
+            <div className="flex items-center space-x-12">
+              <Link href="/salon" className="text-slate-600 hover:text-slate-900 transition-colors">
+                Salon
               </Link>
-            ))}
-          </nav>
-
-          {/* Sağ taraf - Sadece arama ve menü */}
-          <div className="flex items-center space-x-4">
-            {/* Minimalist Arama */}
-            <div className="hidden sm:block">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="search"
-                  placeholder="Ara..."
-                  className="pl-10 w-56 h-9 border-0 bg-muted/30 focus:bg-muted/50 focus:ring-1 focus:ring-border transition-all"
-                  aria-label="Blog yazılarında ara"
-                />
-              </div>
+              <Link href="/mutfak" className="text-slate-600 hover:text-slate-900 transition-colors">
+                Mutfak
+              </Link>
+              <Link href="/yatak-odasi" className="text-slate-600 hover:text-slate-900 transition-colors">
+                Yatak Odası
+              </Link>
+              <Link href="/banyo" className="text-slate-600 hover:text-slate-900 transition-colors">
+                Banyo
+              </Link>
+              <Link href="/balkon" className="text-slate-600 hover:text-slate-900 transition-colors">
+                Balkon
+              </Link>
+              <Link href="/ofis" className="text-slate-600 hover:text-slate-900 transition-colors">
+                Çalışma Odası
+              </Link>
             </div>
-
-            {/* Mobile menu button */}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="md:hidden h-9 w-9 p-0"
-              onClick={handleMenuToggle}
-              aria-label={isMenuOpen ? 'Menüyü kapat' : 'Menüyü aç'}
-              aria-expanded={isMenuOpen}
-            >
-              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </Button>
           </div>
+
+          {/* Mobil Menü Butonu - Sağa hizalı */}
+          <div className="md:hidden ml-auto">
+            <button className="p-2 rounded-lg hover:bg-slate-100 transition-colors">
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="h-6 w-6" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M4 6h16M4 12h16M4 18h16" 
+                />
+              </svg>
+            </button>
+          </div>
+        </nav>
+      </div>
+
+      {/* Mobil Menü (Kapalı varsayılan) */}
+      <div className="hidden md:hidden">
+        <div className="px-2 pt-2 pb-3 space-y-1">
+          <Link href="/salon" className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors">
+            Salon
+          </Link>
+          <Link href="/mutfak" className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors">
+            Mutfak
+          </Link>
+          <Link href="/yatak-odasi" className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors">
+            Yatak Odası
+          </Link>
+          <Link href="/banyo" className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors">
+            Banyo
+          </Link>
+          <Link href="/balkon" className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors">
+            Balkon
+          </Link>
+          <Link href="/ofis" className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors">
+            Çalışma Odası
+          </Link>
         </div>
-
-        {/* Mobile Navigation - Clean */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border/50">
-            {/* Mobile Search */}
-            <div className="mb-4 sm:hidden">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="search"
-                  placeholder="Ara..."
-                  className="pl-10 h-9 border-0 bg-muted/30"
-                  aria-label="Blog yazılarında ara"
-                />
-              </div>
-            </div>
-
-            {/* Mobile Navigation Links */}
-            <nav className="space-y-1" aria-label="Mobil navigasyon">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="block py-2 text-muted-foreground hover:text-foreground transition-colors text-sm font-medium"
-                  onClick={handleLinkClick}
-                  aria-label={item.name}
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </nav>
-          </div>
-        )}
       </div>
     </header>
   );

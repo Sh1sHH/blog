@@ -9,8 +9,8 @@ import { Toaster } from 'sonner';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'ContentHub - Your Source for Quality Content & Reviews',
-  description: 'Discover insightful articles, comprehensive reviews, and expert recommendations on technology, lifestyle, and more.',
+  title: 'NishBlog',
+  description: 'Modern ve minimalist blog sitesi',
   keywords: ['blog', 'reviews', 'technology', 'lifestyle', 'guides', 'recommendations'],
   authors: [{ name: 'ContentHub Team' }],
   openGraph: {
@@ -54,17 +54,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="tr">
       <body className={inter.className}>
-        <div className="min-h-screen flex flex-col">
-          <Header />
-          <main className="flex-1">
-            {children}
-          </main>
-          <Footer />
-          <NewsletterPopup />
-        </div>
-        <Toaster position="top-right" />
+        <Header />
+        <main className="pt-16 min-h-screen bg-slate-50">
+          {children}
+        </main>
+        <Footer />
+        <NewsletterPopup />
       </body>
     </html>
   );
