@@ -19,24 +19,24 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
@@ -45,25 +45,25 @@
     --radius: 0.5rem;
   }
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
@@ -78,5 +78,296 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* TinyMCE Editor Styles */
+.tox-tinymce {
+  border: 1px solid hsl(var(--border)) !important;
+  border-radius: 0.5rem !important;
+  overflow: hidden !important;
+}
+
+.tox .tox-editor-header {
+  border-bottom: 1px solid hsl(var(--border)) !important;
+}
+
+.tox .tox-toolbar {
+  background: hsl(var(--background)) !important;
+  border-bottom: 1px solid hsl(var(--border)) !important;
+}
+
+.tox .tox-menubar {
+  background: hsl(var(--background)) !important;
+  border-bottom: 1px solid hsl(var(--border)) !important;
+}
+
+.tox .tox-edit-area {
+  border: none !important;
+}
+
+.tox .tox-statusbar {
+  border-top: 1px solid hsl(var(--border)) !important;
+  background: hsl(var(--muted)) !important;
+}
+
+/* Blog Content Styling */
+.prose {
+  max-width: none;
+}
+
+.prose p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.prose h1 { font-size: 2.25rem; }
+.prose h2 { font-size: 1.875rem; }
+.prose h3 { font-size: 1.5rem; }
+.prose h4 { font-size: 1.25rem; }
+.prose h5 { font-size: 1.125rem; }
+.prose h6 { font-size: 1rem; }
+
+.prose blockquote {
+  border-left: 4px solid #e5e7eb;
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #6b7280;
+}
+
+.prose img {
+  border-radius: 0.5rem;
+  margin: 1.5rem auto;
+  max-width: 100%;
+  height: auto;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.prose table th,
+.prose table td {
+  border: 1px solid #e5e7eb;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.prose table th {
+  background-color: #f9fafb;
+  font-weight: 600;
+}
+
+.prose code {
+  background-color: #f3f4f6;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+.prose pre {
+  background-color: #1f2937;
+  color: #f9fafb;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.prose pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+}
+
+.prose a {
+  color: #3b82f6;
+  text-decoration: underline;
+}
+
+.prose a:hover {
+  color: #1d4ed8;
+}
+
+.prose ul,
+.prose ol {
+  margin: 1rem 0;
+  padding-left: 2rem;
+}
+
+.prose li {
+  margin: 0.5rem 0;
+}
+
+/* Line clamp utility */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Scrollbar Hide Utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  /* Prevent horizontal scroll */
+  body {
+    overflow-x: hidden !important;
+  }
+  
+  /* Mobile container adjustments */
+  .prose {
+    font-size: 0.9rem !important;
+    line-height: 1.6 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+  }
+  
+  /* Ensure all content stays within bounds */
+  .prose * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  .prose h1 {
+    font-size: 1.75rem !important;
+    line-height: 1.3 !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  .prose h2 {
+    font-size: 1.5rem !important;
+    line-height: 1.3 !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+  
+  .prose h3 {
+    font-size: 1.25rem !important;
+    line-height: 1.4 !important;
+    margin-top: 1.25rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .prose h4, .prose h5, .prose h6 {
+    font-size: 1.125rem !important;
+    margin-top: 1rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .prose p {
+    margin-bottom: 1rem !important;
+    line-height: 1.6 !important;
+  }
+  
+  .prose img {
+    margin: 1rem 0 !important;
+    border-radius: 0.5rem !important;
+  }
+  
+  .prose blockquote {
+    font-size: 0.9rem !important;
+    padding: 0.75rem !important;
+    margin: 1rem 0 !important;
+  }
+  
+  .prose ul, .prose ol {
+    padding-left: 1.25rem !important;
+    margin: 0.75rem 0 !important;
+  }
+  
+  .prose li {
+    margin-bottom: 0.25rem !important;
+  }
+  
+  .prose table {
+    font-size: 0.8rem !important;
+    margin: 1rem 0 !important;
+    width: 100% !important;
+    display: block !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+  }
+  
+  .prose table th,
+  .prose table td {
+    padding: 0.375rem 0.5rem !important;
+    min-width: 100px !important;
+  }
+  
+  /* Make wide content scrollable */
+  .prose pre {
+    overflow-x: auto !important;
+    max-width: 100% !important;
+  }
+  
+  .prose iframe,
+  .prose video,
+  .prose embed,
+  .prose object {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  
+  /* Break long words */
+  .prose p,
+  .prose li,
+  .prose td,
+  .prose th {
+    word-break: break-word !important;
+    hyphens: auto !important;
+  }
+  
+  .prose pre {
+    padding: 0.75rem !important;
+    margin: 1rem 0 !important;
+    font-size: 0.875rem !important;
+  }
+  
+  .prose code {
+    font-size: 0.8rem !important;
+  }
+  
+  /* Mobile spacing adjustments */
+  .prose > *:first-child {
+    margin-top: 0 !important;
+  }
+  
+  .prose > *:last-child {
+    margin-bottom: 0 !important;
   }
 }

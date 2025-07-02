@@ -1,10 +1,7 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
 import { marked } from 'marked';
+import { firestoreDB, BlogPost as FirestoreBlogPost } from './firebase-db';
 
-const postsDirectory = path.join(process.cwd(), 'content/posts');
-
+// Blog frontend için interface (Firebase'dekiyle uyumlu)
 export interface BlogPost {
   slug: string;
   title: string;
@@ -17,6 +14,8 @@ export interface BlogPost {
   image: string;
   content: string;
   readTime: number;
+  views: number;
+  likes: number;
 }
 
 export interface BlogPostMeta {
@@ -30,6 +29,8 @@ export interface BlogPostMeta {
   featured: boolean;
   image: string;
   readTime: number;
+  views: number;
+  likes: number;
 }
 
 // Calculate reading time based on content
@@ -39,48 +40,43 @@ function calculateReadTime(content: string): number {
   return Math.ceil(words / wordsPerMinute);
 }
 
-// Get all blog posts metadata
-export function getAllPosts(): BlogPostMeta[] {
-  // Create directory if it doesn't exist
-  if (!fs.existsSync(postsDirectory)) {
-    fs.mkdirSync(postsDirectory, { recursive: true });
+// Firebase post'unu frontend post'una çevir
+function convertFirestorePost(firestorePost: FirestoreBlogPost): BlogPostMeta {
+  return {
+    slug: firestorePost.slug,
+    title: firestorePost.title,
+    description: firestorePost.description,
+    date: firestorePost.createdAt.toISOString(),
+    author: firestorePost.author,
+    category: firestorePost.category,
+    tags: firestorePost.tags,
+    featured: firestorePost.featured,
+    image: firestorePost.image || '/images/default-post.jpg',
+    readTime: calculateReadTime(firestorePost.content),
+    views: firestorePost.views,
+    likes: firestorePost.likes,
+  };
+}
+
+// Get all published blog posts metadata
+export async function getAllPosts(): Promise<BlogPostMeta[]> {
+  try {
+    const firestorePosts = await firestoreDB.getPublishedPosts();
+    return firestorePosts.map(convertFirestorePost);
+  } catch (error) {
+    console.error('Error fetching posts:', error);
     return [];
   }
-
-  const fileNames = fs.readdirSync(postsDirectory);
-  
-  const allPostsData = fileNames
-    .filter(fileName => fileName.endsWith('.md'))
-    .map((fileName) => {
-      const slug = fileName.replace(/\.md$/, '');
-      const fullPath = path.join(postsDirectory, fileName);
-      const fileContents = fs.readFileSync(fullPath, 'utf8');
-      const { data, content } = matter(fileContents);
-
-      return {
-        slug,
-        title: data.title || 'Untitled',
-        description: data.description || '',
-        date: data.date || new Date().toISOString(),
-        author: data.author || 'Anonymous',
-        category: data.category || 'General',
-        tags: data.tags || [],
-        featured: data.featured || false,
-        image: data.image || '/images/default-post.jpg',
-        readTime: calculateReadTime(content),
-      } as BlogPostMeta;
-    });
-
-  // Sort posts by date, newest first
-  return allPostsData.sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
 // Get a single blog post by slug
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   try {
-    const fullPath = path.join(postsDirectory, `${slug}.md`);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-    const { data, content } = matter(fileContents);
+    const firestorePost = await firestoreDB.getPostBySlug(slug);
+    
+    if (!firestorePost || !firestorePost.published) {
+      return null;
+    }
 
     // Configure marked for better HTML output
     marked.setOptions({
@@ -88,73 +84,132 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       gfm: true,
     });
 
-    const htmlContent = marked(content) as string;
+    const htmlContent = marked(firestorePost.content) as string;
+
+    // Increment views
+    await firestoreDB.incrementViews(slug);
 
     return {
-      slug,
-      title: data.title || 'Untitled',
-      description: data.description || '',
-      date: data.date || new Date().toISOString(),
-      author: data.author || 'Anonymous',
-      category: data.category || 'General',
-      tags: data.tags || [],
-      featured: data.featured || false,
-      image: data.image || '/images/default-post.jpg',
+      slug: firestorePost.slug,
+      title: firestorePost.title,
+      description: firestorePost.description,
+      date: firestorePost.createdAt.toISOString(),
+      author: firestorePost.author,
+      category: firestorePost.category,
+      tags: firestorePost.tags,
+      featured: firestorePost.featured,
+      image: firestorePost.image || '/images/default-post.jpg',
       content: htmlContent,
-      readTime: calculateReadTime(content),
+      readTime: calculateReadTime(firestorePost.content),
+      views: firestorePost.views,
+      likes: firestorePost.likes,
     };
   } catch (error) {
+    console.error('Error fetching post by slug:', error);
     return null;
   }
 }
 
 // Get featured posts
-export function getFeaturedPosts(): BlogPostMeta[] {
-  const allPosts = getAllPosts();
-  return allPosts.filter(post => post.featured).slice(0, 3);
+export async function getFeaturedPosts(): Promise<BlogPostMeta[]> {
+  try {
+    const firestorePosts = await firestoreDB.getFeaturedPosts();
+    return firestorePosts.map(convertFirestorePost).slice(0, 3);
+  } catch (error) {
+    console.error('Error fetching featured posts:', error);
+    return [];
+  }
 }
 
 // Get posts by category
-export function getPostsByCategory(category: string): BlogPostMeta[] {
-  const allPosts = getAllPosts();
-  return allPosts.filter(post => post.category.toLowerCase() === category.toLowerCase());
+export async function getPostsByCategory(category: string): Promise<BlogPostMeta[]> {
+  try {
+    const firestorePosts = await firestoreDB.getPostsByCategory(category);
+    return firestorePosts.map(convertFirestorePost);
+  } catch (error) {
+    console.error('Error fetching posts by category:', error);
+    return [];
+  }
 }
 
 // Get all unique categories
-export function getAllCategories(): string[] {
-  const allPosts = getAllPosts();
-  const categories = allPosts.map(post => post.category);
-  return Array.from(new Set(categories));
+export async function getAllCategories(): Promise<string[]> {
+  try {
+    return await firestoreDB.getCategories();
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    return [];
+  }
+}
+
+// Get all tags
+export async function getAllTags(): Promise<string[]> {
+  try {
+    return await firestoreDB.getTags();
+  } catch (error) {
+    console.error('Error fetching tags:', error);
+    return [];
+  }
+}
+
+// Get latest posts (excluding current post)
+export async function getLatestPosts(currentSlug?: string, limit: number = 3): Promise<BlogPostMeta[]> {
+  try {
+    const allPosts = await getAllPosts();
+    
+    // Filter out current post if provided
+    const filteredPosts = currentSlug 
+      ? allPosts.filter(post => post.slug !== currentSlug)
+      : allPosts;
+    
+    // Sort by date (newest first) and return limited results
+    return filteredPosts
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, limit);
+  } catch (error) {
+    console.error('Error fetching latest posts:', error);
+    return [];
+  }
 }
 
 // Get related posts based on category and tags
-export function getRelatedPosts(currentSlug: string, category: string, tags: string[], limit: number = 3): BlogPostMeta[] {
-  const allPosts = getAllPosts();
-  
-  // Filter out current post
-  const otherPosts = allPosts.filter(post => post.slug !== currentSlug);
-  
-  // Score posts based on relevance
-  const scoredPosts = otherPosts.map(post => {
-    let score = 0;
+export async function getRelatedPosts(
+  currentSlug: string, 
+  category: string, 
+  tags: string[], 
+  limit: number = 3
+): Promise<BlogPostMeta[]> {
+  try {
+    const allPosts = await getAllPosts();
     
-    // Same category gets higher score
-    if (post.category.toLowerCase() === category.toLowerCase()) {
-      score += 3;
-    }
+    // Filter out current post
+    const otherPosts = allPosts.filter(post => post.slug !== currentSlug);
     
-    // Shared tags get points
-    const sharedTags = post.tags.filter(tag => 
-      tags.some(currentTag => currentTag.toLowerCase() === tag.toLowerCase())
-    );
-    score += sharedTags.length * 2;
+    // Score posts based on relevance
+    const scoredPosts = otherPosts.map(post => {
+      let score = 0;
+      
+      // Same category gets higher score
+      if (post.category.toLowerCase() === category.toLowerCase()) {
+        score += 3;
+      }
+      
+      // Shared tags get points
+      const sharedTags = post.tags.filter(tag => 
+        tags.some(currentTag => currentTag.toLowerCase() === tag.toLowerCase())
+      );
+      score += sharedTags.length * 2;
+      
+      return { post, score };
+    });
     
-    return { post, score };
-  });
-  
-  // Sort by score (highest first) and return limited results
-  return scoredPosts
-    .sort((a, b) => b.score - a.score)
-    .slice(0, limit)
-    .map(item => item.post);
+    // Sort by score (highest first) and return limited results
+    return scoredPosts
+      .sort((a, b) => b.score - a.score)
+      .slice(0, limit)
+      .map(item => item.post);
+  } catch (error) {
+    console.error('Error fetching related posts:', error);
+    return [];
+  }
 }

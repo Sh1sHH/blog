@@ -6,9 +6,9 @@ import HomeCarousel from "@/components/ui/carousel";
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 
-export default function Home() {
-  const allPosts = getAllPosts();
-  const featuredPosts = getFeaturedPosts();
+export default async function Home() {
+  const allPosts = await getAllPosts();
+  const featuredPosts = await getFeaturedPosts();
 
   return (
     <main className="min-h-screen">
@@ -37,7 +37,7 @@ export default function Home() {
         
         <BlogList 
           posts={allPosts} 
-          title="For You" 
+          title="Latest Articles" 
           showFeatured={featuredPosts.length > 0}
         />
       </section>
