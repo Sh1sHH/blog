@@ -14,38 +14,38 @@ interface CarouselItem {
 const DEFAULT_ITEMS: CarouselItem[] = [
   {
     id: 1,
-    title: "Modern Ev Dekorasyonu",
-    description: "2024'ün en trend ev dekorasyon fikirleri.",
+    title: "Kitap Kütüphanesi",
+    description: "Huzurlu bir yaşam.",
     category: "Decor",
-    imageUrl: "/images/decor/coffee-table.jpg"
+    imageUrl: "/images/karosel/1.png"
   },
   {
     id: 2,
-    title: "Salon Tasarımları",
-    description: "Salonunuzu yeniden tasarlayın.",
+    title: "Cozy Room",
+    description: "Sıcak ve samimi bir oda tasarımı.",
     category: "Decor",
-    imageUrl: "/images/decor/fall-decor.jpg"
+    imageUrl: "/images/karosel/2.png"
   },
   {
     id: 3,
-    title: "Kahve Köşesi",
-    description: "Evinizde mükemmel bir kahve köşesi yaratın.",
+    title: "Luxury Living",
+    description: "Lüks ve modern yaşam alanı.",
     category: "Decor",
-    imageUrl: "/images/decor/living-room.jpg"
+    imageUrl: "/images/karosel/3.png"
   },
   {
     id: 4,
-    title: "Kitaplık Düzeni",
-    description: "Kitaplığınızı düzenlemek için ipuçları.",
+    title: "Modern Style",
+    description: "Çağdaş ve şık dekorasyon.",
     category: "Decor",
-    imageUrl: "/images/decor/farmhouse-pantry.jpg"
+    imageUrl: "/images/karosel/4.png"
   },
   {
     id: 5,
-    title: "Duvar Dekorasyonu",
-    description: "Duvarlarınızı sanat eserleriyle süsleyin.",
+    title: "Stylish Home",
+    description: "Tarz sahibi evler için ilham alın.",
     category: "Decor",
-    imageUrl: "/images/decor/wall-decor.jpg"
+    imageUrl: "/images/karosel/5.png"
   }
 ];
 

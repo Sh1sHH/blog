@@ -9,7 +9,6 @@ import { ArrowRight } from 'lucide-react';
 export default function Home() {
   const allPosts = getAllPosts();
   const featuredPosts = getFeaturedPosts();
-  const recentPosts = allPosts.slice(0, 6);
 
   return (
     <main className="min-h-screen">
@@ -37,26 +36,10 @@ export default function Home() {
       <section className="container mx-auto px-4 py-12">
         
         <BlogList 
-          posts={recentPosts} 
+          posts={allPosts} 
           title="For You" 
           showFeatured={featuredPosts.length > 0}
         />
-        
-        {recentPosts.length > 6 && (
-          <div className="text-center mt-16">
-            <Button 
-              asChild 
-              variant="outline" 
-              size="lg"
-              className="text-lg px-8 py-4 h-14"
-            >
-              <Link href="/blog" className="flex items-center gap-3">
-                Tüm Yazıları Görüntüle
-                <ArrowRight className="h-5 w-5" />
-              </Link>
-            </Button>
-          </div>
-        )}
       </section>
     </main>
   );

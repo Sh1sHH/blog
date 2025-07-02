@@ -11,7 +11,7 @@ interface BlogCardProps {
 
 export default function BlogCard({ post, featured = false }: BlogCardProps) {
   return (
-    <article className="group h-full overflow-hidden rounded-2xl bg-white shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+    <article className="group h-full overflow-hidden rounded-2xl bg-white shadow-sm hover:shadow-lg transition-all duration-500 transform hover:-translate-y-2">
       <Link href={`/blog/${post.slug}`}>
         <div className="relative h-full">
           <div className="aspect-[3/4] overflow-hidden">
@@ -20,33 +20,33 @@ export default function BlogCard({ post, featured = false }: BlogCardProps) {
               alt={post.title}
               width={600}
               height={800}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              className="w-full h-full object-cover"
             />
           </div>
           
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-70" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent group-hover:from-black/80 group-hover:via-black/40 transition-all duration-500" />
           
-          {post.featured && (
-            <div className="absolute top-4 left-4 bg-white text-black text-sm py-1.5 px-4 rounded-full z-10">
-              Öne Çıkan
-            </div>
-          )}
+          <div className="absolute top-4 left-4 bg-black/50 text-white text-sm px-3 py-1 rounded-full backdrop-blur-sm">
+            2 days ago
+          </div>
           
-          <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-            <h3 className="font-bold text-xl mb-2 line-clamp-2">
+          <div className="absolute bottom-4 left-4 right-4 text-white group-hover:bottom-28 transition-all duration-500 text-center">
+            <h3 className="font-bold text-xl leading-tight line-clamp-3">
               {post.title}
             </h3>
-            
-            <p className="text-sm mb-3 line-clamp-2 text-gray-200">
+          </div>
+          
+          <div className="absolute bottom-0 left-4 right-4 text-white p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+            <p className="text-sm text-gray-200 line-clamp-2 mb-3">
               {post.description}
             </p>
             
-            <div className="flex items-center justify-between text-sm opacity-90">
-              <div className="flex items-center space-x-2">
+            <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center space-x-2 text-gray-300">
                 <Calendar className="h-4 w-4" />
                 <span>{new Date(post.date).toLocaleDateString('tr-TR')}</span>
               </div>
-              <span className="bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm">
+              <span className="bg-white/20 px-3 py-1 rounded-full text-white backdrop-blur-sm">
                 {post.category}
               </span>
             </div>

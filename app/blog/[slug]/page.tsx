@@ -1,4 +1,4 @@
-import { getPostBySlug, getAllPosts } from '@/lib/blog';
+import { getPostBySlug, getAllPosts, getRelatedPosts } from '@/lib/blog';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import Image from 'next/image';
@@ -63,12 +63,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
+  // Get related posts
+  const relatedPosts = getRelatedPosts(post.slug, post.category, post.tags, 3);
+
   return (
     <article className="min-h-screen bg-white">
       {/* Back Button */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <Button asChild variant="ghost" className="mb-6">
-          <Link href="/blog" className="flex items-center gap-2">
+          <Link href="/blog" className="flex items-center gap-2 no-underline">
             <ArrowLeft className="h-4 w-4" />
             Back to Blog
           </Link>
@@ -152,9 +155,68 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
             <div>
               <h4 className="font-semibold text-gray-900">{post.author}</h4>
-              <p className="text-gray-600">Content Writer at ContentHub</p>
+              <p className="text-gray-600">Content Writer at NishHome</p>
             </div>
           </div>
+        </div>
+
+        {/* You Might Also Like Section */}
+        {relatedPosts.length > 0 && (
+          <div className="mt-16 pt-8 border-t border-gray-200">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">You Might Also Like</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {relatedPosts.map((relatedPost) => (
+                <Link 
+                  key={relatedPost.slug} 
+                  href={`/blog/${relatedPost.slug}`}
+                  className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 no-underline"
+                >
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <Image
+                      src={relatedPost.image}
+                      alt={relatedPost.title}
+                      width={400}
+                      height={300}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Badge variant="secondary" className="text-xs">
+                        {relatedPost.category}
+                      </Badge>
+                      <span className="text-xs text-gray-500">
+                        {relatedPost.readTime} min read
+                      </span>
+                    </div>
+                    <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                      {relatedPost.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 line-clamp-2 mb-3">
+                      {relatedPost.description}
+                    </p>
+                    <div className="flex items-center text-xs text-gray-500">
+                      <Calendar className="h-3 w-3 mr-1" />
+                      {new Date(relatedPost.date).toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                      })}
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Back to Blog Button */}
+        <div className="mt-16 text-center pb-12">
+          <Button asChild variant="outline" size="lg">
+            <Link href="/blog" className="no-underline">
+              View All Articles
+            </Link>
+          </Button>
         </div>
       </div>
     </article>

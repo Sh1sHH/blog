@@ -88,7 +88,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       gfm: true,
     });
 
-    const htmlContent = marked(content);
+    const htmlContent = marked(content) as string;
 
     return {
       slug,
@@ -125,4 +125,36 @@ export function getAllCategories(): string[] {
   const allPosts = getAllPosts();
   const categories = allPosts.map(post => post.category);
   return Array.from(new Set(categories));
+}
+
+// Get related posts based on category and tags
+export function getRelatedPosts(currentSlug: string, category: string, tags: string[], limit: number = 3): BlogPostMeta[] {
+  const allPosts = getAllPosts();
+  
+  // Filter out current post
+  const otherPosts = allPosts.filter(post => post.slug !== currentSlug);
+  
+  // Score posts based on relevance
+  const scoredPosts = otherPosts.map(post => {
+    let score = 0;
+    
+    // Same category gets higher score
+    if (post.category.toLowerCase() === category.toLowerCase()) {
+      score += 3;
+    }
+    
+    // Shared tags get points
+    const sharedTags = post.tags.filter(tag => 
+      tags.some(currentTag => currentTag.toLowerCase() === tag.toLowerCase())
+    );
+    score += sharedTags.length * 2;
+    
+    return { post, score };
+  });
+  
+  // Sort by score (highest first) and return limited results
+  return scoredPosts
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map(item => item.post);
 }
