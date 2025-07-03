@@ -101,35 +101,9 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Blog Admin</h1>
-              <p className="text-sm text-gray-600">Manage your blog posts and SEO</p>
-            </div>
-            <div className="flex items-center gap-4">
-              <Link href="/">
-                <Button variant="outline" size="sm">
-                  <Eye className="h-4 w-4 mr-2" />
-                  View Site
-                </Button>
-              </Link>
-              <Link href="/admin/posts/new">
-                <Button>
-                  <Plus className="h-4 w-4 mr-2" />
-                  New Post
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto">
+      {/* Dashboard Content */}
+      <div className="space-y-6">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -351,7 +325,7 @@ export default function AdminDashboard() {
             </div>
           )}
         </div>
-      </main>
+      </div>
     </div>
   );
 } 
