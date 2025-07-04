@@ -46,15 +46,33 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
     );
   }
 
+  // Başlığı kelimelerine böl ve son kelimeyi farklı renklendir
+  const renderTitle = () => {
+    if (!title) return null;
+    
+    if (title === "Get your next weeknight dinner idea") {
+      return (
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
+          <span className="text-gray-900">Get your next</span>
+          <br />
+          <span className="text-orange-500">weeknight dinner idea</span>
+        </h2>
+      );
+    }
+    
+    // Diğer başlıklar için varsayılan stil
+    return (
+      <div className="text-center">
+        <h2 className="text-2xl font-semibold text-slate-800">{title}</h2>
+        <div className="w-16 h-0.5 bg-slate-600 mx-auto mt-2 rounded-full"></div>
+      </div>
+    );
+  };
+
   return (
     <div className="space-y-8">
       {/* Başlık */}
-      {title && (
-        <div className="text-center">
-          <h2 className="text-2xl font-semibold text-slate-800">{title}</h2>
-          <div className="w-16 h-0.5 bg-slate-600 mx-auto mt-2 rounded-full"></div>
-        </div>
-      )}
+      {title && renderTitle()}
 
       {/* Ana Blog Grid - İlk 6 Post */}
       {mainPosts.length > 0 && (

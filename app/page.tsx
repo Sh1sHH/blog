@@ -42,14 +42,11 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Practical Tips Section */}
-      <PracticalTips />
-
       {/* Blog Posts */}
       <section className="container mx-auto px-4 py-12">
         <HomeBlogSection 
           posts={filteredPosts} 
-          title="Latest Articles"
+          title="Get your next weeknight dinner idea"
         />
       </section>
 
@@ -58,6 +55,9 @@ export default async function Home() {
 
       {/* Gift Items Section */}
       <GiftItems />
+
+      {/* Practical Tips Section - En alta taşındı */}
+      <PracticalTips />
     </main>
   );
 }
