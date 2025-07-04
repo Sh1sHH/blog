@@ -3,9 +3,10 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Calendar, Clock, ArrowLeft, Share2 } from 'lucide-react';
+import { Calendar, Clock, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import ShareButton from '@/components/ui/share-button';
 
 interface BlogPostPageProps {
   params: { slug: string };
@@ -184,10 +185,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <div className="hidden md:flex items-center gap-1 md:gap-2">
             <span className="text-blue-600">{post.views} views</span>
           </div>
-          <Button variant="ghost" size="sm" className="ml-auto text-xs md:text-sm p-1 md:p-2">
-            <Share2 className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
-            <span className="hidden md:inline">Share</span>
-          </Button>
+          <ShareButton 
+            title={post.title}
+            description={post.description}
+            url={`https://cleverspacesolutions.com/blog/${post.slug}`}
+            className="ml-auto text-xs md:text-sm p-1 md:p-2"
+          />
         </div>
 
         {/* Featured Image */}
