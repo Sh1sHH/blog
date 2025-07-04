@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import NewsletterPopup from '@/components/ui/newsletter-popup';
+import SocialFollowPopup from '@/components/ui/newsletter-popup';
 import { Toaster } from 'sonner';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -61,7 +61,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
-        <NewsletterPopup />
+        <SocialFollowPopup />
       </body>
     </html>
   );

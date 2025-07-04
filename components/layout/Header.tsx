@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { NavigationMenu } from '@/components/ui/navigation-menu';
 import { Instagram } from 'lucide-react';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Scroll durumunu takip et
   useEffect(() => {
@@ -31,8 +33,15 @@ export default function Header() {
       <div className="container mx-auto px-4">
         <nav className="flex items-center h-16">
           {/* Logo */}
-          <Link href="/" className="font-bold text-xl text-slate-800 hover:text-slate-600 transition-colors no-underline">
-            NishHome
+          <Link href="/" className="flex items-center hover:opacity-80 transition-opacity no-underline">
+            <Image 
+              src="/images/navbar/logo2.webp" 
+              alt="NishHome Logo" 
+              width={120} 
+              height={40}
+              className="h-40 w-auto"
+              priority
+            />
           </Link>
 
           {/* Ana Menü - Ortalanmış */}
@@ -60,7 +69,7 @@ export default function Header() {
           </div>
 
           {/* Sağ Taraf - Sosyal Medya ve Mobil Menü */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 ml-auto">
             {/* Sosyal Medya İkonları - Desktop */}
             <div className="hidden md:flex items-center gap-1">
               <Link 
@@ -84,9 +93,13 @@ export default function Header() {
               </Link>
             </div>
 
-            {/* Mobil Menü Butonu */}
-            <div className="md:hidden">
-              <button className="p-2 rounded-lg hover:bg-slate-100 transition-colors">
+            {/* Mobil Menü Butonu - Sağa konumlandırıldı */}
+            <div className="md:hidden ml-2">
+              <button 
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="p-2 rounded-lg hover:bg-slate-100 transition-colors"
+                aria-label="Toggle mobile menu"
+              >
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
                   className="h-6 w-6" 
@@ -98,7 +111,7 @@ export default function Header() {
                     strokeLinecap="round" 
                     strokeLinejoin="round" 
                     strokeWidth={2} 
-                    d="M4 6h16M4 12h16M4 18h16" 
+                    d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
                   />
                 </svg>
               </button>
@@ -107,25 +120,49 @@ export default function Header() {
         </nav>
       </div>
 
-      {/* Mobil Menü (Kapalı varsayılan) */}
-      <div className="hidden md:hidden">
+      {/* Mobil Menü - State'e bağlı görünürlük */}
+      <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:hidden bg-white border-t`}>
         <div className="px-2 pt-2 pb-3 space-y-1">
-          <Link href="/living-room" className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors no-underline">
+          <Link 
+            href="/living-room" 
+            className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors no-underline"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
             Living Room
           </Link>
-          <Link href="/kitchen" className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors no-underline">
+          <Link 
+            href="/kitchen" 
+            className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors no-underline"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
             Kitchen
           </Link>
-          <Link href="/bedroom" className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors no-underline">
+          <Link 
+            href="/bedroom" 
+            className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors no-underline"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
             Bedroom
           </Link>
-          <Link href="/bathroom" className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors no-underline">
+          <Link 
+            href="/bathroom" 
+            className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors no-underline"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
             Bathroom
           </Link>
-          <Link href="/balcony" className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors no-underline">
+          <Link 
+            href="/balcony" 
+            className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors no-underline"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
             Balcony
           </Link>
-          <Link href="/office" className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors no-underline">
+          <Link 
+            href="/office" 
+            className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors no-underline"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
             Home Office
           </Link>
           

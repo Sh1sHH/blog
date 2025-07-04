@@ -11,6 +11,24 @@ interface BlogPostPageProps {
   params: { slug: string };
 }
 
+// Kategori adını URL-friendly format'a çeviren fonksiyon
+function getCategoryUrl(category: string): string {
+  const categoryUrlMapping: { [key: string]: string } = {
+    'Practical Tips': 'practical-tips',
+    'Decoration': 'decoration',
+    'Gift Items': 'gift-items',
+    'Kitchen': 'kitchen',
+    'Bathroom': 'bathroom',
+    'Living Room': 'living-room',
+    'Office': 'office',
+    'Bedroom': 'bedroom',
+    'Hallway': 'hallway',
+    'General': 'general'
+  };
+  
+  return categoryUrlMapping[category] || category.toLowerCase().replace(/\s+/g, '-');
+}
+
 export async function generateStaticParams() {
   const posts = await getAllPosts();
   return posts.map((post) => ({
@@ -81,7 +99,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {/* Header */}
       <header className="w-full max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 mb-6 md:mb-8">
         <div className="mb-4 md:mb-6">
-          <Badge className="mb-3 md:mb-4 text-xs md:text-sm">{post.category}</Badge>
+          {/* Tıklanabilir Kategori Badge */}
+          <Link href={`/categories/${getCategoryUrl(post.category)}`} className="inline-block no-underline">
+            <Badge className="mb-3 md:mb-4 text-xs md:text-sm hover:bg-blue-700 transition-colors cursor-pointer">
+              {post.category}
+            </Badge>
+          </Link>
           <h1 className="text-xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 md:mb-6 leading-tight">
             {post.title}
           </h1>
@@ -162,9 +185,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               {latestPosts.map((latestPost) => (
                 <article 
                   key={latestPost.slug}
-                  className="group h-full overflow-hidden rounded-2xl bg-white shadow-sm hover:shadow-lg transition-all duration-500 transform hover:-translate-y-1 md:hover:-translate-y-2"
+                  className="group h-full overflow-hidden rounded-2xl bg-white shadow-sm hover:shadow-lg transition-all duration-500 transform hover:-translate-y-1 md:hover:-translate-y-2 relative"
                 >
-                  <Link href={`/blog/${latestPost.slug}`} className="no-underline">
+                  {/* Ana blog post linki */}
+                  <Link href={`/blog/${latestPost.slug}`} className="no-underline block">
                     <div className="relative h-full">
                       <div className="aspect-[4/5] md:aspect-[3/4] overflow-hidden">
                         <Image
@@ -201,12 +225,21 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                             <Calendar className="h-3 w-3 md:h-4 md:w-4" />
                             <span>{latestPost.readTime} dk</span>
                           </div>
+                          {/* Sadece kategori text'i - link ayrı olacak */}
                           <span className="bg-white/20 px-2 py-1 md:px-3 md:py-1 rounded-full text-white backdrop-blur-sm text-xs">
                             {latestPost.category}
                           </span>
                         </div>
                       </div>
                     </div>
+                  </Link>
+                  
+                  {/* Kategori linki ayrı bir Link olarak - ana Link dışında */}
+                  <Link 
+                    href={`/categories/${getCategoryUrl(latestPost.category)}`}
+                    className="absolute bottom-3 right-3 md:bottom-4 md:right-4 bg-white/20 px-2 py-1 md:px-3 md:py-1 rounded-full text-white backdrop-blur-sm text-xs hover:bg-white/30 transition-colors no-underline z-20 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition-all duration-500"
+                  >
+                    {latestPost.category}
                   </Link>
                 </article>
               ))}

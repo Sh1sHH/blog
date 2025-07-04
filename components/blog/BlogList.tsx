@@ -11,9 +11,10 @@ interface BlogListProps {
   initialCategory?: string;
 }
 
-  const categories = [
-    "All", "Pratik Bilgiler", "Dekorasyon", "Hediyelik Eşyalar", "Kitchen", "Bathroom", "Living Room", "Office", "Bedroom", "Hallway"
-  ];
+// İngilizce kategori listesi (SEO için)
+const categories = [
+  "All", "Practical Tips", "Decoration", "Gift Items", "Kitchen", "Bathroom", "Living Room", "Office", "Bedroom", "Hallway", "General"
+];
 
 export default function BlogList({ posts, title = "For You", showFeatured = false, initialCategory = "All" }: BlogListProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);

@@ -3,35 +3,30 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Clock } from 'lucide-react';
 import Link from 'next/link';
-import { BlogPostMeta } from '@/lib/blog';
+import { BlogPostMeta, getAllPosts } from '@/lib/blog';
 
 export default function PracticalTips() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [posts, setPosts] = useState<BlogPostMeta[]>([]);
   const [loading, setLoading] = useState(true);
   
-  // Fetch posts from "Pratik Bilgiler" category from Firebase
+  // Fetch posts from "Practical Tips" category (kategori çevirisi ile)
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('/api/admin/posts');
-        const data = await response.json();
+        // getAllPosts kullanarak kategori çevirisini otomatik al
+        const allPosts = await getAllPosts();
         
-        console.log('PracticalTips - API Response:', data);
+        console.log('PracticalTips - All posts with categories:', allPosts.map(p => ({ title: p.title, category: p.category, published: p.published })));
         
-        if (data.success) {
-          // Log all posts
-          console.log('PracticalTips - All posts:', data.posts);
-          
-          // Filter published posts from "Pratik Bilgiler" category
-          const practicalPosts = data.posts.filter((post: any) => {
-            console.log('PracticalTips - Checking post:', post.category, post.published);
-            return post.category === 'Pratik Bilgiler' && post.published;
-          }).slice(0, 6); // First 6 posts
-          
-          console.log('PracticalTips - Filtered posts:', practicalPosts);
-          setPosts(practicalPosts);
-        }
+        // Filter published posts from "Practical Tips" category (artık İngilizce olarak çevrilmiş)
+        const practicalPosts = allPosts.filter((post: BlogPostMeta) => {
+          console.log('PracticalTips - Checking post:', post.category, post.published);
+          return post.category === 'Practical Tips' && post.published;
+        }).slice(0, 6); // First 6 posts
+        
+        console.log('PracticalTips - Filtered posts:', practicalPosts);
+        setPosts(practicalPosts);
       } catch (error) {
         console.error('Error fetching practical tips:', error);
       } finally {

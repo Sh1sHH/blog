@@ -1,6 +1,25 @@
 import { marked } from 'marked';
 import { firestoreDB, BlogPost as FirestoreBlogPost } from './firebase-db';
 
+// Kategori adlarını Türkçe'den İngilizce'ye çeviren mapping
+const categoryDisplayMapping: { [key: string]: string } = {
+  'Pratik Bilgiler': 'Practical Tips',
+  'Dekorasyon': 'Decoration',
+  'Hediyelik Eşyalar': 'Gift Items',
+  'Kitchen': 'Kitchen',
+  'Bathroom': 'Bathroom', 
+  'Living Room': 'Living Room',
+  'Office': 'Office',
+  'Bedroom': 'Bedroom',
+  'Hallway': 'Hallway',
+  'General': 'General'
+};
+
+// Kategori adını İngilizce olarak döndürür (SEO için)
+export function getCategoryDisplayName(category: string): string {
+  return categoryDisplayMapping[category] || category;
+}
+
 // Blog frontend için interface (Firebase'dekiyle uyumlu)
 export interface BlogPost {
   slug: string;
@@ -49,7 +68,7 @@ function convertFirestorePost(firestorePost: FirestoreBlogPost): BlogPostMeta {
     description: firestorePost.description,
     date: firestorePost.createdAt.toISOString(),
     author: firestorePost.author,
-    category: firestorePost.category,
+    category: getCategoryDisplayName(firestorePost.category), // İngilizce kategori adı
     tags: firestorePost.tags,
     featured: firestorePost.featured,
     published: firestorePost.published,
@@ -97,7 +116,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       description: firestorePost.description,
       date: firestorePost.createdAt.toISOString(),
       author: firestorePost.author,
-      category: firestorePost.category,
+      category: getCategoryDisplayName(firestorePost.category), // İngilizce kategori adı
       tags: firestorePost.tags,
       featured: firestorePost.featured,
       image: firestorePost.image || '/images/default-post.jpg',

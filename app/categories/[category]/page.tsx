@@ -1,4 +1,4 @@
-import { getAllPosts } from '@/lib/blog';
+import { getAllPosts, getCategoryDisplayName } from '@/lib/blog';
 import BlogCard from '@/components/blog/BlogCard';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -7,12 +7,12 @@ import { ArrowLeft } from 'lucide-react';
 
 // Valid categories mapping Turkish to English
 const categoryMapping: { [key: string]: string } = {
-  'pratik-bilgiler': 'Pratik Bilgiler',
-  'practical-tips': 'Pratik Bilgiler',
-  'dekorasyon': 'Dekorasyon', 
-  'decoration': 'Dekorasyon',
-  'hediyelik-esyalar': 'Hediyelik Eşyalar',
-  'gift-items': 'Hediyelik Eşyalar',
+  'pratik-bilgiler': 'Practical Tips',
+  'practical-tips': 'Practical Tips',
+  'dekorasyon': 'Decoration', 
+  'decoration': 'Decoration',
+  'hediyelik-esyalar': 'Gift Items',
+  'gift-items': 'Gift Items',
   'kitchen': 'Kitchen',
   'bathroom': 'Bathroom', 
   'living-room': 'Living Room',
@@ -20,20 +20,6 @@ const categoryMapping: { [key: string]: string } = {
   'bedroom': 'Bedroom',
   'hallway': 'Hallway',
   'general': 'General'
-};
-
-// English category names for display
-const categoryDisplayNames: { [key: string]: string } = {
-  'Pratik Bilgiler': 'Practical Tips',
-  'Dekorasyon': 'Decoration',
-  'Hediyelik Eşyalar': 'Gift Items',
-  'Kitchen': 'Kitchen',
-  'Bathroom': 'Bathroom',
-  'Living Room': 'Living Room', 
-  'Office': 'Office',
-  'Bedroom': 'Bedroom',
-  'Hallway': 'Hallway',
-  'General': 'General'
 };
 
 interface CategoryPageProps {
@@ -46,11 +32,6 @@ function getCategoryFromUrl(urlCategory: string): string | null {
   return categoryMapping[decodedCategory] || null;
 }
 
-// Get display name for category
-function getDisplayName(firebaseCategory: string): string {
-  return categoryDisplayNames[firebaseCategory] || firebaseCategory;
-}
-
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const firebaseCategory = getCategoryFromUrl(params.category);
   
@@ -60,15 +41,13 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
       description: 'The requested category was not found.',
     };
   }
-
-  const displayName = getDisplayName(firebaseCategory);
   
   return {
-    title: `${displayName} Articles - NishHome`,
-    description: `Browse all articles in ${displayName} category. Discover tips, guides, and insights about ${displayName.toLowerCase()}.`,
+    title: `${firebaseCategory} Articles - NishHome`,
+    description: `Browse all articles in ${firebaseCategory} category. Discover tips, guides, and insights about ${firebaseCategory.toLowerCase()}.`,
     openGraph: {
-      title: `${displayName} Articles | NishHome`,
-      description: `Browse all articles in ${displayName} category. Discover tips, guides, and insights about ${displayName.toLowerCase()}.`,
+      title: `${firebaseCategory} Articles | NishHome`,
+      description: `Browse all articles in ${firebaseCategory} category. Discover tips, guides, and insights about ${firebaseCategory.toLowerCase()}.`,
     },
   };
 }
@@ -81,10 +60,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     notFound();
   }
 
-  const displayName = getDisplayName(firebaseCategory);
   const allPosts = await getAllPosts();
   
-  // Filter posts by Firebase category name
+  // Filter posts by category - artık İngilizce kategori adlarını kullanıyoruz
   const categoryPosts = allPosts.filter(post => 
     post.category === firebaseCategory && post.published
   );
@@ -92,11 +70,11 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   // Category descriptions in English
   const getCategoryDescription = (category: string) => {
     switch (category) {
-      case 'Pratik Bilgiler':
+      case 'Practical Tips':
         return 'Practical tips, guides, and expert recommendations for home decoration';
-      case 'Dekorasyon':
+      case 'Decoration':
         return 'Decoration ideas and design inspiration to beautify every corner of your home';
-      case 'Hediyelik Eşyalar':
+      case 'Gift Items':
         return 'Special gift ideas and home decoration gift recommendations to make your loved ones happy';
       case 'Kitchen':
         return 'Kitchen decoration and organization tips and ideas';
@@ -111,7 +89,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       case 'Hallway':
         return 'Hallway and entrance area decoration recommendations';
       default:
-        return `Discover all articles in ${getDisplayName(category)} category`;
+        return `Discover all articles in ${category} category`;
     }
   };
 
@@ -132,7 +110,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         {/* Page Header */}
         <div className="text-center mb-8 md:mb-12">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
-            {displayName}
+            {firebaseCategory}
           </h1>
           <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
             {getCategoryDescription(firebaseCategory)}
@@ -166,7 +144,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 No articles yet
               </h3>
               <p className="text-gray-600 mb-6">
-                There are no published articles in the {displayName} category yet.
+                There are no published articles in the {firebaseCategory} category yet.
               </p>
               <Link 
                 href="/blog" 

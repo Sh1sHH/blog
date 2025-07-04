@@ -4,39 +4,56 @@ import Link from 'next/link';
 
 const categories = [
   {
+    name: 'Kitchen',
     image: '/images/menu/kitchen.png',
-    href: '/yatak-odasi'
+    href: '/categories/kitchen'
   },
   {
-    image: '/images/menu/kitchen.png',
-    href: '/mutfak'
+    name: 'Bedroom',
+    image: '/images/menu/kitchen.png', // Bu görseller güncellenebilir
+    href: '/categories/bedroom'
   },
   {
-    image: '/images/menu/kitchen.png',
-    href: '/banyo'
-  },
-  {
-    image: '/images/menu/kitchen.png',
-    href: '/banyo'
+    name: 'Living Room',
+    image: '/images/menu/kitchen.png', // Bu görseller güncellenebilir
+    href: '/categories/living-room'
   }
 ];
 
+/**
+ * Room Categories bileşeni
+ * Ana sayfada carousel'in yanında 3 adet oda kategorisi gösterir
+ * Carousel ile aynı boyutta tasarlanmıştır
+ */
 export default function RoomCategories() {
   return (
-    <div className="h-full flex flex-col justify-center gap-4">
+    <div className="h-80 md:h-96 lg:h-[450px] flex flex-col gap-4">
       {categories.map((category, index) => (
         <Link
           key={index}
           href={category.href}
-          className="block rounded-2xl overflow-hidden transition-all duration-200 hover:scale-105 hover:shadow-lg h-24 md:h-28 w-full"
-          style={{ minHeight: 80 }}
+          className="group block rounded-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg flex-1 relative"
         >
-          <img
-            src={category.image}
-            alt="Kategori görseli"
-            className="w-full h-full object-cover"
-            draggable={false}
-          />
+          <div className="relative w-full h-full">
+            <img
+              src={category.image}
+              alt={`${category.name} category`}
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+              draggable={false}
+            />
+            {/* Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent group-hover:from-black/70 group-hover:via-black/30 transition-all duration-300" />
+            
+            {/* Category Name */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <h3 className="text-white font-bold text-lg md:text-xl text-center group-hover:text-blue-300 transition-colors">
+                {category.name}
+              </h3>
+            </div>
+            
+            {/* Hover Effect */}
+            <div className="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-xl transition-all duration-300" />
+          </div>
         </Link>
       ))}
     </div>

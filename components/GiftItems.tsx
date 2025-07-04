@@ -3,35 +3,30 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Clock } from 'lucide-react';
 import Link from 'next/link';
-import { BlogPostMeta } from '@/lib/blog';
+import { BlogPostMeta, getAllPosts } from '@/lib/blog';
 
 export default function GiftItems() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [posts, setPosts] = useState<BlogPostMeta[]>([]);
   const [loading, setLoading] = useState(true);
   
-  // Fetch posts from "Hediyelik Eşyalar" category from Firebase
+  // Fetch posts from "Gift Items" category (kategori çevirisi ile)
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('/api/admin/posts');
-        const data = await response.json();
+        // getAllPosts kullanarak kategori çevirisini otomatik al
+        const allPosts = await getAllPosts();
         
-        console.log('GiftItems - API Response:', data);
+        console.log('GiftItems - All posts with categories:', allPosts.map(p => ({ title: p.title, category: p.category, published: p.published })));
         
-        if (data.success) {
-          // Log all posts
-          console.log('GiftItems - All posts:', data.posts);
-          
-          // Filter published posts from "Hediyelik Eşyalar" category
-          const giftPosts = data.posts.filter((post: any) => {
-            console.log('GiftItems - Checking post:', post.category, post.published);
-            return post.category === 'Hediyelik Eşyalar' && post.published;
-          }).slice(0, 6); // First 6 posts
-          
-          console.log('GiftItems - Filtered posts:', giftPosts);
-          setPosts(giftPosts);
-        }
+        // Filter published posts from "Gift Items" category (artık İngilizce olarak çevrilmiş)
+        const giftPosts = allPosts.filter((post: BlogPostMeta) => {
+          console.log('GiftItems - Checking post:', post.category, post.published);
+          return post.category === 'Gift Items' && post.published;
+        }).slice(0, 6); // First 6 posts
+        
+        console.log('GiftItems - Filtered posts:', giftPosts);
+        setPosts(giftPosts);
       } catch (error) {
         console.error('Error fetching gift items:', error);
       } finally {
