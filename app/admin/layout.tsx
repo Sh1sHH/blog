@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import AdminAuthGuard from '@/components/admin/AdminAuthGuard';
 import AdminHeader from '@/components/admin/AdminHeader';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Eye, Plus, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -34,8 +35,15 @@ export default function AdminLayout({
             <nav className="flex items-center justify-between h-16 max-w-6xl mx-auto">
               {/* Sol taraf - Logo ve Admin başlığı */}
               <div className="flex items-center space-x-6">
-                <Link href="/" className="font-bold text-xl text-slate-800 hover:text-slate-600 transition-colors no-underline">
-                  NishHome
+                <Link href="/" className="flex items-center hover:opacity-80 transition-opacity no-underline">
+                  <Image 
+                    src="/images/navbar/logo2.webp" 
+                    alt="NishHome Logo" 
+                    width={120} 
+                    height={40}
+                    className="h-40 w-auto"
+                    priority
+                  />
                 </Link>
                 <div className="hidden sm:block">
                   <span className="text-slate-600 text-sm font-medium">Admin Panel</span>
