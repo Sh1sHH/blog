@@ -46,7 +46,7 @@ export default async function Home() {
       <section className="container mx-auto px-4 py-12">
         <HomeBlogSection 
           posts={filteredPosts} 
-          title="Get your next weeknight dinner idea"
+          title="Discover your next smart space idea"
         />
       </section>
 

@@ -60,6 +60,16 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
       );
     }
     
+    if (title === "Discover your next smart space idea") {
+      return (
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
+          <span className="text-gray-900">Discover your next</span>
+          <br />
+          <span className="text-blue-500">smart space idea</span>
+        </h2>
+      );
+    }
+    
     // Diğer başlıklar için varsayılan stil
     return (
       <div className="text-center">

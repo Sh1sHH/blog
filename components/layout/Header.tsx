@@ -47,22 +47,22 @@ export default function Header() {
           {/* Ana Menü - Ortalanmış */}
           <div className="hidden md:flex flex-1 items-center justify-center">
             <div className="flex items-center space-x-12">
-              <Link href="/living-room" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
+              <Link href="/categories/living-room" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
                 Living Room
               </Link>
-              <Link href="/kitchen" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
+              <Link href="/categories/kitchen" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
                 Kitchen
               </Link>
-              <Link href="/bedroom" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
+              <Link href="/categories/bedroom" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
                 Bedroom
               </Link>
-              <Link href="/bathroom" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
+              <Link href="/categories/bathroom" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
                 Bathroom
               </Link>
-              <Link href="/balcony" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
+              <Link href="/categories/balcony" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
                 Balcony
               </Link>
-              <Link href="/office" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
+              <Link href="/categories/office" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
                 Home Office
               </Link>
             </div>
@@ -124,42 +124,42 @@ export default function Header() {
       <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:hidden bg-white border-t`}>
         <div className="px-2 pt-2 pb-3 space-y-1">
           <Link 
-            href="/living-room" 
+            href="/categories/living-room" 
             className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors no-underline"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Living Room
           </Link>
           <Link 
-            href="/kitchen" 
+            href="/categories/kitchen" 
             className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors no-underline"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Kitchen
           </Link>
           <Link 
-            href="/bedroom" 
+            href="/categories/bedroom" 
             className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors no-underline"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Bedroom
           </Link>
           <Link 
-            href="/bathroom" 
+            href="/categories/bathroom" 
             className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors no-underline"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Bathroom
           </Link>
           <Link 
-            href="/balcony" 
+            href="/categories/balcony" 
             className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors no-underline"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Balcony
           </Link>
           <Link 
-            href="/office" 
+            href="/categories/office" 
             className="block px-3 py-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors no-underline"
             onClick={() => setIsMobileMenuOpen(false)}
           >

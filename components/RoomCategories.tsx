@@ -4,19 +4,19 @@ import Link from 'next/link';
 
 const categories = [
   {
-    name: 'Kitchen',
-    image: '/images/menu/kitchen.png',
-    href: '/categories/kitchen'
+    name: 'Decoration Ideas',
+    image: '/images/menu/decors.png',
+    href: '/categories/decoration'
   },
   {
-    name: 'Bedroom',
-    image: '/images/menu/kitchen.png', // Bu görseller güncellenebilir
-    href: '/categories/bedroom'
+    name: 'Gift Ideas',
+    image: '/images/menu/gifts.png', // Bu görseller güncellenebilir
+    href: '/categories/gift-items'
   },
   {
-    name: 'Living Room',
-    image: '/images/menu/kitchen.png', // Bu görseller güncellenebilir
-    href: '/categories/living-room'
+    name: 'Practical Tips',
+    image: '/images/menu/Tips.png', // Bu görseller güncellenebilir
+    href: '/categories/practical-tips'
   }
 ];
 

@@ -123,7 +123,7 @@ export class FirestorePostService {
         tags: postData.tags || [],
         featured: postData.featured || false,
         published: postData.published || false,
-        author: postData.author || 'Admin',
+        author: postData.author || 'Joesp H.',
         image: postData.image || '/images/blog/default.jpg',
         
         // SEO

@@ -18,6 +18,7 @@ const categoryMapping: { [key: string]: string } = {
   'living-room': 'Living Room',
   'office': 'Office',
   'bedroom': 'Bedroom',
+  'balcony': 'Balcony',
   'hallway': 'Hallway',
   'general': 'General'
 };
@@ -86,6 +87,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         return 'Home office and workspace organization recommendations';
       case 'Bedroom':
         return 'Bedroom decoration and design ideas';
+      case 'Balcony':
+        return 'Balcony decoration and outdoor space ideas';
       case 'Hallway':
         return 'Hallway and entrance area decoration recommendations';
       default:
@@ -182,6 +185,7 @@ export async function generateStaticParams() {
     { category: 'living-room' },
     { category: 'office' },
     { category: 'bedroom' },
+    { category: 'balcony' },
     { category: 'hallway' },
     { category: 'general' }
   ];
