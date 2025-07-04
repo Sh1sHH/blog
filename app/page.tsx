@@ -13,7 +13,7 @@ export default async function Home() {
   const allPosts = await getAllPosts();
   const featuredPosts = await getFeaturedPosts();
   
-  // İngilizce kategori adlarına göre filtrele - "Get your next weeknight dinner idea" bölümünden çıkar
+  // Filter by English category names - exclude from "Get your next weeknight dinner idea" section
   const filteredPosts = allPosts.filter(post => 
     post.category !== 'Practical Tips' && 
     post.category !== 'Decoration' && 
@@ -25,10 +25,10 @@ export default async function Home() {
       {/* Hero Section - Carousel and Categories Side by Side */}
       <section className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-          {/* Carousel - Takes 2/3 of the space - Şimdi tüm blog postlarını gösterir */}
+          {/* Carousel - Takes 2/3 of the space - Now shows all blog posts */}
           <div className="lg:col-span-2">
             <HomeCarousel
-              posts={allPosts} // Tüm blog postları (kategori ayırt etmeden)
+              posts={allPosts} // All blog posts (regardless of category)
               autoplay={true}
               autoplayDelay={4000}
               pauseOnHover={true}
@@ -56,7 +56,7 @@ export default async function Home() {
       {/* Gift Items Section */}
       <GiftItems />
 
-      {/* Practical Tips Section - En alta taşındı */}
+      {/* Practical Tips Section - Moved to bottom */}
       <PracticalTips />
     </main>
   );

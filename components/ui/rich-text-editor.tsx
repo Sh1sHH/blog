@@ -156,7 +156,7 @@ export function RichTextEditor({
                 resolve(reader.result as string);
               };
               reader.onerror = () => {
-                reject('Görsel yüklenemedi. Lütfen görsel URL\'sini manuel olarak ekleyin.');
+                reject('Image could not be uploaded. Please add the image URL manually.');
               };
               reader.readAsDataURL(blobInfo.blob());
             });

@@ -79,6 +79,15 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Global link styles - remove underlines */
+  a {
+    text-decoration: none !important;
+  }
+  
+  a:hover {
+    text-decoration: none !important;
+  }
 }
 
 /* Dropdown Menu Fixes */
@@ -219,11 +228,12 @@
 
 .prose a {
   color: #3b82f6;
-  text-decoration: underline;
+  text-decoration: none !important;
 }
 
 .prose a:hover {
   color: #1d4ed8;
+  text-decoration: none !important;
 }
 
 .prose ul,

@@ -14,9 +14,9 @@ export default function Newsletter() {
     e.preventDefault();
     setIsLoading(true);
 
-    // Newsletter kayıt simülasyonu
+    // Newsletter subscription simulation
     setTimeout(() => {
-      toast.success('Teşekkürler! E-posta adresinize onay mesajı gönderildi.');
+      toast.success('Thank you! A confirmation message has been sent to your email address.');
       setEmail('');
       setIsLoading(false);
     }, 1000);
@@ -30,23 +30,23 @@ export default function Newsletter() {
         </div>
         
         <h3 className="text-3xl font-semibold text-slate-800 mb-4">
-          Güncel Kalın
+          Stay Updated
         </h3>
         
         <p className="text-xl text-slate-600 mb-8 leading-relaxed">
-          En son yazılarımızı ve uzman görüşlerini e-posta adresinize 
-          düzenli olarak göndermemizi ister misiniz?
+          Would you like us to send our latest articles and expert insights 
+          to your email address regularly?
         </p>
         
         <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto mb-6">
           <Input
             type="email"
-            placeholder="E-posta adresiniz"
+            placeholder="Your email address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
             className="flex-1 h-12 text-lg bg-white border-slate-300 focus:border-slate-500 focus:ring-slate-500"
-            aria-label="E-posta adresi"
+            aria-label="Email address"
           />
           <Button
             type="submit"
@@ -54,10 +54,10 @@ export default function Newsletter() {
             className="bg-slate-700 hover:bg-slate-800 h-12 px-8 text-lg font-medium"
           >
             {isLoading ? (
-              'Kaydediliyor...'
+              'Subscribing...'
             ) : (
               <>
-                Abone Ol
+                Subscribe
                 <ArrowRight className="ml-2 h-5 w-5" />
               </>
             )}
@@ -65,7 +65,7 @@ export default function Newsletter() {
         </form>
         
         <p className="text-sm text-slate-500">
-          Spam göndermiyoruz, istediğiniz zaman abonelikten çıkabilirsiniz.
+          We don't send spam, you can unsubscribe at any time.
         </p>
       </div>
     </div>

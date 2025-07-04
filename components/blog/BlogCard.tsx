@@ -27,7 +27,7 @@ export default function BlogCard({ post, featured = false }: BlogCardProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent group-hover:from-black/80 group-hover:via-black/40 transition-all duration-500" />
           
           <div className="absolute top-3 left-3 md:top-4 md:left-4 bg-black/50 text-white text-xs md:text-sm px-2 py-1 md:px-3 md:py-1 rounded-full backdrop-blur-sm">
-            {new Date(post.date).toLocaleDateString('tr-TR', { 
+            {new Date(post.date).toLocaleDateString('en-US', { 
               month: 'short', 
               day: 'numeric' 
             })}
@@ -45,10 +45,10 @@ export default function BlogCard({ post, featured = false }: BlogCardProps) {
             </p>
             
             <div className="flex items-center justify-between text-xs md:text-sm">
-              <div className="flex items-center space-x-1 md:space-x-2 text-gray-300">
-                <Calendar className="h-3 w-3 md:h-4 md:w-4" />
-                <span>{post.readTime} dk</span>
-              </div>
+                                      <div className="flex items-center space-x-1 md:space-x-2 text-gray-300">
+                          <Calendar className="h-3 w-3 md:h-4 md:w-4" />
+                          <span>{post.readTime} min</span>
+                        </div>
               <span className="bg-white/20 px-2 py-1 md:px-3 md:py-1 rounded-full text-white backdrop-blur-sm text-xs">
                 {post.category}
               </span>

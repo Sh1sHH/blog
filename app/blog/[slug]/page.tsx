@@ -84,8 +84,54 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   // Get latest posts (excluding current post)
   const latestPosts = await getLatestPosts(post.slug, 3);
 
+  // JSON-LD structured data for SEO - English only
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.description,
+    "image": {
+      "@type": "ImageObject",
+      "url": post.image,
+      "width": 1200,
+      "height": 630
+    },
+    "author": {
+      "@type": "Person",
+      "name": post.author,
+      "url": "https://cleverspacesolutions.com/about"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CleverSpaceSolutions",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://cleverspacesolutions.com/images/navbar/logo2.webp"
+      }
+    },
+    "datePublished": post.date,
+    "dateModified": post.date,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://cleverspacesolutions.com/blog/${post.slug}`
+    },
+    "keywords": post.tags.join(", "),
+    "articleSection": post.category,
+    "wordCount": post.content.replace(/<[^>]*>/g, '').split(' ').length,
+    "timeRequired": `PT${post.readTime}M`,
+    "inLanguage": "en-US",
+    "isAccessibleForFree": true
+  };
+
   return (
-    <article className="min-h-screen bg-white overflow-x-hidden">
+    <>
+      {/* JSON-LD structured data for Google */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      
+      <article className="min-h-screen bg-white overflow-x-hidden">
       {/* Back Button */}
       <div className="w-full max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 pt-4 md:pt-8">
         <Button asChild variant="ghost" className="mb-4 md:mb-6 text-sm md:text-base">
@@ -121,22 +167,22 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
           <div className="flex items-center gap-1 md:gap-2">
             <Calendar className="h-3 w-3 md:h-4 md:w-4" />
-            <span className="hidden md:inline">{new Date(post.date).toLocaleDateString('tr-TR', {
+            <span className="hidden md:inline">{new Date(post.date).toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'long',
               day: 'numeric'
             })}</span>
-            <span className="md:hidden">{new Date(post.date).toLocaleDateString('tr-TR', {
+            <span className="md:hidden">{new Date(post.date).toLocaleDateString('en-US', {
               day: 'numeric',
               month: 'short'
             })}</span>
           </div>
           <div className="flex items-center gap-1 md:gap-2">
             <Clock className="h-3 w-3 md:h-4 md:w-4" />
-            <span>{post.readTime} dk</span>
+            <span>{post.readTime} min read</span>
           </div>
           <div className="hidden md:flex items-center gap-1 md:gap-2">
-            <span className="text-blue-600">{post.views} görüntülenme</span>
+            <span className="text-blue-600">{post.views} views</span>
           </div>
           <Button variant="ghost" size="sm" className="ml-auto text-xs md:text-sm p-1 md:p-2">
             <Share2 className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2" />
@@ -165,11 +211,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         {/* Tags */}
         {post.tags.length > 0 && (
-          <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-gray-200">
+          <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-gray-200 mb-6 md:mb-8">
             <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">Tags</h3>
             <div className="flex flex-wrap gap-2">
               {post.tags.map((tag) => (
-                <Badge key={tag} variant="secondary" className="text-xs md:text-sm">
+                <Badge key={tag} className="text-xs md:text-sm bg-blue-100 text-blue-800 hover:bg-blue-200 transition-colors">
                   {tag}
                 </Badge>
               ))}
@@ -203,7 +249,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent group-hover:from-black/80 group-hover:via-black/40 transition-all duration-500" />
                       
                       <div className="absolute top-3 left-3 md:top-4 md:left-4 bg-black/50 text-white text-xs md:text-sm px-2 py-1 md:px-3 md:py-1 rounded-full backdrop-blur-sm">
-                        {new Date(latestPost.date).toLocaleDateString('tr-TR', { 
+                        {new Date(latestPost.date).toLocaleDateString('en-US', { 
                           month: 'short', 
                           day: 'numeric' 
                         })}
@@ -223,7 +269,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         <div className="flex items-center justify-between text-xs md:text-sm">
                           <div className="flex items-center space-x-1 md:space-x-2 text-gray-300">
                             <Calendar className="h-3 w-3 md:h-4 md:w-4" />
-                            <span>{latestPost.readTime} dk</span>
+                            <span>{latestPost.readTime} min</span>
                           </div>
                           {/* Sadece kategori text'i - link ayrı olacak */}
                           <span className="bg-white/20 px-2 py-1 md:px-3 md:py-1 rounded-full text-white backdrop-blur-sm text-xs">
@@ -248,5 +294,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         )}
       </div>
     </article>
+    </>
   );
 }

@@ -81,7 +81,7 @@ export default function AdminLoginPage() {
               color: '#374151', 
               marginBottom: '0.25rem' 
             }}>
-              Email Adresi
+              Email Address
             </label>
             <input
               type="email"
@@ -110,7 +110,7 @@ export default function AdminLoginPage() {
               color: '#374151', 
               marginBottom: '0.25rem' 
             }}>
-              Şifre
+              Password
             </label>
             <input
               type="password"
@@ -160,14 +160,14 @@ export default function AdminLoginPage() {
             }}
             disabled={loading || !email || !password}
           >
-            {loading ? 'Giriş Yapılıyor...' : 'Giriş Yap'}
+            {loading ? 'Signing In...' : 'Sign In'}
           </button>
         </form>
 
         {/* Info */}
         <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
           <p style={{ fontSize: '0.875rem', color: '#6b7280', margin: '0' }}>
-            Sadece yetkili admin hesapları giriş yapabilir
+            Only authorized admin accounts can sign in
           </p>
         </div>
       </div>

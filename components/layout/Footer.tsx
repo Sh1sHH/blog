@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           {/* Logo ve Telif */}
           <div className="text-slate-600 text-sm">
-            © {new Date().getFullYear()} NishHome
+            © {new Date().getFullYear()} CleverSpace
           </div>
 
           {/* Linkler */}

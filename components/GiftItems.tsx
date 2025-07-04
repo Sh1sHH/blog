@@ -164,12 +164,16 @@ export default function GiftItems() {
                   </div>
 
                   {/* Content */}
-                  <div className="p-6 flex-1 flex flex-col justify-between">
-                    <h3 className="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-2">
+                  <div className="p-6 flex-1 flex flex-col">
+                    <h3 className="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-2 mb-3">
                       {gift.title}
                     </h3>
                     
-                    <div className="mt-4">
+                    <p className="text-sm text-slate-600 line-clamp-3 flex-1 mb-4">
+                      {gift.description}
+                    </p>
+                    
+                    <div className="mt-auto">
                       <span className="inline-block bg-slate-100 text-slate-600 text-sm px-3 py-1 rounded-full">
                         Gift Ideas
                       </span>

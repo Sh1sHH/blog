@@ -122,7 +122,7 @@ export default function HomeCarousel({
                       <div className="flex items-center gap-3 md:gap-4 text-xs md:text-sm text-gray-300">
                         <div className="flex items-center gap-1">
                           <Calendar className="w-3 h-3 md:w-4 md:h-4" />
-                          <span>{new Date(post.date).toLocaleDateString('tr-TR')}</span>
+                          <span>{new Date(post.date).toLocaleDateString('en-US')}</span>
                         </div>
                         <div className="flex items-center gap-1">
                           <Clock className="w-3 h-3 md:w-4 md:h-4" />

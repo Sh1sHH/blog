@@ -29,29 +29,29 @@ export const signInAdmin = async (email: string, password: string) => {
     // Persistence ayarla - kullanıcı tarayıcıyı kapatıp açsa bile giriş kalsın
     await setPersistence(auth, browserLocalPersistence);
     
-    // Email admin listesinde mi kontrol et
+    // Check if email is in admin list
     if (!isAdminEmail(email)) {
-      throw new Error('Bu email adresi admin paneline erişim yetkisine sahip değil.');
+      throw new Error('This email address does not have admin panel access.');
     }
 
-    // Firebase ile giriş yap
+    // Sign in with Firebase
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     return userCredential.user;
   } catch (error: any) {
-    console.error('Admin giriş hatası:', error);
+    console.error('Admin login error:', error);
     
-    // Firebase hata kodlarını Türkçe'ye çevir
+    // Translate Firebase error codes to English
     switch (error.code) {
       case 'auth/user-not-found':
-        throw new Error('Bu email adresi ile kayıtlı kullanıcı bulunamadı.');
+        throw new Error('No user found with this email address.');
       case 'auth/wrong-password':
-        throw new Error('Şifre hatalı.');
+        throw new Error('Incorrect password.');
       case 'auth/invalid-email':
-        throw new Error('Geçersiz email formatı.');
+        throw new Error('Invalid email format.');
       case 'auth/too-many-requests':
-        throw new Error('Çok fazla başarısız deneme. Lütfen daha sonra tekrar deneyin.');
+        throw new Error('Too many failed attempts. Please try again later.');
       default:
-        throw new Error(error.message || 'Giriş yaparken bir hata oluştu.');
+        throw new Error(error.message || 'An error occurred during login.');
     }
   }
 };

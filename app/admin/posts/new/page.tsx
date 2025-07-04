@@ -318,9 +318,9 @@ export default function NewPostPage() {
                       className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     >
                       <option value="General">General</option>
-                      <option value="Pratik Bilgiler">Pratik Bilgiler</option>
-                      <option value="Dekorasyon">Dekorasyon</option>
-                      <option value="Hediyelik Eşyalar">Hediyelik Eşyalar</option>
+                      <option value="Practical Tips">Practical Tips</option>
+                      <option value="Decoration">Decoration</option>
+                      <option value="Gift Items">Gift Items</option>
                       <option value="Kitchen">Kitchen</option>
                       <option value="Bathroom">Bathroom</option>
                       <option value="Living Room">Living Room</option>

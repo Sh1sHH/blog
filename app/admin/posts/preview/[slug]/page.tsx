@@ -177,22 +177,22 @@ export default function PreviewPostPage() {
             </div>
             <div className="flex items-center gap-1 md:gap-2">
               <Calendar className="h-3 w-3 md:h-4 md:w-4" />
-              <span className="hidden md:inline">{new Date(post.date).toLocaleDateString('tr-TR', {
+              <span className="hidden md:inline">{new Date(post.date).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'
               })}</span>
-              <span className="md:hidden">{new Date(post.date).toLocaleDateString('tr-TR', {
+              <span className="md:hidden">{new Date(post.date).toLocaleDateString('en-US', {
                 day: 'numeric',
                 month: 'short'
               })}</span>
             </div>
             <div className="flex items-center gap-1 md:gap-2">
               <Clock className="h-3 w-3 md:h-4 md:w-4" />
-              <span>{post.readTime} dk</span>
+              <span>{post.readTime} min read</span>
             </div>
             <div className="hidden md:flex items-center gap-1 md:gap-2">
-              <span className="text-blue-600">{post.views} görüntülenme</span>
+              <span className="text-blue-600">{post.views} views</span>
             </div>
           </div>
 

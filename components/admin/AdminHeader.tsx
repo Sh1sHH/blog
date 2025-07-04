@@ -24,7 +24,7 @@ export default function AdminHeader() {
       await signOutAdmin();
       router.push('/admin/login');
     } catch (error) {
-      console.error('Çıkış hatası:', error);
+      console.error('Sign out error:', error);
     } finally {
       setLoading(false);
     }

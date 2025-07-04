@@ -76,12 +76,12 @@ export default function SocialReminder() {
   };
 
   const handleTelegramClick = () => {
-    window.open('https://t.me/nishome_official', '_blank');
+    window.open('https://t.me/cleverspacesolutions', '_blank');
     toast.success('🚀 Welcome to our Telegram channel!');
   };
 
   const handlePinterestClick = () => {
-    window.open('https://pinterest.com/nishome_official', '_blank');
+    window.open('https://pinterest.com/cleverspacesolutions', '_blank');
     toast.success('📌 Welcome to our Pinterest page!');
   };
 
