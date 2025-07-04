@@ -1,14 +1,24 @@
 import Link from 'next/link';
 import { getAllPosts, getFeaturedPosts } from '@/lib/blog';
-import BlogList from "@/components/blog/BlogList";
+import HomeBlogSection from "@/components/blog/HomeBlogSection";
 import RoomCategories from "@/components/RoomCategories";
 import HomeCarousel from "@/components/ui/carousel";
+import PracticalTips from "@/components/PracticalTips";
+import DecorationSection from "@/components/DecorationSection";
+import GiftItems from "@/components/GiftItems";
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 
 export default async function Home() {
   const allPosts = await getAllPosts();
   const featuredPosts = await getFeaturedPosts();
+  
+  // "Pratik Bilgiler", "Dekorasyon" ve "Hediyelik Eşyalar" kategorilerini Latest Articles'dan çıkar
+  const filteredPosts = allPosts.filter(post => 
+    post.category !== 'Pratik Bilgiler' && 
+    post.category !== 'Dekorasyon' && 
+    post.category !== 'Hediyelik Eşyalar'
+  );
 
   return (
     <main className="min-h-screen">
@@ -32,15 +42,22 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* Practical Tips Section */}
+      <PracticalTips />
+
       {/* Blog Posts */}
       <section className="container mx-auto px-4 py-12">
-        
-        <BlogList 
-          posts={allPosts} 
-          title="Latest Articles" 
-          showFeatured={featuredPosts.length > 0}
+        <HomeBlogSection 
+          posts={filteredPosts} 
+          title="Latest Articles"
         />
       </section>
+
+      {/* Decoration Section */}
+      <DecorationSection />
+
+      {/* Gift Items Section */}
+      <GiftItems />
     </main>
   );
 }

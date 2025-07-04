@@ -289,13 +289,13 @@ export default function AdminDashboard() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div className="flex justify-end gap-2">
-                          <Link href={`/blog/${post.slug}`}>
-                            <Button variant="ghost" size="sm">
+                          <Link href={post.published ? `/blog/${post.slug}` : `/admin/posts/preview/${post.slug}`}>
+                            <Button variant="ghost" size="sm" title={post.published ? 'View Published Post' : 'Preview Draft'}>
                               <Eye className="h-4 w-4" />
                             </Button>
                           </Link>
                           <Link href={`/admin/posts/edit/${post.slug}`}>
-                            <Button variant="ghost" size="sm">
+                            <Button variant="ghost" size="sm" title="Edit Post">
                               <Edit className="h-4 w-4" />
                             </Button>
                           </Link>
@@ -304,6 +304,7 @@ export default function AdminDashboard() {
                             size="sm"
                             onClick={() => handleDelete(post.slug)}
                             className="text-red-600 hover:text-red-800"
+                            title="Delete Post"
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>

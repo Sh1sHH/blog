@@ -1,0 +1,123 @@
+'use client';
+
+import { useState } from 'react';
+import { BlogPostMeta } from '@/lib/blog';
+import BlogCard from './BlogCard';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+interface HomeBlogSectionProps {
+  posts: BlogPostMeta[];
+  title?: string;
+}
+
+export default function HomeBlogSection({ posts, title = "Latest Articles" }: HomeBlogSectionProps) {
+  const [currentPage, setCurrentPage] = useState(0);
+
+  // İlk 6 postu göster
+  const mainPosts = posts.slice(0, 6);
+  
+  // Kalan postları 3'lü sayfalara böl
+  const remainingPosts = posts.slice(6);
+  const postsPerPage = 3;
+  const totalPages = Math.ceil(remainingPosts.length / postsPerPage);
+  
+  const getCurrentPagePosts = () => {
+    const startIndex = currentPage * postsPerPage;
+    return remainingPosts.slice(startIndex, startIndex + postsPerPage);
+  };
+
+  const nextPage = () => {
+    setCurrentPage((prev) => (prev + 1) % totalPages);
+  };
+
+  const prevPage = () => {
+    setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
+  };
+
+  const goToPage = (pageIndex: number) => {
+    setCurrentPage(pageIndex);
+  };
+
+  if (posts.length === 0) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-slate-500 text-lg">No articles found yet.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-8">
+      {/* Başlık */}
+      {title && (
+        <div className="text-center">
+          <h2 className="text-2xl font-semibold text-slate-800">{title}</h2>
+          <div className="w-16 h-0.5 bg-slate-600 mx-auto mt-2 rounded-full"></div>
+        </div>
+      )}
+
+      {/* Ana Blog Grid - İlk 6 Post */}
+      {mainPosts.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+          {mainPosts.map((post) => (
+            <BlogCard key={post.slug} post={post} />
+          ))}
+        </div>
+      )}
+
+      {/* Carousel Bölümü - Kalan Postlar */}
+      {remainingPosts.length > 0 && (
+        <div className="space-y-6">
+          {/* Carousel Container */}
+          <div className="relative">
+            {/* Navigation Arrows */}
+            {totalPages > 1 && (
+              <>
+                <button
+                  onClick={prevPage}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10"
+                  aria-label="Previous posts"
+                >
+                  <ChevronLeft className="w-5 h-5 text-slate-600" />
+                </button>
+                
+                <button
+                  onClick={nextPage}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10"
+                  aria-label="Next posts"
+                >
+                  <ChevronRight className="w-5 h-5 text-slate-600" />
+                </button>
+              </>
+            )}
+
+            {/* Posts Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+              {getCurrentPagePosts().map((post) => (
+                <BlogCard key={post.slug} post={post} />
+              ))}
+            </div>
+          </div>
+
+          {/* Dots Indicator */}
+          {totalPages > 1 && (
+            <div className="flex justify-center space-x-2">
+              {Array.from({ length: totalPages }, (_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToPage(index)}
+                  className={`w-2 h-2 rounded-full transition-colors ${
+                    index === currentPage 
+                      ? 'bg-slate-600' 
+                      : 'bg-slate-300 hover:bg-slate-400'
+                  }`}
+                  aria-label={`Go to page ${index + 1}`}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+} 

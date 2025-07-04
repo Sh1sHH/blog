@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BlogPostMeta } from '@/lib/blog';
 import BlogCard from './BlogCard';
 
@@ -8,14 +8,20 @@ interface BlogListProps {
   posts: BlogPostMeta[];
   title?: string;
   showFeatured?: boolean;
+  initialCategory?: string;
 }
 
-const categories = [
-  "All", "Decoration", "Kitchen", "Bathroom", "Living Room", "Office", "Bedroom", "Hallway"
-];
+  const categories = [
+    "All", "Pratik Bilgiler", "Dekorasyon", "Hediyelik Eşyalar", "Kitchen", "Bathroom", "Living Room", "Office", "Bedroom", "Hallway"
+  ];
 
-export default function BlogList({ posts, title = "For You", showFeatured = false }: BlogListProps) {
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+export default function BlogList({ posts, title = "For You", showFeatured = false, initialCategory = "All" }: BlogListProps) {
+  const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
+
+  // URL'den gelen kategori değiştiğinde state'i güncelle
+  useEffect(() => {
+    setSelectedCategory(initialCategory);
+  }, [initialCategory]);
 
   // Kategori filtreleme
   const filterPostsByCategory = (posts: BlogPostMeta[], category: string) => {

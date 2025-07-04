@@ -31,9 +31,9 @@ export default function AdminLayout({
         {/* Blog Admin Navigation Bar - Ana sayfayla uyumlu */}
         <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-sm border-b">
           <div className="container mx-auto px-4">
-            <nav className="flex items-center h-16">
+            <nav className="flex items-center justify-between h-16 max-w-6xl mx-auto">
               {/* Sol taraf - Logo ve Admin başlığı */}
-              <div className="flex items-center space-x-8">
+              <div className="flex items-center space-x-6">
                 <Link href="/" className="font-bold text-xl text-slate-800 hover:text-slate-600 transition-colors no-underline">
                   NishHome
                 </Link>
@@ -42,13 +42,13 @@ export default function AdminLayout({
                 </div>
               </div>
               
-              {/* Orta - Navigation Links */}
-              <div className="hidden md:flex flex-1 items-center justify-center">
+              {/* Orta - Navigation Links - Daha merkezi */}
+              <div className="hidden md:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2">
                 <div className="flex items-center space-x-8">
                   <Link 
                     href="/admin" 
-                    className={`text-slate-600 hover:text-slate-900 transition-colors no-underline flex items-center space-x-1 ${
-                      pathname === '/admin' ? 'text-slate-900 font-medium' : ''
+                    className={`text-slate-600 hover:text-slate-900 transition-colors no-underline flex items-center space-x-2 px-3 py-2 rounded-lg ${
+                      pathname === '/admin' ? 'text-slate-900 font-medium bg-slate-100' : 'hover:bg-slate-50'
                     }`}
                   >
                     <BarChart3 className="h-4 w-4" />
@@ -56,8 +56,8 @@ export default function AdminLayout({
                   </Link>
                   <Link 
                     href="/admin/posts/new" 
-                    className={`text-slate-600 hover:text-slate-900 transition-colors no-underline flex items-center space-x-1 ${
-                      pathname === '/admin/posts/new' ? 'text-slate-900 font-medium' : ''
+                    className={`text-slate-600 hover:text-slate-900 transition-colors no-underline flex items-center space-x-2 px-3 py-2 rounded-lg ${
+                      pathname === '/admin/posts/new' ? 'text-slate-900 font-medium bg-slate-100' : 'hover:bg-slate-50'
                     }`}
                   >
                     <Plus className="h-4 w-4" />
@@ -67,10 +67,10 @@ export default function AdminLayout({
               </div>
 
               {/* Sağ taraf - Action buttons ve user menu */}
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-3">
                 {/* View Site Button */}
                 <Link href="/" target="_blank">
-                  <button className="hidden sm:flex items-center space-x-1 text-slate-600 hover:text-slate-900 transition-colors p-2 rounded-lg hover:bg-slate-100">
+                  <button className="hidden sm:flex items-center space-x-2 text-slate-600 hover:text-slate-900 transition-colors px-3 py-2 rounded-lg hover:bg-slate-100">
                     <Eye className="h-4 w-4" />
                     <span className="text-sm">View Site</span>
                   </button>

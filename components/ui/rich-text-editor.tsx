@@ -112,7 +112,6 @@ export function RichTextEditor({
           font_formats: 'Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats',
           
           // Paste ayarları
-          paste_data_images: true,
           paste_as_text: false,
           paste_remove_styles: false,
           
@@ -147,6 +146,31 @@ export function RichTextEditor({
           
           // Medya ayarları
           media_live_embeds: true,
+          
+          // Görsel yükleme - URL tabanlı
+          images_upload_handler: (blobInfo: any, progress: (percent: number) => void) => {
+            return new Promise((resolve, reject) => {
+              // Base64 URL oluştur (geçici çözüm)
+              const reader = new FileReader();
+              reader.onload = () => {
+                resolve(reader.result as string);
+              };
+              reader.onerror = () => {
+                reject('Görsel yüklenemedi. Lütfen görsel URL\'sini manuel olarak ekleyin.');
+              };
+              reader.readAsDataURL(blobInfo.blob());
+            });
+          },
+          
+          // Manuel görsel URL girişi için
+          image_advtab: true,
+          image_caption: true,
+          
+          // URL tabanlı çalışma
+          automatic_uploads: false,
+          
+          // Paste ile görsel yükleme
+          paste_data_images: true,
           
           // Temizlik ayarları
           verify_html: false,

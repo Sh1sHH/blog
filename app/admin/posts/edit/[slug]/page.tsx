@@ -235,67 +235,77 @@ export default function EditPostPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-4">
-              <Link href="/admin">
-                <Button variant="ghost" size="sm">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to Dashboard
-                </Button>
-              </Link>
-              <div>
-                <h1 className="text-xl font-bold text-gray-900">Edit Post</h1>
-                <p className="text-sm text-gray-600">Update your blog post</p>
+      {/* Ultra Kompakt Header */}
+      <div className="flex justify-center py-3 bg-gray-50">
+        <div className="bg-white border rounded-lg px-4 py-3 shadow-sm inline-flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            <Link href="/admin" className="text-blue-600 hover:text-blue-800 flex items-center gap-1 text-sm">
+              <ArrowLeft className="h-4 w-4" />
+              Dashboard
+            </Link>
+            <span className="text-gray-300">|</span>
+            <h1 className="text-base font-medium text-gray-900">Edit Post</h1>
+          </div>
+          
+          <div className="flex items-center gap-2">
+            {/* SEO Score - Ultra Kompakt */}
+            <div className="flex items-center gap-1">
+              <span className="text-xs text-gray-400">SEO</span>
+              <div className={`px-2 py-0.5 rounded text-xs font-medium ${
+                seoScore >= 80 ? 'bg-green-100 text-green-700' :
+                seoScore >= 60 ? 'bg-yellow-100 text-yellow-700' :
+                'bg-red-100 text-red-700'
+              }`}>
+                {seoScore}%
               </div>
             </div>
+
+            {/* Preview Button */}
+            <Button 
+              variant="ghost" 
+              size="sm"
+              onClick={() => window.open(`/admin/posts/preview/${formData.customSlug}`, '_blank')}
+              disabled={!formData.title || !formData.content}
+              className="h-8 px-3"
+            >
+              <Eye className="h-3 w-3 mr-1" />
+              <span className="text-xs">Preview</span>
+            </Button>
+
+            {/* Delete Button */}
+            <Button 
+              variant="destructive" 
+              size="sm"
+              onClick={handleDelete}
+              disabled={isDeleting}
+              className="h-8 px-3"
+            >
+              <Trash2 className="h-3 w-3 mr-1" />
+              <span className="text-xs">{isDeleting ? 'Deleting...' : 'Delete'}</span>
+            </Button>
+
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => handleSubmit(formData.published)}
+              disabled={isSaving || !formData.title || !formData.content}
+              className="h-8 px-3"
+            >
+              <Save className="h-3 w-3 mr-1" />
+              <span className="text-xs">{isSaving ? 'Saving...' : 'Save'}</span>
+            </Button>
             
-            <div className="flex items-center gap-3">
-              {/* SEO Score */}
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600">SEO Score:</span>
-                <div className={`px-3 py-1 rounded-full text-sm font-medium ${
-                  seoScore >= 80 ? 'bg-green-100 text-green-800' :
-                  seoScore >= 60 ? 'bg-yellow-100 text-yellow-800' :
-                  'bg-red-100 text-red-800'
-                }`}>
-                  {seoScore}%
-                </div>
-              </div>
-
-              {/* Delete Button */}
-              <Button 
-                variant="destructive" 
-                size="sm"
-                onClick={handleDelete}
-                disabled={isDeleting}
-              >
-                <Trash2 className="h-4 w-4 mr-2" />
-                {isDeleting ? 'Deleting...' : 'Delete'}
-              </Button>
-
-              <Button 
-                variant="outline" 
-                onClick={() => handleSubmit(formData.published)}
-                disabled={isSaving || !formData.title || !formData.content}
-              >
-                <Save className="h-4 w-4 mr-2" />
-                {isSaving ? 'Saving...' : 'Save'}
-              </Button>
-              
-              <Button 
-                onClick={() => handleSubmit(true)}
-                disabled={isSaving || !formData.title || !formData.content}
-              >
-                <Eye className="h-4 w-4 mr-2" />
-                {formData.published ? 'Update & Keep Published' : 'Publish'}
-              </Button>
-            </div>
+            <Button 
+              size="sm"
+              onClick={() => handleSubmit(true)}
+              disabled={isSaving || !formData.title || !formData.content}
+              className="h-8 px-3"
+            >
+              <span className="text-xs">{formData.published ? 'Update' : 'Publish'}</span>
+            </Button>
           </div>
         </div>
-      </header>
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -347,7 +357,9 @@ export default function EditPostPage() {
                       className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     >
                       <option value="General">General</option>
-                      <option value="Decoration">Decoration</option>
+                      <option value="Pratik Bilgiler">Pratik Bilgiler</option>
+                      <option value="Dekorasyon">Dekorasyon</option>
+                      <option value="Hediyelik Eşyalar">Hediyelik Eşyalar</option>
                       <option value="Kitchen">Kitchen</option>
                       <option value="Bathroom">Bathroom</option>
                       <option value="Living Room">Living Room</option>
@@ -366,6 +378,30 @@ export default function EditPostPage() {
                       placeholder="https://example.com/image.jpg"
                       className="mt-1"
                     />
+                    <p className="text-xs text-gray-500 mt-1">
+                      Görsel URL'sini buraya yapıştırın. 
+                      <br />
+                      💡 <strong>Önerilen kaynaklar:</strong> Cloudinary, Imgur, Google Drive, GitHub
+                    </p>
+                    {formData.image && (
+                      <div className="mt-3 p-3 bg-gray-50 rounded-lg">
+                        <p className="text-xs text-gray-600 mb-2">Önizleme:</p>
+                        <div className="relative w-full h-32 bg-gray-100 rounded overflow-hidden">
+                          <img 
+                            src={formData.image} 
+                            alt="Preview" 
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).style.display = 'none';
+                              const parent = (e.target as HTMLElement).parentElement;
+                              if (parent) {
+                                parent.innerHTML = '<div class="flex items-center justify-center h-full text-xs text-gray-400">Görsel yüklenemedi</div>';
+                              }
+                            }}
+                          />
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 

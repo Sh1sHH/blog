@@ -27,6 +27,7 @@ export interface BlogPostMeta {
   category: string;
   tags: string[];
   featured: boolean;
+  published: boolean;
   image: string;
   readTime: number;
   views: number;
@@ -51,6 +52,7 @@ function convertFirestorePost(firestorePost: FirestoreBlogPost): BlogPostMeta {
     category: firestorePost.category,
     tags: firestorePost.tags,
     featured: firestorePost.featured,
+    published: firestorePost.published,
     image: firestorePost.image || '/images/default-post.jpg',
     readTime: calculateReadTime(firestorePost.content),
     views: firestorePost.views,

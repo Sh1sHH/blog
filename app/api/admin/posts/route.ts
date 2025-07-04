@@ -15,11 +15,13 @@ function createSlug(title: string): string {
     .replace(/^-+|-+$/g, ''); // Başındaki ve sonundaki tireleri temizle
 }
 
-// GET - Tüm blog yazılarını listele
+// GET - Tüm blog yazılarını listele (admin için hem yayınlanmış hem taslak)
 export async function GET() {
   try {
     const posts = await firestoreDB.getAllPosts();
-    return NextResponse.json({ posts });
+    console.log('API - Fetched posts count:', posts.length); // Debug log
+    console.log('API - Posts categories:', posts.map(p => ({ title: p.title, category: p.category, published: p.published }))); // Debug log
+    return NextResponse.json({ success: true, posts });
   } catch (error) {
     console.error('Error fetching posts:', error);
     return NextResponse.json({ error: 'Failed to fetch posts' }, { status: 500 });
