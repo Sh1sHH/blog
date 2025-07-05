@@ -53,15 +53,7 @@ const convertFirestoreDoc = (doc: any): BlogPost => {
 };
 
 // Slug oluşturma fonksiyonu
-const createSlug = (title: string): string => {
-  return title
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .trim()
-    .replace(/^-+|-+$/g, '');
-};
+import { createSlug } from './helpers';
 
 // Posts Collection Reference
 const postsCollection = collection(db, 'posts');
