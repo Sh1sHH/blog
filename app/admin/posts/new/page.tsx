@@ -326,7 +326,7 @@ export default function NewPostPage() {
                       <option value="Living Room">Living Room</option>
                       <option value="Bedroom">Bedroom</option>
                       <option value="Office">Office</option>
-                      <option value="Hallway">Hallway</option>
+                      <option value="Balcony">Balcony</option>
                     </select>
                   </div>
 
