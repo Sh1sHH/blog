@@ -8,6 +8,7 @@ import { Toaster } from 'sonner';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://cleverspacesolutions.com'),
   title: 'CleverSpaceSolutions - Reclaim Your Space!',
   description: 'Tired of clutter? Discover clever storage solutions & organization ideas for small spaces. Turn your tiny home into a tidy, organized oasis. Reclaim your space!',
   keywords: ['storage solutions', 'small spaces', 'organization', 'home organization', 'space saving', 'declutter', 'tiny home', 'clever storage'],

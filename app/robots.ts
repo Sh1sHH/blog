@@ -25,6 +25,5 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: 'https://cleverspacesolutions.com/sitemap.xml',
-    host: 'https://cleverspacesolutions.com',
   };
 } 
