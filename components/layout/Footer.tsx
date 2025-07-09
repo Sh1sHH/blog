@@ -12,19 +12,35 @@ export default function Footer() {
           </div>
 
           {/* Linkler */}
-          <nav className="flex items-center gap-6 text-sm">
-            <Link href="/" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
-              Home
-            </Link>
-            <Link href="/blog" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
-              Blog
-            </Link>
-            <Link href="/about" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
-              About Us
-            </Link>
-            <Link href="/contact" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
-              Contact
-            </Link>
+          <nav className="flex flex-col md:flex-row items-center gap-4 md:gap-6 text-sm">
+            {/* Ana Linkler */}
+            <div className="flex items-center gap-4 md:gap-6">
+              <Link href="/" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
+                Home
+              </Link>
+              <Link href="/blog" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
+                Blog
+              </Link>
+                              <Link href="/about" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
+                  About Us
+                </Link>
+                <Link href="/contact" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
+                  Contact
+                </Link>
+            </div>
+            
+            {/* Yasal Linkler */}
+            <div className="flex items-center gap-4 md:gap-6 text-xs md:text-sm">
+              <Link href="/privacy-policy" className="text-slate-500 hover:text-slate-700 transition-colors no-underline">
+                Privacy Policy
+              </Link>
+              <Link href="/terms-of-service" className="text-slate-500 hover:text-slate-700 transition-colors no-underline">
+                Terms of Service
+              </Link>
+              <Link href="/cookie-policy" className="text-slate-500 hover:text-slate-700 transition-colors no-underline">
+                Cookie Policy
+              </Link>
+            </div>
           </nav>
 
           {/* Sosyal Medya İkonları */}
