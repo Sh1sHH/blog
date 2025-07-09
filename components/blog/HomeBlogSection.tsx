@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { BlogPostMeta } from '@/lib/blog';
 import BlogCard from './BlogCard';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import RotatingText from '@/components/ui/rotating-text';
 
 interface HomeBlogSectionProps {
   posts: BlogPostMeta[];
@@ -62,11 +63,25 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
     
     if (title === "Discover your next smart space idea") {
       return (
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-8">
-          <span className="text-gray-900">Discover your next</span>
-          <br />
-          <span className="text-blue-500">smart space idea</span>
-        </h2>
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 leading-tight">
+            <span className="block mb-2">Discover your next</span>
+            <span className="block text-blue-600">
+              <RotatingText
+                texts={['smart', 'clever', 'modern', 'creative']}
+                mainClassName="px-1 bg-blue-600 text-white overflow-hidden py-0.5 rounded"
+                staggerFrom="last"
+                initial={{ y: "100%" }}
+                animate={{ y: 0 }}
+                exit={{ y: "-120%" }}
+                staggerDuration={0.025}
+                splitLevelClassName="overflow-hidden"
+                transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                rotationInterval={2000}
+              /> space idea
+            </span>
+          </h2>
+        </div>
       );
     }
     
@@ -120,7 +135,7 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
             )}
 
             {/* Posts Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 ">
               {getCurrentPagePosts().map((post) => (
                 <BlogCard key={post.slug} post={post} />
               ))}

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Clock } from 'lucide-react';
 import Link from 'next/link';
 import { BlogPostMeta, getAllPosts } from '@/lib/blog';
+import BlogCardMobile from './ui/blog-card-mobile';
 
 export default function DecorationSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -144,43 +145,52 @@ export default function DecorationSection() {
           {/* Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {getCurrentSlideDecorations().map((decoration) => (
-              <Link key={decoration.slug} href={`/blog/${decoration.slug}`}>
-                <div className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer h-96 flex flex-col">
-                  {/* Image Container */}
-                  <div className="relative h-48 overflow-hidden flex-shrink-0">
-                    <img 
-                      src={decoration.image} 
-                      alt={decoration.title}
-                      className="w-full h-full object-cover object-bottom group-hover:scale-105 transition-transform duration-300"
-                    />
-                    
-                    {/* Reading Time Badge */}
-                    <div className="absolute top-3 left-3">
-                      <div className="bg-white bg-opacity-90 backdrop-blur-sm text-slate-700 text-xs px-2 py-1 rounded-full flex items-center gap-1">
-                        <Clock className="w-3 h-3" />
-                        {decoration.readTime} min read
+              <div key={decoration.slug} className="block md:hidden">
+                <BlogCardMobile post={decoration} categoryLabel="Decoration" />
+              </div>
+            ))}
+            
+            {/* Desktop cards */}
+            {getCurrentSlideDecorations().map((decoration) => (
+              <div key={`desktop-${decoration.slug}`} className="hidden md:block">
+                <Link href={`/blog/${decoration.slug}`}>
+                  <div className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer h-96 flex flex-col">
+                    {/* Image Container */}
+                    <div className="relative h-48 overflow-hidden flex-shrink-0">
+                      <img 
+                        src={decoration.image} 
+                        alt={decoration.title}
+                        className="w-full h-full object-cover object-bottom group-hover:scale-105 transition-transform duration-300"
+                      />
+                      
+                      {/* Reading Time Badge */}
+                      <div className="absolute top-3 left-3">
+                        <div className="bg-white bg-opacity-90 backdrop-blur-sm text-slate-700 text-xs px-2 py-1 rounded-full flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          {decoration.readTime} min read
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-6 flex-1 flex flex-col">
+                      <h3 className="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-2 mb-3">
+                        {decoration.title}
+                      </h3>
+                      
+                      <p className="text-sm text-slate-600 line-clamp-3 flex-1 mb-4">
+                        {decoration.description}
+                      </p>
+                      
+                      <div className="mt-auto">
+                        <span className="inline-block bg-slate-100 text-slate-600 text-sm px-3 py-1 rounded-full">
+                          Decoration
+                        </span>
                       </div>
                     </div>
                   </div>
-
-                  {/* Content */}
-                  <div className="p-6 flex-1 flex flex-col">
-                    <h3 className="text-lg font-semibold text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-2 mb-3">
-                      {decoration.title}
-                    </h3>
-                    
-                    <p className="text-sm text-slate-600 line-clamp-3 flex-1 mb-4">
-                      {decoration.description}
-                    </p>
-                    
-                    <div className="mt-auto">
-                      <span className="inline-block bg-slate-100 text-slate-600 text-sm px-3 py-1 rounded-full">
-                        Decoration
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </Link>
+                </Link>
+              </div>
             ))}
           </div>
         </div>

@@ -44,10 +44,10 @@ export default function Footer() {
           {/* Sosyal Medya İkonları */}
           <div className="flex items-center gap-3">
             <Link 
-              href="https://pinterest.com" 
+              href="https://www.pinterest.com/cleverspacesolutions/" 
               target="_blank"
               className="text-slate-600 hover:text-red-600 transition-colors p-2 rounded-lg hover:bg-slate-100"
-              aria-label="Pinterest"
+              aria-label="Pinterest - CleverSpace Solutions"
             >
               {/* Pinterest Icon */}
               <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 384 512">
@@ -55,10 +55,10 @@ export default function Footer() {
               </svg>
             </Link>
             <Link 
-              href="https://instagram.com" 
+              href="https://www.instagram.com/cleverspacesolutions/" 
               target="_blank"
               className="text-slate-600 hover:text-pink-600 transition-colors p-2 rounded-lg hover:bg-slate-100"
-              aria-label="Instagram"
+              aria-label="Instagram - CleverSpace Solutions"
             >
               <Instagram className="h-5 w-5" />
             </Link>
