@@ -151,7 +151,7 @@ export default function GiftItems() {
                     <img 
                       src={gift.image} 
                       alt={gift.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover object-bottom group-hover:scale-105 transition-transform duration-300"
                     />
                     
                     {/* Reading Time Badge */}

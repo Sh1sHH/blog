@@ -151,7 +151,7 @@ export default function PracticalTips() {
                     <img 
                       src={tip.image} 
                       alt={tip.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover object-bottom group-hover:scale-105 transition-transform duration-300"
                     />
                     
                     {/* Reading Time Badge */}

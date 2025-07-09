@@ -95,7 +95,7 @@ export default function HomeCarousel({
                   <img
                     src={post.image}
                     alt={post.title}
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="absolute inset-0 w-full h-full object-cover object-bottom group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent group-hover:from-black/80 group-hover:via-black/40 transition-all duration-300" />
                   
@@ -148,7 +148,7 @@ export default function HomeCarousel({
                 <img
                   src={item.imageUrl}
                   alt={item.title}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className="absolute inset-0 w-full h-full object-cover object-bottom"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
                 

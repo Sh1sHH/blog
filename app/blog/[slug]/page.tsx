@@ -200,7 +200,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             alt={post.title}
             width={800}
             height={450}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-bottom"
             priority
           />
         </div>
@@ -245,7 +245,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                           alt={latestPost.title}
                           width={600}
                           height={800}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover object-bottom"
                         />
                       </div>
                       
