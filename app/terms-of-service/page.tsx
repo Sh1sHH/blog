@@ -214,8 +214,7 @@ export default function TermsOfService() {
                 If you have any questions about these Terms of Service, please contact us:
               </p>
               <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-gray-700 mb-2"><strong>Email:</strong> legal@cleverspacesolutions.com</p>
-                <p className="text-gray-700 mb-2"><strong>Address:</strong> [Your Business Address]</p>
+                <p className="text-gray-700 mb-2"><strong>Email:</strong> cleverspacesolutions@gmail.com</p>
                 <p className="text-gray-700"><strong>Response Time:</strong> We will respond to your inquiry within 48 hours</p>
               </div>
             </section>

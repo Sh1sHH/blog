@@ -172,9 +172,8 @@ export default function PrivacyPolicy() {
                 If you have any questions about this Privacy Policy or wish to exercise your rights, please contact us:
               </p>
               <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-gray-700 mb-2"><strong>Email:</strong> privacy@cleverspacesolutions.com</p>
-                <p className="text-gray-700 mb-2"><strong>Address:</strong> [Your Business Address]</p>
-                <p className="text-gray-700"><strong>Response Time:</strong> We will respond to your request within 30 days</p>
+                <p className="text-gray-700 mb-2"><strong>Email:</strong> cleverspacesolutions@gmail.com</p>
+                <p className="text-gray-700"><strong>Response Time:</strong> We will respond to your request within 7 days</p>
               </div>
             </section>
 

@@ -235,8 +235,7 @@ export default function CookiePolicy() {
                 If you have any questions about our use of cookies or this Cookie Policy, please contact us:
               </p>
               <div className="bg-gray-50 p-4 rounded-lg">
-                <p className="text-gray-700 mb-2"><strong>Email:</strong> privacy@cleverspacesolutions.com</p>
-                <p className="text-gray-700 mb-2"><strong>Address:</strong> [Your Business Address]</p>
+                <p className="text-gray-700 mb-2"><strong>Email:</strong> cleverspacesolutions@gmail.com</p>
                 <p className="text-gray-700"><strong>Subject Line:</strong> Cookie Policy Inquiry</p>
               </div>
             </section>
