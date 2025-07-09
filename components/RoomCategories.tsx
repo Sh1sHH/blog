@@ -15,7 +15,7 @@ const categories = [
   },
   {
     name: 'Practical Tips',
-    image: '/images/menu/Tips.png', // Bu görseller güncellenebilir
+    image: '/images/menu/tips.png',
     href: '/categories/practical-tips'
   }
 ];
