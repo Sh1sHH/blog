@@ -2,18 +2,19 @@ import { getAllPosts } from '@/lib/blog';
 import BlogList from '@/components/blog/BlogList';
 import { Metadata } from 'next';
 
+interface BlogPageProps {
+  searchParams: {
+    category?: string;
+  };
+}
+
 export const metadata: Metadata = {
-  title: 'Blog - All Articles',
-  description: 'Browse all our articles covering technology, lifestyle, reviews, and guides.',
-  openGraph: {
-    title: 'Blog - All Articles | ContentHub',
-    description: 'Browse all our articles covering technology, lifestyle, reviews, and guides.',
-  },
+  title: 'Blog | CleverSpaceSolutions',
+  description: 'Explore our comprehensive collection of articles, reviews, and guides covering storage solutions, organization tips, and space-saving ideas.',
 };
 
-interface BlogPageProps {
-  searchParams: { [key: string]: string | string[] | undefined }
-}
+// Vercel ISR: Blog sayfasını her 60 saniyede bir yeniden generate et
+export const revalidate = 60;
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
   const allPosts = await getAllPosts();

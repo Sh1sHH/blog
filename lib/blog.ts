@@ -82,8 +82,17 @@ function convertFirestorePost(firestorePost: FirestoreBlogPost): BlogPostMeta {
 // Get all published blog posts metadata
 export async function getAllPosts(): Promise<BlogPostMeta[]> {
   try {
+    // Cache-busting: timestamp parametresi ekle
+    const timestamp = Date.now();
+    console.log(`getAllPosts called at ${new Date().toISOString()}, timestamp: ${timestamp}`);
+    
     const firestorePosts = await firestoreDB.getPublishedPosts();
-    return firestorePosts.map(convertFirestorePost);
+    console.log(`Found ${firestorePosts.length} published posts from Firestore`);
+    
+    const convertedPosts = firestorePosts.map(convertFirestorePost);
+    console.log('Converted posts categories:', convertedPosts.map(p => ({ title: p.title, category: p.category, image: p.image })));
+    
+    return convertedPosts;
   } catch (error) {
     console.error('Error fetching posts:', error);
     return [];
