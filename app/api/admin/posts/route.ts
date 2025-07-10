@@ -21,7 +21,14 @@ export async function GET() {
     const posts = await firestoreDB.getAllPosts();
     console.log('API - Fetched posts count:', posts.length); // Debug log
     console.log('API - Posts categories:', posts.map(p => ({ title: p.title, category: p.category, published: p.published }))); // Debug log
-    return NextResponse.json({ success: true, posts });
+    
+    // Cache-busting headers for Vercel
+    const response = NextResponse.json({ success: true, posts });
+    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    
+    return response;
   } catch (error) {
     console.error('Error fetching posts:', error);
     return NextResponse.json({ error: 'Failed to fetch posts' }, { status: 500 });

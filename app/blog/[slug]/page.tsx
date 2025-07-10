@@ -12,6 +12,9 @@ interface BlogPostPageProps {
   params: { slug: string };
 }
 
+// Vercel ISR: Blog post sayfalarını her 300 saniyede bir yeniden generate et
+export const revalidate = 300;
+
 // Kategori adını URL-friendly format'a çeviren fonksiyon
 function getCategoryUrl(category: string): string {
   const categoryUrlMapping: { [key: string]: string } = {
