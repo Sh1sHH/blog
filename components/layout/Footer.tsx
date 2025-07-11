@@ -44,7 +44,7 @@ export default function Footer() {
           {/* Sosyal Medya İkonları */}
           <div className="flex items-center gap-3">
             <Link 
-              href="https://www.pinterest.com/cleverspacesolutions/" 
+              href="https://pinterest.com/cleverspacesolutionsbusiness/" 
               target="_blank"
               className="text-slate-600 hover:text-red-600 transition-colors p-2 rounded-lg hover:bg-slate-100"
               aria-label="Pinterest - CleverSpace Solutions"
@@ -61,6 +61,17 @@ export default function Footer() {
               aria-label="Instagram - CleverSpace Solutions"
             >
               <Instagram className="h-5 w-5" />
+            </Link>
+            <Link 
+              href="https://www.tiktok.com/@cleverspacesolutions" 
+              target="_blank"
+              className="text-slate-600 hover:text-black transition-colors p-2 rounded-lg hover:bg-slate-100"
+              aria-label="TikTok - CleverSpace Solutions"
+            >
+              {/* TikTok Icon */}
+              <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 448 512">
+                <path d="M448 209.9a210.1 210.1 0 0 1-122.8-39.3V349c0 95.2-77.2 172.5-172.4 172.5-95.2 0-172.4-77.3-172.4-172.5 0-95.2 77.2-172.5 172.4-172.5 17.4 0 34.3 2.7 50.2 7.6v85.3c-15.8-7.3-33.2-11.4-51.7-11.4-61.3 0-111 49.8-111 111.1 0 61.3 49.8 111.1 111.1 111.1 61.3 0 111-49.8 111-111.1V0h61.3c4.8 33.3 21.9 63.9 48.3 82.1 26.4 18.2 58.2 27.9 91.2 27.9v99.9z"/>
+              </svg>
             </Link>
           </div>
         </div>
