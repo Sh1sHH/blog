@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   }
 
   return {
-    title: post.title,
+    title: `${post.title} | CleverSpaceSolutions`,
     description: post.description,
     keywords: post.tags,
     authors: [{ name: post.author }],

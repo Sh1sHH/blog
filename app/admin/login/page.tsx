@@ -66,7 +66,7 @@ export default function AdminLoginPage() {
             Admin Girişi
           </h1>
           <p style={{ color: '#6b7280', fontSize: '0.875rem', margin: '0' }}>
-            NishHome admin paneline erişim için giriş yapın
+            CleverSpaceSolutions admin paneline erişim için giriş yapın
           </p>
         </div>
         

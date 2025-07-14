@@ -1,6 +1,6 @@
-# NishHome Admin Authentication Kurulumu
+# CleverSpaceSolutions Admin Authentication Kurulumu
 
-Bu dosya NishHome admin paneli için Firebase Authentication kurulum talimatlarını içerir.
+Bu dosya CleverSpaceSolutions admin paneli için Firebase Authentication kurulum talimatlarını içerir.
 
 ## Firebase Console Ayarları
 

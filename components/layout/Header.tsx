@@ -36,7 +36,7 @@ export default function Header() {
           <Link href="/" className="flex items-center hover:opacity-80 transition-opacity no-underline">
             <Image 
               src="/images/navbar/logo2.webp" 
-              alt="NishHome Logo" 
+              alt="CleverSpaceSolutions Logo" 
               width={120} 
               height={40}
               className="h-40 w-auto"

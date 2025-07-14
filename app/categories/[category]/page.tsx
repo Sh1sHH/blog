@@ -38,16 +38,16 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   
   if (!firebaseCategory) {
     return {
-      title: 'Category Not Found - NishHome',
+      title: 'Category Not Found - CleverSpaceSolutions',
       description: 'The requested category was not found.',
     };
   }
   
   return {
-    title: `${firebaseCategory} Articles - NishHome`,
+    title: `${firebaseCategory} Articles - CleverSpaceSolutions`,
     description: `Browse all articles in ${firebaseCategory} category. Discover tips, guides, and insights about ${firebaseCategory.toLowerCase()}.`,
     openGraph: {
-      title: `${firebaseCategory} Articles | NishHome`,
+      title: `${firebaseCategory} Articles | CleverSpaceSolutions`,
       description: `Browse all articles in ${firebaseCategory} category. Discover tips, guides, and insights about ${firebaseCategory.toLowerCase()}.`,
     },
   };
