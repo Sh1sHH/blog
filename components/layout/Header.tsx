@@ -73,7 +73,7 @@ export default function Header() {
             {/* Sosyal Medya İkonları - Desktop */}
             <div className="hidden md:flex items-center gap-1">
               <Link 
-                href="https://pinterest.com/cleverspacesolutionsbusiness/" 
+                href="https://pinterest.com/cleverspacesolutions/" 
                 target="_blank"
                 className="text-slate-600 hover:text-red-600 transition-colors p-2 rounded-lg hover:bg-slate-100"
                 aria-label="Pinterest - CleverSpace Solutions"
@@ -180,7 +180,7 @@ export default function Header() {
           {/* Mobil Sosyal Medya */}
           <div className="flex items-center justify-center gap-4 pt-4 border-t">
             <Link 
-              href="https://pinterest.com/cleverspacesolutionsbusiness/" 
+              href="https://pinterest.com/cleverspacesolutions/" 
               target="_blank"
               className="text-slate-600 hover:text-red-600 transition-colors p-2"
               aria-label="Pinterest - CleverSpace Solutions"
