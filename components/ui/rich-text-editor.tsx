@@ -40,7 +40,7 @@ export function RichTextEditor({
           ],
           toolbar: [
             'undo redo | blocks | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify',
-            'bullist numlist outdent indent | removeformat | link image media table | code fullscreen preview'
+            'bullist numlist outdent indent | removeformat | link affiliate_link image media table | code fullscreen preview'
           ].join(' | '),
           content_style: `
             body { 
@@ -118,6 +118,93 @@ export function RichTextEditor({
           // Diğer ayarlar
           branding: false,
           elementpath: false,
+          
+          // Affiliate link butonu setup
+          setup: (editor: any) => {
+            // Özel ikon ekle
+            editor.ui.registry.addIcon('affiliate_link', '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path><text x="12" y="18" text-anchor="middle" fill="currentColor" font-size="8">₺</text></svg>');
+            
+            // Affiliate link butonu ekle
+            editor.ui.registry.addButton('affiliate_link', {
+              text: 'Affiliate Link',
+              icon: 'affiliate_link', // Özel ikonumuzu kullan
+              tooltip: 'Affiliate Link Ekle (Satış Ortaklığı)',
+              onAction: () => {
+                // Seçili metni al
+                const selectedText = editor.selection.getContent({ format: 'text' });
+                const defaultText = selectedText || 'Link metni';
+                
+                // Diyalog penceresini aç
+                editor.windowManager.open({
+                  title: 'Affiliate Link Ekle',
+                  body: {
+                    type: 'panel',
+                    items: [
+                      {
+                        type: 'input',
+                        name: 'url',
+                        label: 'URL',
+                        placeholder: 'https://amazon.com/product/...'
+                      },
+                      {
+                        type: 'input',
+                        name: 'text',
+                        label: 'Görüntülenecek Metin',
+                        value: defaultText
+                      },
+                      {
+                        type: 'htmlpanel',
+                        html: '<p style="font-size: 12px; color: #666; margin: 8px 0;">Bu link otomatik olarak yeni sekmede açılacak ve "sponsored" olarak işaretlenecektir.</p>'
+                      }
+                    ]
+                  },
+                  buttons: [
+                    {
+                      type: 'cancel',
+                      text: 'İptal'
+                    },
+                    {
+                      type: 'submit',
+                      text: 'Ekle',
+                      primary: true
+                    }
+                  ],
+                  onSubmit: (api: any) => {
+                    const data = api.getData();
+                    const { url, text } = data;
+                    
+                    // Validation
+                    if (!url || !text) {
+                      editor.notificationManager.open({
+                        text: 'URL ve metin alanları doldurulmalıdır.',
+                        type: 'error'
+                      });
+                      return;
+                    }
+                    
+                    // Affiliate link HTML'i oluştur
+                    const affiliateLink = `<a href="${url}" target="_blank" rel="noopener noreferrer sponsored">${text}</a>`;
+                    
+                    // Seçili metin varsa değiştir, yoksa cursor pozisyonuna ekle
+                    if (selectedText) {
+                      editor.selection.setContent(affiliateLink);
+                    } else {
+                      editor.insertContent(affiliateLink);
+                    }
+                    
+                    // Başarı mesajı
+                    editor.notificationManager.open({
+                      text: 'Affiliate link başarıyla eklendi.',
+                      type: 'success',
+                      timeout: 2000
+                    });
+                    
+                    api.close();
+                  }
+                });
+              }
+            });
+          },
           resize: false,
           statusbar: true,
           

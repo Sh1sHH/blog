@@ -8,6 +8,8 @@ import { Calendar, Clock, ArrowLeft, Eye, Edit } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import AffiliateDisclosure from '@/components/ui/affiliate-disclosure';
+import { hasAffiliateLinks } from '@/lib/utils';
 
 interface Post {
   id: string;
@@ -217,9 +219,16 @@ export default function PreviewPostPage() {
             <div dangerouslySetInnerHTML={{ __html: post.content }} />
           </div>
 
+          {/* Affiliate Disclosure - Tags kısmının üstünde */}
+          {hasAffiliateLinks(post.content) && (
+            <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-gray-200">
+              <AffiliateDisclosure />
+            </div>
+          )}
+
           {/* Tags */}
           {post.tags.length > 0 && (
-            <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t border-gray-200">
+            <div className="mt-6 md:mt-8">
               <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4">Tags</h3>
               <div className="flex flex-wrap gap-2">
                 {post.tags.map((tag) => (

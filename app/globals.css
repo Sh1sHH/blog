@@ -236,6 +236,48 @@
   text-decoration: none !important;
 }
 
+/* Affiliate link stilleri */
+.prose a[rel*="sponsored"] {
+  color: #059669;
+  font-weight: 500;
+  position: relative;
+}
+
+.prose a[rel*="sponsored"]:hover {
+  color: #047857;
+}
+
+.prose a[rel*="sponsored"]:after {
+  content: " 🔗";
+  font-size: 0.8em;
+  opacity: 0.7;
+  margin-left: 2px;
+}
+
+/* Affiliate link tooltip */
+.prose a[rel*="sponsored"]:before {
+  content: "Affiliate Link";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #374151;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  z-index: 10;
+  margin-bottom: 4px;
+}
+
+.prose a[rel*="sponsored"]:hover:before {
+  opacity: 1;
+}
+
 .prose ul,
 .prose ol {
   margin: 1rem 0;
