@@ -113,23 +113,23 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
         <div className="space-y-6">
           {/* Carousel Container */}
           <div className="relative">
-            {/* Navigation Arrows */}
+            {/* Navigation Arrows - Mobil responsive */}
             {totalPages > 1 && (
               <>
                 <button
                   onClick={prevPage}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10"
+                  className="absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10"
                   aria-label="Previous posts"
                 >
-                  <ChevronLeft className="w-5 h-5 text-slate-600" />
+                  <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-slate-600" />
                 </button>
                 
                 <button
                   onClick={nextPage}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10"
+                  className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10"
                   aria-label="Next posts"
                 >
-                  <ChevronRight className="w-5 h-5 text-slate-600" />
+                  <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-600" />
                 </button>
               </>
             )}
