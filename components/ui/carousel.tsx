@@ -237,21 +237,50 @@ export default function HomeCarousel({
         @media (max-width: 767px) {
           .carousel-control-prev,
           .carousel-control-next {
-            height: 35px !important;
-            width: 35px !important;
+            height: 32px !important;
+            width: 32px !important;
             margin: 0 0.5rem !important;
           }
           
           .carousel-control-prev-icon,
           .carousel-control-next-icon {
-            width: 14px !important;
-            height: 14px !important;
+            width: 12px !important;
+            height: 12px !important;
+          }
+
+          .carousel-indicators {
+            margin-bottom: 0.75rem !important;
           }
 
           .carousel-indicators [data-bs-target] {
-            width: 6px !important;
-            height: 6px !important;
-            margin: 0 2px !important;
+            width: 5px !important;
+            height: 5px !important;
+            margin: 0 1px !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .carousel-control-prev,
+          .carousel-control-next {
+            height: 28px !important;
+            width: 28px !important;
+            margin: 0 0.25rem !important;
+          }
+          
+          .carousel-control-prev-icon,
+          .carousel-control-next-icon {
+            width: 10px !important;
+            height: 10px !important;
+          }
+
+          .carousel-indicators {
+            margin-bottom: 0.5rem !important;
+          }
+
+          .carousel-indicators [data-bs-target] {
+            width: 4px !important;
+            height: 4px !important;
+            margin: 0 1px !important;
           }
         }
       `}</style>
