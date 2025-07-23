@@ -18,20 +18,27 @@ This post contains affiliate links to demonstrate our affiliate disclosure compo
 ### MacBook Pro M3
 The new MacBook Pro M3 is incredibly powerful for developers and creators. 
 
-[Buy MacBook Pro M3 on Amazon](https://www.amazon.com/dp/B0CM5JV268) - This is an affiliate link that should trigger our disclosure.
+<a href="https://www.amazon.com/dp/B0CM5JV268" target="_blank" rel="noopener noreferrer sponsored">Buy MacBook Pro M3 on Amazon</a>
 
 ### Dell XPS 13
 A great Windows alternative with excellent build quality.
 
-[Check Dell XPS 13 Price](https://www.amazon.com/dp/B08YKDYWK5) - Another affiliate link for testing.
+<a href="https://www.amazon.com/dp/B08YKDYWK5" target="_blank" rel="noopener noreferrer sponsored" class="affiliate-secondary">Check Dell XPS 13 Price</a>
 
 ## Accessories
 
 ### Wireless Mouse
-[Logitech MX Master 3](https://amzn.to/3abc123) - Great for productivity.
+<a href="https://amzn.to/3abc123" target="_blank" rel="noopener noreferrer sponsored" class="affiliate-outline">Logitech MX Master 3</a> - Great for productivity.
 
 ### Keyboard
-[Mechanical Keyboard](https://www.amazon.com/dp/B07ZGDPT4M) - Perfect for coding.
+<a href="https://www.amazon.com/dp/B07ZGDPT4M" target="_blank" rel="noopener noreferrer sponsored">Mechanical Keyboard</a> - Perfect for coding.
+
+## More Product Recommendations
+
+### Gaming Setup
+<a href="https://www.amazon.com/dp/B08XYZ123" target="_blank" rel="noopener noreferrer sponsored">Gaming Chair</a>
+<a href="https://www.amazon.com/dp/B08ABC456" target="_blank" rel="noopener noreferrer sponsored" class="affiliate-secondary">Gaming Monitor</a>
+<a href="https://www.amazon.com/dp/B08DEF789" target="_blank" rel="noopener noreferrer sponsored" class="affiliate-outline">Gaming Headset</a>
 
 ## Regular Links (Non-Affiliate)
 

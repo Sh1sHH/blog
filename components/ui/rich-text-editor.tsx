@@ -153,6 +153,16 @@ export function RichTextEditor({
                         value: defaultText
                       },
                       {
+                        type: 'selectbox',
+                        name: 'style',
+                        label: 'Buton Stili',
+                        items: [
+                          { text: 'Primary (Yeşil)', value: 'primary' },
+                          { text: 'Secondary (Gri)', value: 'secondary' },
+                          { text: 'Outline (Çerçeveli)', value: 'outline' }
+                        ]
+                      },
+                      {
                         type: 'htmlpanel',
                         html: '<p style="font-size: 12px; color: #666; margin: 8px 0;">Bu link otomatik olarak yeni sekmede açılacak ve "sponsored" olarak işaretlenecektir.</p>'
                       }
@@ -171,7 +181,7 @@ export function RichTextEditor({
                   ],
                   onSubmit: (api: any) => {
                     const data = api.getData();
-                    const { url, text } = data;
+                    const { url, text, style } = data;
                     
                     // Validation
                     if (!url || !text) {
@@ -182,8 +192,16 @@ export function RichTextEditor({
                       return;
                     }
                     
-                    // Affiliate link HTML'i oluştur
-                    const affiliateLink = `<a href="${url}" target="_blank" rel="noopener noreferrer sponsored">${text}</a>`;
+                    // Buton stilini belirle
+                    let cssClass = '';
+                    if (style === 'secondary') {
+                      cssClass = ' class="affiliate-secondary"';
+                    } else if (style === 'outline') {
+                      cssClass = ' class="affiliate-outline"';
+                    }
+                    
+                    // Affiliate link HTML'i oluştur (buton olarak)
+                    const affiliateLink = `<a href="${url}" target="_blank" rel="noopener noreferrer sponsored"${cssClass}>${text}</a>`;
                     
                     // Seçili metin varsa değiştir, yoksa cursor pozisyonuna ekle
                     if (selectedText) {
