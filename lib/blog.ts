@@ -3,8 +3,9 @@ import { firestoreDB, BlogPost as FirestoreBlogPost } from './firebase-db';
 
 // Kategori adlarını Türkçe'den İngilizce'ye çeviren mapping
 const categoryDisplayMapping: { [key: string]: string } = {
+  // Türkçe kategoriler
   'Pratik Bilgiler': 'Practical Tips',
-  'Dekorasyon': 'Decoration',
+  'Dekorasyon': 'Decoration', 
   'Hediyelik Eşyalar': 'Gift Items',
   'Kitchen': 'Kitchen',
   'Bathroom': 'Bathroom', 

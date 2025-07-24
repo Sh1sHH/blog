@@ -13,6 +13,10 @@ const categoryMapping: { [key: string]: string } = {
   'decoration': 'Decoration',
   'hediyelik-esyalar': 'Gift Items',
   'gift-items': 'Gift Items',
+  'technology': 'Technology',
+  'teknoloji': 'Technology',
+  'travel': 'Travel',
+  'seyahat': 'Travel',
   'kitchen': 'Kitchen',
   'bathroom': 'Bathroom', 
   'living-room': 'Living Room',
@@ -72,11 +76,15 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const getCategoryDescription = (category: string) => {
     switch (category) {
       case 'Practical Tips':
-        return 'Practical tips, guides, and expert recommendations for home decoration';
+        return 'Practical tips, guides, and expert recommendations for daily life, health, and productivity';
       case 'Decoration':
         return 'Decoration ideas and design inspiration to beautify every corner of your home';
       case 'Gift Items':
         return 'Special gift ideas and home decoration gift recommendations to make your loved ones happy';
+      case 'Technology':
+        return 'Latest technology trends, gadgets, and digital solutions for modern life';
+      case 'Travel':
+        return 'Travel guides, destination recommendations, and travel tips for your adventures';
       case 'Kitchen':
         return 'Kitchen decoration and organization tips and ideas';
       case 'Bathroom':
@@ -180,6 +188,8 @@ export async function generateStaticParams() {
     { category: 'practical-tips' },
     { category: 'decoration' },
     { category: 'gift-items' },
+    { category: 'technology' },
+    { category: 'travel' },
     { category: 'kitchen' },
     { category: 'bathroom' },
     { category: 'living-room' },

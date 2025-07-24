@@ -268,24 +268,6 @@ export default function PracticalTips() {
             </div>
           )}
         </div>
-
-        {/* Dots Indicator */}
-        {totalSlides > 1 && (
-          <div className="flex justify-center space-x-2">
-            {Array.from({ length: totalSlides }, (_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  index === currentSlide 
-                    ? 'bg-slate-600' 
-                    : 'bg-slate-300 hover:bg-slate-400'
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
-          </div>
-        )}
       </div>
     </section>
   );
