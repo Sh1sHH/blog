@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { firestoreDB } from '@/lib/firebase-db';
+import { adminAuth } from '@/lib/firebase-admin';
 
 // Next.js 13 için dynamic konfigürasyonu
 export const dynamic = 'force-dynamic';
@@ -38,6 +39,20 @@ export async function GET() {
 // POST - Yeni blog yazısı oluştur
 export async function POST(request: NextRequest) {
   try {
+    // 1. Gelen isteğin başlığından kimlik token'ını al
+    const idToken = request.headers.get('Authorization')?.split('Bearer ')[1];
+
+    if (!idToken) {
+      return NextResponse.json({ error: 'Yetkisiz işlem: Token bulunamadı' }, { status: 401 });
+    }
+
+    // 2. Token'ı doğrula
+    // Bu satır, token'ın geçerli olup olmadığını kontrol eder.
+    // Firestore kuralları zaten admin olup olmadığını kontrol edeceği için
+    // burada tekrar admin kontrolü yapmaya gerek yok.
+    await adminAuth.verifyIdToken(idToken);
+
+    // 3. Token geçerliyse, post oluşturma işlemine devam et
     const body = await request.json();
     console.log('Received post data:', body); // Debug log
     
