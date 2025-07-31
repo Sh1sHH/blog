@@ -162,23 +162,18 @@ export default function EditPostPage() {
     setIsSaving(true);
 
     try {
-      // 1. Giriş yapmış kullanıcıyı al
       const user = auth.currentUser;
       if (!user) {
-        alert("Bu işlemi yapmak için giriş yapmalısınız.");
-        setIsSaving(false);
-        return;
+        throw new Error('Bu işlemi yapmak için giriş yapmalısınız.');
       }
 
-      // 2. Kullanıcının kimlik token'ını al
       const idToken = await user.getIdToken();
 
-      // 3. API isteğini token ile birlikte gönder
       const response = await fetch(`/api/admin/posts/${slug}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${idToken}`, // EN ÖNEMLİ KISIM BURASI
+          'Authorization': `Bearer ${idToken}`,
         },
         body: JSON.stringify({
           ...formData,
@@ -195,7 +190,6 @@ export default function EditPostPage() {
 
       alert(`Post ${publish ? 'published' : 'updated'} successfully!`);
       
-      // Eğer slug değiştiyse, kullanıcıyı yeni adrese yönlendir
       if (updatedPost.slug && updatedPost.slug !== slug) {
         router.push(`/admin/posts/edit/${updatedPost.slug}`);
       }
