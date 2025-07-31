@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Save, Eye, AlertCircle, CheckCircle, Info } from 'lucide-react';
-import { auth } from '@/lib/firebase';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -146,21 +145,10 @@ export default function NewPostPage() {
     setIsSaving(true);
 
     try {
-      const user = auth.currentUser;
-      if (!user) {
-        alert("Giriş yapmalısınız!");
-        return;
-      }
-
-      // Kullanıcının kimlik token'ını al
-      const idToken = await user.getIdToken();
-
-      // API isteğini token ile birlikte gönder
       const response = await fetch('/api/admin/posts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${idToken}`, // EN ÖNEMLİ KISIM BURASI
         },
         body: JSON.stringify({
           ...formData,
@@ -189,21 +177,10 @@ export default function NewPostPage() {
     setIsSaving(true);
 
     try {
-      const user = auth.currentUser;
-      if (!user) {
-        alert("Giriş yapmalısınız!");
-        return;
-      }
-
-      // Kullanıcının kimlik token'ını al
-      const idToken = await user.getIdToken();
-
-      // API isteğini token ile birlikte gönder
       const response = await fetch('/api/admin/posts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${idToken}`, // EN ÖNEMLİ KISIM BURASI
         },
         body: JSON.stringify({
           ...formData,
