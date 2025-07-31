@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Save, Eye, AlertCircle, CheckCircle, Info, Trash2 } from 'lucide-react';
-import { auth } from '@/lib/firebase';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -162,23 +161,10 @@ export default function EditPostPage() {
     setIsSaving(true);
 
     try {
-      // 1. Giriş yapmış kullanıcıyı al
-      const user = auth.currentUser;
-      if (!user) {
-        alert("Bu işlemi yapmak için giriş yapmalısınız.");
-        setIsSaving(false);
-        return;
-      }
-
-      // 2. Kullanıcının kimlik token'ını al
-      const idToken = await user.getIdToken();
-
-      // 3. API isteğini token ile birlikte gönder
       const response = await fetch(`/api/admin/posts/${slug}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${idToken}`, // EN ÖNEMLİ KISIM BURASI
         },
         body: JSON.stringify({
           ...formData,
@@ -186,23 +172,20 @@ export default function EditPostPage() {
         }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Post güncellenemedi.');
+      const result = await response.json();
+
+      if (response.ok) {
+        alert(`Post ${publish ? 'published' : 'updated'} successfully!`);
+        // Slug değiştiyse yeni URL'e yönlendir
+        if (result.newSlug && result.newSlug !== slug) {
+          router.push(`/admin/posts/edit/${result.newSlug}`);
+        }
+      } else {
+        alert(result.error || 'Failed to update post');
       }
-
-      const updatedPost = await response.json();
-
-      alert(`Post ${publish ? 'published' : 'updated'} successfully!`);
-      
-      // Eğer slug değiştiyse, kullanıcıyı yeni adrese yönlendir
-      if (updatedPost.slug && updatedPost.slug !== slug) {
-        router.push(`/admin/posts/edit/${updatedPost.slug}`);
-      }
-
-    } catch (error: any) {
-      console.error('Post güncelleme hatası:', error);
-      alert(error.message || 'Error updating post');
+    } catch (error) {
+      console.error('Error updating post:', error);
+      alert('Error updating post');
     } finally {
       setIsSaving(false);
     }
@@ -217,23 +200,8 @@ export default function EditPostPage() {
     setIsDeleting(true);
 
     try {
-      // 1. Giriş yapmış kullanıcıyı al
-      const user = auth.currentUser;
-      if (!user) {
-        alert("Bu işlemi yapmak için giriş yapmalısınız.");
-        setIsDeleting(false);
-        return;
-      }
-
-      // 2. Kullanıcının kimlik token'ını al
-      const idToken = await user.getIdToken();
-
-      // 3. API isteğini token ile birlikte gönder
       const response = await fetch(`/api/admin/posts/${slug}`, {
         method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${idToken}`, // EN ÖNEMLİ KISIM BURASI
-        },
       });
 
       if (response.ok) {

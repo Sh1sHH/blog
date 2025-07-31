@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { firestoreDB } from '@/lib/firebase-db';
-import { adminAuth } from '@/lib/firebase-admin';
 
 // Next.js 13 için dynamic konfigürasyonu
 export const dynamic = 'force-dynamic';
@@ -32,20 +31,6 @@ export async function PUT(
 ) {
   try {
     const { slug } = params;
-
-    // 1. Gelen isteğin başlığından kimlik token'ını al
-    const idToken = request.headers.get('Authorization')?.split('Bearer ')[1];
-
-    if (!idToken) {
-      return NextResponse.json({ error: 'Yetkisiz işlem: Token bulunamadı' }, { status: 401 });
-    }
-
-    // 2. Token'ı doğrula. Bu satır, isteği yapanın gerçekten giriş yapmış
-    // bir kullanıcı olduğunu garanti eder. Firestore kuralları ise admin
-    // olup olmadığını ayrıca kontrol edecektir.
-    await adminAuth.verifyIdToken(idToken);
-
-    // 3. Token geçerliyse, güncelleme işlemine devam et
     const body = await request.json();
     const { 
       title, 
@@ -78,15 +63,24 @@ export async function PUT(
       image: image?.trim()
     });
 
-    if (result.success) {
-      return NextResponse.json(result.post);
-    } else {
-      // Slug çakışması gibi hataları doğru döndür
-      return NextResponse.json({ error: result.error }, { status: 409 });
+    if (!result.success) {
+      return NextResponse.json(
+        { error: result.error }, 
+        { status: result.error === 'Post not found' ? 404 : 
+                 result.error === 'A post with this slug already exists' ? 409 : 400 }
+      );
     }
+
+    return NextResponse.json({ 
+      success: true, 
+      post: result.post,
+      newSlug: result.newSlug,
+      message: 'Post updated successfully' 
+    });
+
   } catch (error) {
-    console.error('API Güncelleme Hatası:', error);
-    return NextResponse.json({ error: 'Sunucu hatası oluştu' }, { status: 500 });
+    console.error('Error updating post:', error);
+    return NextResponse.json({ error: 'Failed to update post' }, { status: 500 });
   }
 }
 
@@ -97,18 +91,6 @@ export async function DELETE(
 ) {
   try {
     const { slug } = params;
-
-    // 1. Gelen isteğin başlığından kimlik token'ını al
-    const idToken = request.headers.get('Authorization')?.split('Bearer ')[1];
-
-    if (!idToken) {
-      return NextResponse.json({ error: 'Yetkisiz işlem: Token bulunamadı' }, { status: 401 });
-    }
-
-    // 2. Token'ı doğrula
-    await adminAuth.verifyIdToken(idToken);
-
-    // 3. Token geçerliyse, silme işlemine devam et
     const result = await firestoreDB.deletePost(slug);
 
     if (!result.success) {
