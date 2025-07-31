@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { RichTextEditor } from '@/components/ui/rich-text-editor';
+import { firestoreDB } from '@/lib/firebase-db'; // DEĞİŞİKLİK: Firestore servisini doğrudan import ettik
 
 export default function EditPostPage() {
   const router = useRouter();
@@ -87,29 +88,23 @@ export default function EditPostPage() {
     let score = 0;
     const maxScore = 100;
 
-    // Title kontrolü (25 puan)
     if (formData.title.length >= 30 && formData.title.length <= 60) score += 25;
     else if (formData.title.length > 0) score += 10;
 
-    // SEO Title kontrolü (20 puan)
     const seoTitle = formData.seoTitle || formData.title;
     if (seoTitle.length >= 30 && seoTitle.length <= 60) score += 20;
     else if (seoTitle.length > 0) score += 10;
 
-    // Description kontrolü (20 puan)
     if (formData.description.length >= 120 && formData.description.length <= 160) score += 20;
     else if (formData.description.length > 0) score += 10;
-
-    // SEO Description kontrolü (15 puan)
+    
     const seoDesc = formData.seoDescription || formData.description;
     if (seoDesc.length >= 120 && seoDesc.length <= 160) score += 15;
     else if (seoDesc.length > 0) score += 7;
 
-    // Keywords kontrolü (10 puan)
     if (formData.keywords.length >= 3) score += 10;
     else if (formData.keywords.length > 0) score += 5;
 
-    // Content kontrolü (10 puan)
     if (formData.content.length >= 300) score += 10;
     else if (formData.content.length > 0) score += 5;
 
@@ -118,7 +113,6 @@ export default function EditPostPage() {
 
   const seoScore = calculateSEOScore();
 
-  // Tag ekleme
   const addTag = () => {
     if (tagInput.trim() && !formData.tags.includes(tagInput.trim())) {
       setFormData(prev => ({
@@ -129,7 +123,6 @@ export default function EditPostPage() {
     }
   };
 
-  // Tag silme
   const removeTag = (tagToRemove: string) => {
     setFormData(prev => ({
       ...prev,
@@ -137,7 +130,6 @@ export default function EditPostPage() {
     }));
   };
 
-  // Keyword ekleme
   const addKeyword = () => {
     if (keywordInput.trim() && !formData.keywords.includes(keywordInput.trim())) {
       setFormData(prev => ({
@@ -148,7 +140,6 @@ export default function EditPostPage() {
     }
   };
 
-  // Keyword silme
   const removeKeyword = (keywordToRemove: string) => {
     setFormData(prev => ({
       ...prev,
@@ -156,27 +147,18 @@ export default function EditPostPage() {
     }));
   };
 
-  // Form submit (Update)
+  // DEĞİŞİKLİK: handleSubmit fonksiyonu API yerine doğrudan firestoreDB'yi kullanıyor
   const handleSubmit = async (publish: boolean = false) => {
     setIsSaving(true);
-
     try {
-      const response = await fetch(`/api/admin/posts/${slug}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          published: publish,
-        }),
+      const result = await firestoreDB.updatePost(slug, {
+        ...formData,
+        slug: formData.customSlug, // Ensure the custom slug is used
+        published: publish,
       });
 
-      const result = await response.json();
-
-      if (response.ok) {
+      if (result.success) {
         alert(`Post ${publish ? 'published' : 'updated'} successfully!`);
-        // Slug değiştiyse yeni URL'e yönlendir
         if (result.newSlug && result.newSlug !== slug) {
           router.push(`/admin/posts/edit/${result.newSlug}`);
         }
@@ -185,30 +167,24 @@ export default function EditPostPage() {
       }
     } catch (error) {
       console.error('Error updating post:', error);
-      alert('Error updating post');
+      alert('An unexpected error occurred while updating the post.');
     } finally {
       setIsSaving(false);
     }
   };
-
-  // Post silme
+  
   const handleDelete = async () => {
     if (!confirm('Are you sure you want to delete this post? This action cannot be undone.')) {
       return;
     }
-
     setIsDeleting(true);
-
     try {
-      const response = await fetch(`/api/admin/posts/${slug}`, {
-        method: 'DELETE',
-      });
-
-      if (response.ok) {
+      // API rotası yerine doğrudan firestoreDB servisini kullanıyoruz
+      const result = await firestoreDB.deletePost(slug);
+      if (result.success) {
         alert('Post deleted successfully!');
         router.push('/admin');
       } else {
-        const result = await response.json();
         alert(result.error || 'Failed to delete post');
       }
     } catch (error) {
@@ -219,7 +195,6 @@ export default function EditPostPage() {
     }
   };
 
-  // Preview URL
   const previewUrl = formData.customSlug ? `/blog/${formData.customSlug}` : '#';
 
   if (isLoading) {
@@ -235,8 +210,8 @@ export default function EditPostPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Ultra Kompakt Header */}
-      <div className="flex justify-center py-3 bg-gray-50">
+      {/* ... (sayfanın geri kalanı aynı, burada kesiyorum) ... */}
+       <div className="flex justify-center py-3 bg-gray-50">
         <div className="bg-white border rounded-lg px-4 py-3 shadow-sm inline-flex items-center gap-4">
           <div className="flex items-center gap-3">
             <Link href="/admin" className="text-blue-600 hover:text-blue-800 flex items-center gap-1 text-sm">
@@ -306,7 +281,6 @@ export default function EditPostPage() {
           </div>
         </div>
       </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
@@ -677,4 +651,4 @@ export default function EditPostPage() {
       </div>
     </div>
   );
-} 
+}

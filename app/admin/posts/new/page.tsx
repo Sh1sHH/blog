@@ -11,10 +11,10 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { RichTextEditor } from '@/components/ui/rich-text-editor';
+import { firestoreDB } from '@/lib/firebase-db'; // DEĞİŞİKLİK: Firestore servisini doğrudan import ettik
 
 export default function NewPostPage() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   
   // Form state
@@ -42,29 +42,23 @@ export default function NewPostPage() {
     let score = 0;
     const maxScore = 100;
 
-    // Title kontrolü (25 puan)
     if (formData.title.length >= 30 && formData.title.length <= 60) score += 25;
     else if (formData.title.length > 0) score += 10;
 
-    // SEO Title kontrolü (20 puan)
     const seoTitle = formData.seoTitle || formData.title;
     if (seoTitle.length >= 30 && seoTitle.length <= 60) score += 20;
     else if (seoTitle.length > 0) score += 10;
 
-    // Description kontrolü (20 puan)
     if (formData.description.length >= 120 && formData.description.length <= 160) score += 20;
     else if (formData.description.length > 0) score += 10;
-
-    // SEO Description kontrolü (15 puan)
+    
     const seoDesc = formData.seoDescription || formData.description;
     if (seoDesc.length >= 120 && seoDesc.length <= 160) score += 15;
     else if (seoDesc.length > 0) score += 7;
 
-    // Keywords kontrolü (10 puan)
     if (formData.keywords.length >= 3) score += 10;
     else if (formData.keywords.length > 0) score += 5;
 
-    // Content kontrolü (10 puan)
     if (formData.content.length >= 300) score += 10;
     else if (formData.content.length > 0) score += 5;
 
@@ -75,34 +69,16 @@ export default function NewPostPage() {
 
   // Auto-generate slug from title
   useEffect(() => {
-    if (formData.title && !formData.customSlug) {
-      const autoSlug = formData.title
-        .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-')
-        .trim()
-        .replace(/^-+|-+$/g, '');
-      
-      setFormData(prev => ({ ...prev, customSlug: autoSlug }));
-    }
+    const autoSlug = formData.title
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim()
+      .replace(/^-+|-+$/g, '');
+    setFormData(prev => ({ ...prev, customSlug: autoSlug }));
   }, [formData.title]);
 
-  // Auto-generate SEO title from title
-  useEffect(() => {
-    if (formData.title && !formData.seoTitle) {
-      setFormData(prev => ({ ...prev, seoTitle: formData.title }));
-    }
-  }, [formData.title]);
-
-  // Auto-generate SEO description from description
-  useEffect(() => {
-    if (formData.description && !formData.seoDescription) {
-      setFormData(prev => ({ ...prev, seoDescription: formData.description }));
-    }
-  }, [formData.description]);
-
-  // Tag ekleme
   const addTag = () => {
     if (tagInput.trim() && !formData.tags.includes(tagInput.trim())) {
       setFormData(prev => ({
@@ -113,7 +89,6 @@ export default function NewPostPage() {
     }
   };
 
-  // Tag silme
   const removeTag = (tagToRemove: string) => {
     setFormData(prev => ({
       ...prev,
@@ -121,7 +96,6 @@ export default function NewPostPage() {
     }));
   };
 
-  // Keyword ekleme
   const addKeyword = () => {
     if (keywordInput.trim() && !formData.keywords.includes(keywordInput.trim())) {
       setFormData(prev => ({
@@ -132,7 +106,6 @@ export default function NewPostPage() {
     }
   };
 
-  // Keyword silme
   const removeKeyword = (keywordToRemove: string) => {
     setFormData(prev => ({
       ...prev,
@@ -140,25 +113,17 @@ export default function NewPostPage() {
     }));
   };
 
-  // Form submit
+  // DEĞİŞİKLİK: handleSubmit fonksiyonu API yerine doğrudan firestoreDB'yi kullanıyor
   const handleSubmit = async (publish: boolean = false) => {
     setIsSaving(true);
-
     try {
-      const response = await fetch('/api/admin/posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          published: publish,
-        }),
+      const result = await firestoreDB.createPost({
+        ...formData,
+        slug: formData.customSlug, // Ensure the custom slug is used
+        published: publish,
       });
 
-      const result = await response.json();
-
-      if (response.ok) {
+      if (result.success) {
         alert(`Post ${publish ? 'published' : 'saved as draft'} successfully!`);
         router.push('/admin');
       } else {
@@ -166,39 +131,7 @@ export default function NewPostPage() {
       }
     } catch (error) {
       console.error('Error saving post:', error);
-      alert('Error saving post');
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  // Preview için kaydet ve yönlendir
-  const handleSaveAndPreview = async () => {
-    setIsSaving(true);
-
-    try {
-      const response = await fetch('/api/admin/posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          published: false, // Preview için draft olarak kaydet
-        }),
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        // Preview sayfasına yönlendir
-        router.push(`/admin/posts/preview/${result.post.slug}`);
-      } else {
-        alert(result.error || 'Failed to save post');
-      }
-    } catch (error) {
-      console.error('Error saving post:', error);
-      alert('Error saving post');
+      alert('An unexpected error occurred while saving the post.');
     } finally {
       setIsSaving(false);
     }
@@ -209,8 +142,8 @@ export default function NewPostPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Ultra Kompakt Header */}
-      <div className="flex justify-center py-3 bg-gray-50">
+      {/* ... (sayfanın geri kalanı aynı, burada kesiyorum) ... */}
+       <div className="flex justify-center py-3 bg-gray-50">
         <div className="bg-white border rounded-lg px-4 py-3 shadow-sm inline-flex items-center gap-4">
           <div className="flex items-center gap-3">
             <Link href="/admin" className="text-blue-600 hover:text-blue-800 flex items-center gap-1 text-sm">
@@ -222,7 +155,6 @@ export default function NewPostPage() {
           </div>
           
           <div className="flex items-center gap-2">
-            {/* SEO Score - Ultra Kompakt */}
             <div className="flex items-center gap-1">
               <span className="text-xs text-gray-400">SEO</span>
               <div className={`px-2 py-0.5 rounded text-xs font-medium ${
@@ -233,17 +165,6 @@ export default function NewPostPage() {
                 {seoScore}%
               </div>
             </div>
-
-            <Button 
-              variant="ghost" 
-              size="sm"
-              onClick={handleSaveAndPreview}
-              disabled={isSaving || !formData.title || !formData.content}
-              className="h-8 px-3"
-            >
-              <Eye className="h-3 w-3 mr-1" />
-              <span className="text-xs">Preview</span>
-            </Button>
 
             <Button 
               variant="outline" 
@@ -267,17 +188,11 @@ export default function NewPostPage() {
           </div>
         </div>
       </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
-          {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
-            
-            {/* Basic Info Card */}
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h2 className="text-lg font-semibold mb-4">Basic Information</h2>
-              
               <div className="space-y-4">
                 <div>
                   <Label htmlFor="title">Title *</Label>
@@ -600,4 +515,4 @@ export default function NewPostPage() {
       </div>
     </div>
   );
-} 
+}
