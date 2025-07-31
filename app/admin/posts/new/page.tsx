@@ -148,16 +148,19 @@ export default function NewPostPage() {
     try {
       const user = auth.currentUser;
       if (!user) {
-        throw new Error('Bu işlemi yapmak için giriş yapmalısınız.');
+        alert("Giriş yapmalısınız!");
+        return;
       }
 
+      // Kullanıcının kimlik token'ını al
       const idToken = await user.getIdToken();
 
+      // API isteğini token ile birlikte gönder
       const response = await fetch('/api/admin/posts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${idToken}`,
+          'Authorization': `Bearer ${idToken}`, // EN ÖNEMLİ KISIM BURASI
         },
         body: JSON.stringify({
           ...formData,
@@ -165,19 +168,17 @@ export default function NewPostPage() {
         }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Post oluşturulamadı.');
+      const result = await response.json();
+
+      if (response.ok) {
+        alert(`Post ${publish ? 'published' : 'saved as draft'} successfully!`);
+        router.push('/admin');
+      } else {
+        alert(result.error || 'Failed to save post');
       }
-
-      const newPost = await response.json();
-
-      alert(`Post ${publish ? 'published' : 'saved as draft'} successfully!`);
-      router.push(`/admin/posts/edit/${newPost.slug}`);
-
-    } catch (error: any) {
-      console.error('Post oluşturma hatası:', error);
-      alert(error.message || 'Error saving post');
+    } catch (error) {
+      console.error('Error saving post:', error);
+      alert('Error saving post');
     } finally {
       setIsSaving(false);
     }
@@ -190,16 +191,19 @@ export default function NewPostPage() {
     try {
       const user = auth.currentUser;
       if (!user) {
-        throw new Error('Bu işlemi yapmak için giriş yapmalısınız.');
+        alert("Giriş yapmalısınız!");
+        return;
       }
 
+      // Kullanıcının kimlik token'ını al
       const idToken = await user.getIdToken();
 
+      // API isteğini token ile birlikte gönder
       const response = await fetch('/api/admin/posts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${idToken}`,
+          'Authorization': `Bearer ${idToken}`, // EN ÖNEMLİ KISIM BURASI
         },
         body: JSON.stringify({
           ...formData,
@@ -207,19 +211,17 @@ export default function NewPostPage() {
         }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Post oluşturulamadı.');
+      const result = await response.json();
+
+      if (response.ok) {
+        // Preview sayfasına yönlendir
+        router.push(`/admin/posts/preview/${result.post.slug}`);
+      } else {
+        alert(result.error || 'Failed to save post');
       }
-
-      const newPost = await response.json();
-
-      // Preview sayfasına yönlendir
-      router.push(`/admin/posts/preview/${newPost.slug}`);
-
-    } catch (error: any) {
-      console.error('Post oluşturma hatası:', error);
-      alert(error.message || 'Error saving post');
+    } catch (error) {
+      console.error('Error saving post:', error);
+      alert('Error saving post');
     } finally {
       setIsSaving(false);
     }
