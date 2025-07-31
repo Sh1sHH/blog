@@ -27,4 +27,4 @@ export async function POST(request: Request) {
     console.error('API Hatası (POST):', error);
     return NextResponse.json({ error: 'Sunucu hatası oluştu' }, { status: 500 });
   }
-} 
+}
