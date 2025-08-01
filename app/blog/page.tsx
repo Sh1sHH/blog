@@ -13,8 +13,8 @@ export const metadata: Metadata = {
   description: 'Explore our comprehensive collection of articles, reviews, and guides covering storage solutions, organization tips, and space-saving ideas.',
 };
 
-// Vercel ISR: Blog sayfasını her 60 saniyede bir yeniden generate et
-export const revalidate = 60;
+// Vercel ISR: Blog sayfasını her 15 dakikada bir yeniden generate et (günde 1 yazı için optimize)
+export const revalidate = 900;
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
   const allPosts = await getAllPosts();

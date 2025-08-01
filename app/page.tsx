@@ -11,8 +11,8 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import ScrollArrow from '@/components/ui/scroll-arrow';
 
-// Vercel ISR: Sayfayı her 60 saniyede bir yeniden generate et
-export const revalidate = 60;
+// Vercel ISR: Sayfayı her 30 dakikada bir yeniden generate et (günde 1 yazı için optimize)
+export const revalidate = 1800;
 
 export default async function Home() {
   const allPosts = await getAllPosts();

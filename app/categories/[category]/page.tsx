@@ -5,6 +5,9 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
+// Vercel ISR: Kategori sayfalarını her 10 dakikada bir yeniden generate et (günde 1 yazı için optimize)
+export const revalidate = 600;
+
 // Valid categories mapping Turkish to English
 const categoryMapping: { [key: string]: string } = {
   'pratik-bilgiler': 'Practical Tips',
