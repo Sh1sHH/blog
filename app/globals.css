@@ -236,46 +236,133 @@
   text-decoration: none !important;
 }
 
-/* Affiliate link stilleri */
+/* Affiliate link buton stilleri */
 .prose a[rel*="sponsored"] {
-  color: #059669;
-  font-weight: 500;
+  /* Buton temel stilleri */
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  margin: 4px 8px 4px 0;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none !important;
+  transition: all 0.3s ease;
   position: relative;
+  overflow: hidden;
+  
+  /* Primary buton (varsayılan) */
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  color: white;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.2);
 }
 
 .prose a[rel*="sponsored"]:hover {
-  color: #047857;
+  background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(5, 150, 105, 0.3);
+  color: white;
 }
 
+/* Affiliate link ikonu */
 .prose a[rel*="sponsored"]:after {
-  content: " 🔗";
-  font-size: 0.8em;
-  opacity: 0.7;
-  margin-left: 2px;
+  content: "🛒";
+  font-size: 1em;
+  opacity: 0.9;
+  margin-left: 0;
 }
 
-/* Affiliate link tooltip */
+/* Affiliate link tooltip - buton üstünde */
 .prose a[rel*="sponsored"]:before {
-  content: "Affiliate Link";
+  content: "Affiliate Link - Satın Alma Linki";
   position: absolute;
-  bottom: 100%;
+  bottom: 115%;
   left: 50%;
   transform: translateX(-50%);
-  background: #374151;
+  background: #1f2937;
   color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 6px 12px;
+  border-radius: 6px;
   font-size: 0.75rem;
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s ease;
   z-index: 10;
-  margin-bottom: 4px;
 }
 
 .prose a[rel*="sponsored"]:hover:before {
   opacity: 1;
+}
+
+/* Secondary affiliate buton varyantı */
+.prose a[rel*="sponsored"].affiliate-secondary {
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  color: #374151;
+  border: 2px solid #d1d5db;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.prose a[rel*="sponsored"].affiliate-secondary:hover {
+  background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+  color: #1f2937;
+  border-color: #9ca3af;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Outline affiliate buton varyantı */
+.prose a[rel*="sponsored"].affiliate-outline {
+  background: transparent;
+  color: #059669;
+  border: 2px solid #059669;
+  box-shadow: none;
+}
+
+.prose a[rel*="sponsored"].affiliate-outline:hover {
+  background: #059669;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(5, 150, 105, 0.3);
+}
+
+/* Affiliate buton animasyon efekti */
+.prose a[rel*="sponsored"]:active {
+  transform: translateY(0px);
+  transition: transform 0.1s ease;
+}
+
+/* Responsive tasarım - mobil */
+@media (max-width: 640px) {
+  .prose a[rel*="sponsored"] {
+    display: inline-flex;
+    width: auto;
+    max-width: 280px;
+    justify-content: center;
+    margin: 6px 4px;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+  }
+  
+  .prose a[rel*="sponsored"]:before {
+    bottom: 120%;
+    font-size: 0.7rem;
+  }
+}
+
+/* Çok küçük ekranlar için */
+@media (max-width: 480px) {
+  .prose a[rel*="sponsored"] {
+    max-width: 240px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    gap: 6px;
+  }
+  
+  .prose a[rel*="sponsored"]:after {
+    font-size: 0.9em;
+  }
 }
 
 .prose ul,

@@ -96,6 +96,13 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
+        
+        {/* Google AdSense Verification Script */}
+        <script 
+          async 
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6430440480434971"
+          crossOrigin="anonymous"
+        />
       </head>
       <body className={inter.className}>
         <Header />
