@@ -12,7 +12,6 @@ const categoryDisplayMapping: { [key: string]: string } = {
   'Living Room': 'Living Room',
   'Office': 'Office',
   'Bedroom': 'Bedroom',
-  'Hallway': 'Hallway',
   'General': 'General'
 };
 

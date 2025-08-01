@@ -13,17 +13,12 @@ const categoryMapping: { [key: string]: string } = {
   'decoration': 'Decoration',
   'hediyelik-esyalar': 'Gift Items',
   'gift-items': 'Gift Items',
-  'technology': 'Technology',
-  'teknoloji': 'Technology',
-  'travel': 'Travel',
-  'seyahat': 'Travel',
   'kitchen': 'Kitchen',
   'bathroom': 'Bathroom', 
   'living-room': 'Living Room',
   'office': 'Office',
   'bedroom': 'Bedroom',
   'balcony': 'Balcony',
-  'hallway': 'Hallway',
   'general': 'General'
 };
 
@@ -81,10 +76,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         return 'Decoration ideas and design inspiration to beautify every corner of your home';
       case 'Gift Items':
         return 'Special gift ideas and home decoration gift recommendations to make your loved ones happy';
-      case 'Technology':
-        return 'Latest technology trends, gadgets, and digital solutions for modern life';
-      case 'Travel':
-        return 'Travel guides, destination recommendations, and travel tips for your adventures';
       case 'Kitchen':
         return 'Kitchen decoration and organization tips and ideas';
       case 'Bathroom':
@@ -97,8 +88,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         return 'Bedroom decoration and design ideas';
       case 'Balcony':
         return 'Balcony decoration and outdoor space ideas';
-      case 'Hallway':
-        return 'Hallway and entrance area decoration recommendations';
       default:
         return `Discover all articles in ${category} category`;
     }
@@ -188,15 +177,12 @@ export async function generateStaticParams() {
     { category: 'practical-tips' },
     { category: 'decoration' },
     { category: 'gift-items' },
-    { category: 'technology' },
-    { category: 'travel' },
     { category: 'kitchen' },
     { category: 'bathroom' },
     { category: 'living-room' },
     { category: 'office' },
     { category: 'bedroom' },
     { category: 'balcony' },
-    { category: 'hallway' },
     { category: 'general' }
   ];
 } 

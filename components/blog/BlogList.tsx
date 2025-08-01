@@ -13,7 +13,7 @@ interface BlogListProps {
 
 // İngilizce kategori listesi (SEO için)
 const categories = [
-  "All", "Practical Tips", "Decoration", "Gift Items", "Technology", "Travel", "Kitchen", "Bathroom", "Living Room", "Office", "Bedroom", "Hallway", "General"
+  "All", "Practical Tips", "Decoration", "Gift Items", "Kitchen", "Bathroom", "Living Room", "Office", "Bedroom", "General"
 ];
 
 export default function BlogList({ posts, title = "For You", showFeatured = false, initialCategory = "All" }: BlogListProps) {
