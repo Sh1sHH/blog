@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Clock } from 'lucide-react';
 import Link from 'next/link';
 import { BlogPostMeta, getAllPosts } from '@/lib/blog';
@@ -10,24 +10,27 @@ export default function PracticalTips() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [posts, setPosts] = useState<BlogPostMeta[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
   
-  // Fetch posts from "Practical Tips" category (kategori çevirisi ile)
+  // Fetch posts from "Practical Tips" category
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        // getAllPosts kullanarak kategori çevirisini otomatik al
         const allPosts = await getAllPosts();
         
         console.log('PracticalTips - All posts with categories:', allPosts.map(p => ({ title: p.title, category: p.category, published: p.published })));
         
-        // Filter published posts from "Practical Tips" category (artık İngilizce olarak çevrilmiş)
-        const practicalPosts = allPosts.filter((post: BlogPostMeta) => {
+        // Filter published posts from "Practical Tips" category
+        const tipPosts = allPosts.filter((post: BlogPostMeta) => {
           console.log('PracticalTips - Checking post:', post.category, post.published);
           return post.category === 'Practical Tips' && post.published;
         }).slice(0, 6); // First 6 posts
         
-        console.log('PracticalTips - Filtered posts:', practicalPosts);
-        setPosts(practicalPosts);
+        console.log('PracticalTips - Filtered posts:', tipPosts);
+        setPosts(tipPosts);
       } catch (error) {
         console.error('Error fetching practical tips:', error);
       } finally {
@@ -84,6 +87,76 @@ export default function PracticalTips() {
     setCurrentSlide(slideIndex);
   };
 
+  // Touch/Swipe handlers for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsDragging(true);
+    setStartX(e.touches[0].pageX - (carouselRef.current?.offsetLeft || 0));
+    setScrollLeft(carouselRef.current?.scrollLeft || 0);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.touches[0].pageX - (carouselRef.current?.offsetLeft || 0);
+    const walk = (x - startX) * 2;
+    if (carouselRef.current) {
+      carouselRef.current.scrollLeft = scrollLeft - walk;
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    
+    if (carouselRef.current) {
+      const currentScrollLeft = carouselRef.current.scrollLeft;
+      const threshold = 50;
+      
+      if (Math.abs(currentScrollLeft - scrollLeft) > threshold) {
+        if (currentScrollLeft > scrollLeft) {
+          prevMobileSlide();
+        } else {
+          nextMobileSlide();
+        }
+      }
+    }
+  };
+
+  // Mouse drag handlers for desktop
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setStartX(e.pageX - (carouselRef.current?.offsetLeft || 0));
+    setScrollLeft(carouselRef.current?.scrollLeft || 0);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - (carouselRef.current?.offsetLeft || 0);
+    const walk = (x - startX) * 2;
+    if (carouselRef.current) {
+      carouselRef.current.scrollLeft = scrollLeft - walk;
+    }
+  };
+
+  const handleMouseUp = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    
+    if (carouselRef.current) {
+      const currentScrollLeft = carouselRef.current.scrollLeft;
+      const threshold = 50;
+      
+      if (Math.abs(currentScrollLeft - scrollLeft) > threshold) {
+        if (currentScrollLeft > scrollLeft) {
+          prevMobileSlide();
+        } else {
+          nextMobileSlide();
+        }
+      }
+    }
+  };
+
   if (loading) {
     return (
       <section className="container mx-auto px-4 py-12">
@@ -96,7 +169,7 @@ export default function PracticalTips() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[1, 2].map((i) => (
-              <div key={i} className="bg-white rounded-xl overflow-hidden shadow-sm h-96 animate-pulse">
+              <div key={i} className="bg-white rounded-xl shadow-sm animate-pulse">
                 <div className="h-48 bg-gray-200"></div>
                 <div className="p-6 space-y-3">
                   <div className="h-4 bg-gray-200 rounded w-3/4"></div>
@@ -146,7 +219,18 @@ export default function PracticalTips() {
 
         {/* Mobile Layout */}
         <div className="md:hidden">
-          <div className="grid grid-cols-1 gap-4">
+          <div 
+            ref={carouselRef}
+            className="grid grid-cols-1 gap-4 overflow-hidden"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+          >
             {/* İlk kart - Sabit (en güncel post) */}
             {getFirstCardPost() && (
               <BlogCardMobile post={getFirstCardPost()!} categoryLabel="Practical Tips" />
@@ -160,18 +244,18 @@ export default function PracticalTips() {
                   <>
                     <button
                       onClick={prevMobileSlide}
-                      className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10"
+                      className="absolute left-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10 border border-slate-200"
                       aria-label="Previous tip"
                     >
-                      <ChevronLeft className="w-4 h-4 text-slate-600" />
+                      <ChevronLeft className="w-5 h-5 text-slate-600" />
                     </button>
                     
                     <button
                       onClick={nextMobileSlide}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10 border border-slate-200"
                       aria-label="Next tip"
                     >
-                      <ChevronRight className="w-4 h-4 text-slate-600" />
+                      <ChevronRight className="w-5 h-5 text-slate-600" />
                     </button>
                   </>
                 )}
@@ -180,6 +264,24 @@ export default function PracticalTips() {
               </div>
             )}
           </div>
+
+          {/* Dots Indicator - Mobil için */}
+          {posts.length > 1 && (
+            <div className="flex justify-center space-x-3 mt-6">
+              {Array.from({ length: posts.length - 1 }, (_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-colors ${
+                    index === currentSlide 
+                      ? 'bg-slate-600' 
+                      : 'bg-slate-300 hover:bg-slate-400'
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Desktop Layout */}
@@ -190,18 +292,18 @@ export default function PracticalTips() {
               <>
                 <button
                   onClick={prevSlide}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10 border border-slate-200"
                   aria-label="Previous tips"
                 >
-                  <ChevronLeft className="w-5 h-5 text-slate-600" />
+                  <ChevronLeft className="w-6 h-6 text-slate-600" />
                 </button>
                 
                 <button
                   onClick={nextSlide}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10 border border-slate-200"
                   aria-label="Next tips"
                 >
-                  <ChevronRight className="w-5 h-5 text-slate-600" />
+                  <ChevronRight className="w-6 h-6 text-slate-600" />
                 </button>
               </>
             )}
@@ -252,12 +354,12 @@ export default function PracticalTips() {
 
           {/* Dots Indicator - Desktop için */}
           {totalSlides > 1 && (
-            <div className="flex justify-center space-x-2 mt-6">
+            <div className="flex justify-center space-x-3 mt-6">
               {Array.from({ length: totalSlides }, (_, index) => (
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
-                  className={`w-2 h-2 rounded-full transition-colors ${
+                  className={`w-3 h-3 rounded-full transition-colors ${
                     index === currentSlide 
                       ? 'bg-slate-600' 
                       : 'bg-slate-300 hover:bg-slate-400'

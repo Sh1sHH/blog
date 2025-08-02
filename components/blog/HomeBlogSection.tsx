@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { BlogPostMeta } from '@/lib/blog';
 import BlogCard from './BlogCard';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -13,6 +13,10 @@ interface HomeBlogSectionProps {
 
 export default function HomeBlogSection({ posts, title = "Latest Articles" }: HomeBlogSectionProps) {
   const [currentPage, setCurrentPage] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   // İlk 6 postu göster
   const mainPosts = posts.slice(0, 6);
@@ -38,6 +42,84 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
   const goToPage = (pageIndex: number) => {
     setCurrentPage(pageIndex);
   };
+
+  // Touch/Swipe handlers for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsDragging(true);
+    setStartX(e.touches[0].pageX - (carouselRef.current?.offsetLeft || 0));
+    setScrollLeft(carouselRef.current?.scrollLeft || 0);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.touches[0].pageX - (carouselRef.current?.offsetLeft || 0);
+    const walk = (x - startX) * 2; // Scroll speed multiplier
+    if (carouselRef.current) {
+      carouselRef.current.scrollLeft = scrollLeft - walk;
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    
+    // Determine swipe direction and navigate
+    if (carouselRef.current) {
+      const currentScrollLeft = carouselRef.current.scrollLeft;
+      const threshold = 50; // Minimum swipe distance
+      
+      if (Math.abs(currentScrollLeft - scrollLeft) > threshold) {
+        if (currentScrollLeft > scrollLeft) {
+          prevPage(); // Swiped right
+        } else {
+          nextPage(); // Swiped left
+        }
+      }
+    }
+  };
+
+  // Mouse drag handlers for desktop
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setStartX(e.pageX - (carouselRef.current?.offsetLeft || 0));
+    setScrollLeft(carouselRef.current?.scrollLeft || 0);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - (carouselRef.current?.offsetLeft || 0);
+    const walk = (x - startX) * 2;
+    if (carouselRef.current) {
+      carouselRef.current.scrollLeft = scrollLeft - walk;
+    }
+  };
+
+  const handleMouseUp = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    
+    if (carouselRef.current) {
+      const currentScrollLeft = carouselRef.current.scrollLeft;
+      const threshold = 50;
+      
+      if (Math.abs(currentScrollLeft - scrollLeft) > threshold) {
+        if (currentScrollLeft > scrollLeft) {
+          prevPage();
+        } else {
+          nextPage();
+        }
+      }
+    }
+  };
+
+  // Reset scroll position when page changes
+  useEffect(() => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollLeft = 0;
+    }
+  }, [currentPage]);
 
   if (posts.length === 0) {
     return (
@@ -101,7 +183,7 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
 
       {/* Ana Blog Grid - İlk 6 Post */}
       {mainPosts.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
           {mainPosts.map((post) => (
             <BlogCard key={post.slug} post={post} />
           ))}
@@ -118,38 +200,49 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
               <>
                 <button
                   onClick={prevPage}
-                  className="absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10"
+                  className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10 border border-slate-200"
                   aria-label="Previous posts"
                 >
-                  <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-slate-600" />
+                  <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-slate-600" />
                 </button>
                 
                 <button
                   onClick={nextPage}
-                  className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10"
+                  className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10 border border-slate-200"
                   aria-label="Next posts"
                 >
-                  <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-slate-600" />
+                  <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-slate-600" />
                 </button>
               </>
             )}
 
-            {/* Posts Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 ">
+            {/* Posts Grid with Touch Support */}
+            <div 
+              ref={carouselRef}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 overflow-hidden"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+              style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+            >
               {getCurrentPagePosts().map((post) => (
                 <BlogCard key={post.slug} post={post} />
               ))}
             </div>
           </div>
 
-          {/* Dots Indicator */}
+          {/* Dots Indicator - Mobil responsive */}
           {totalPages > 1 && (
-            <div className="flex justify-center space-x-2">
+            <div className="flex justify-center space-x-3">
               {Array.from({ length: totalPages }, (_, index) => (
                 <button
                   key={index}
                   onClick={() => goToPage(index)}
-                  className={`w-2 h-2 rounded-full transition-colors ${
+                  className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-colors ${
                     index === currentPage 
                       ? 'bg-slate-600' 
                       : 'bg-slate-300 hover:bg-slate-400'

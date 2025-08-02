@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Clock } from 'lucide-react';
 import Link from 'next/link';
 import { BlogPostMeta, getAllPosts } from '@/lib/blog';
@@ -10,17 +10,20 @@ export default function DecorationSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [posts, setPosts] = useState<BlogPostMeta[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
   
-  // Fetch posts from "Decoration" category (kategori çevirisi ile)
+  // Fetch posts from "Decoration" category
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        // getAllPosts kullanarak kategori çevirisini otomatik al
         const allPosts = await getAllPosts();
         
         console.log('DecorationSection - All posts with categories:', allPosts.map(p => ({ title: p.title, category: p.category, published: p.published })));
         
-        // Filter published posts from "Decoration" category (artık İngilizce olarak çevrilmiş)
+        // Filter published posts from "Decoration" category
         const decorationPosts = allPosts.filter((post: BlogPostMeta) => {
           console.log('DecorationSection - Checking post:', post.category, post.published);
           return post.category === 'Decoration' && post.published;
@@ -84,6 +87,76 @@ export default function DecorationSection() {
     setCurrentSlide(slideIndex);
   };
 
+  // Touch/Swipe handlers for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsDragging(true);
+    setStartX(e.touches[0].pageX - (carouselRef.current?.offsetLeft || 0));
+    setScrollLeft(carouselRef.current?.scrollLeft || 0);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.touches[0].pageX - (carouselRef.current?.offsetLeft || 0);
+    const walk = (x - startX) * 2;
+    if (carouselRef.current) {
+      carouselRef.current.scrollLeft = scrollLeft - walk;
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    
+    if (carouselRef.current) {
+      const currentScrollLeft = carouselRef.current.scrollLeft;
+      const threshold = 50;
+      
+      if (Math.abs(currentScrollLeft - scrollLeft) > threshold) {
+        if (currentScrollLeft > scrollLeft) {
+          prevMobileSlide();
+        } else {
+          nextMobileSlide();
+        }
+      }
+    }
+  };
+
+  // Mouse drag handlers for desktop
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setStartX(e.pageX - (carouselRef.current?.offsetLeft || 0));
+    setScrollLeft(carouselRef.current?.scrollLeft || 0);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - (carouselRef.current?.offsetLeft || 0);
+    const walk = (x - startX) * 2;
+    if (carouselRef.current) {
+      carouselRef.current.scrollLeft = scrollLeft - walk;
+    }
+  };
+
+  const handleMouseUp = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    
+    if (carouselRef.current) {
+      const currentScrollLeft = carouselRef.current.scrollLeft;
+      const threshold = 50;
+      
+      if (Math.abs(currentScrollLeft - scrollLeft) > threshold) {
+        if (currentScrollLeft > scrollLeft) {
+          prevMobileSlide();
+        } else {
+          nextMobileSlide();
+        }
+      }
+    }
+  };
+
   if (loading) {
     return (
       <section className="container mx-auto px-4 py-12">
@@ -96,7 +169,7 @@ export default function DecorationSection() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[1, 2].map((i) => (
-              <div key={i} className="bg-white rounded-xl overflow-hidden shadow-sm h-96 animate-pulse">
+              <div key={i} className="bg-white rounded-xl shadow-sm animate-pulse">
                 <div className="h-48 bg-gray-200"></div>
                 <div className="p-6 space-y-3">
                   <div className="h-4 bg-gray-200 rounded w-3/4"></div>
@@ -128,6 +201,7 @@ export default function DecorationSection() {
     );
   }
 
+  // İlk ve ikinci kartları al
   const firstCardPost = getFirstCardPost();
   const secondCardPost = getSecondCardPost();
 
@@ -149,7 +223,18 @@ export default function DecorationSection() {
 
         {/* Mobile Layout */}
         <div className="md:hidden">
-          <div className="grid grid-cols-1 gap-4">
+          <div 
+            ref={carouselRef}
+            className="grid grid-cols-1 gap-4 overflow-hidden"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+          >
             {/* İlk kart - Sabit (en güncel post) */}
             {firstCardPost && (
               <BlogCardMobile post={firstCardPost} categoryLabel="Decoration" />
@@ -163,18 +248,18 @@ export default function DecorationSection() {
                   <>
                     <button
                       onClick={prevMobileSlide}
-                      className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10"
+                      className="absolute left-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10 border border-slate-200"
                       aria-label="Previous decoration"
                     >
-                      <ChevronLeft className="w-4 h-4 text-slate-600" />
+                      <ChevronLeft className="w-5 h-5 text-slate-600" />
                     </button>
                     
                     <button
                       onClick={nextMobileSlide}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10"
+                      className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10 border border-slate-200"
                       aria-label="Next decoration"
                     >
-                      <ChevronRight className="w-4 h-4 text-slate-600" />
+                      <ChevronRight className="w-5 h-5 text-slate-600" />
                     </button>
                   </>
                 )}
@@ -183,6 +268,24 @@ export default function DecorationSection() {
               </div>
             )}
           </div>
+
+          {/* Dots Indicator - Mobil için */}
+          {posts.length > 1 && (
+            <div className="flex justify-center space-x-3 mt-6">
+              {Array.from({ length: posts.length - 1 }, (_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-colors ${
+                    index === currentSlide 
+                      ? 'bg-slate-600' 
+                      : 'bg-slate-300 hover:bg-slate-400'
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Desktop Layout - Mevcut sistem */}
@@ -193,18 +296,18 @@ export default function DecorationSection() {
               <>
                 <button
                   onClick={prevSlide}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10 border border-slate-200"
                   aria-label="Previous decorations"
                 >
-                  <ChevronLeft className="w-5 h-5 text-slate-600" />
+                  <ChevronLeft className="w-6 h-6 text-slate-600" />
                 </button>
                 
                 <button
                   onClick={nextSlide}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10 border border-slate-200"
                   aria-label="Next decorations"
                 >
-                  <ChevronRight className="w-5 h-5 text-slate-600" />
+                  <ChevronRight className="w-6 h-6 text-slate-600" />
                 </button>
               </>
             )}
@@ -255,12 +358,12 @@ export default function DecorationSection() {
 
           {/* Dots Indicator - Desktop için */}
           {totalSlides > 1 && (
-            <div className="flex justify-center space-x-2 mt-6">
+            <div className="flex justify-center space-x-3 mt-6">
               {Array.from({ length: totalSlides }, (_, index) => (
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
-                  className={`w-2 h-2 rounded-full transition-colors ${
+                  className={`w-3 h-3 rounded-full transition-colors ${
                     index === currentSlide 
                       ? 'bg-slate-600' 
                       : 'bg-slate-300 hover:bg-slate-400'
