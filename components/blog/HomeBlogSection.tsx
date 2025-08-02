@@ -21,14 +21,23 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
   // İlk 6 postu göster
   const mainPosts = posts.slice(0, 6);
   
-  // Kalan postları 3'lü sayfalara böl
+  // Kalan postları 3'lü sayfalara böl (desktop için)
   const remainingPosts = posts.slice(6);
   const postsPerPage = 3;
   const totalPages = Math.ceil(remainingPosts.length / postsPerPage);
   
+  // Mobil için sadece 1 kart değişsin
+  const mobilePosts = posts.slice(6);
+  const mobileTotalPages = mobilePosts.length;
+  
   const getCurrentPagePosts = () => {
     const startIndex = currentPage * postsPerPage;
     return remainingPosts.slice(startIndex, startIndex + postsPerPage);
+  };
+
+  // Mobil için tek kart döndür
+  const getCurrentMobilePost = () => {
+    return mobilePosts[currentPage % mobileTotalPages];
   };
 
   const nextPage = () => {
@@ -37,6 +46,15 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
 
   const prevPage = () => {
     setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
+  };
+
+  // Mobil için navigation
+  const nextMobilePage = () => {
+    setCurrentPage((prev) => (prev + 1) % mobileTotalPages);
+  };
+
+  const prevMobilePage = () => {
+    setCurrentPage((prev) => (prev - 1 + mobileTotalPages) % mobileTotalPages);
   };
 
   const goToPage = (pageIndex: number) => {
@@ -193,8 +211,8 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
       {/* Carousel Bölümü - Kalan Postlar */}
       {remainingPosts.length > 0 && (
         <div className="space-y-6">
-          {/* Carousel Container */}
-          <div className="relative">
+          {/* Desktop Layout - 3 kart birden */}
+          <div className="hidden md:block relative">
             {/* Posts Grid with Touch Support */}
             <div 
               ref={carouselRef}
@@ -218,7 +236,7 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
               <>
                 <button
                   onClick={prevPage}
-                  className="hidden md:flex absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 bg-white shadow-lg rounded-full items-center justify-center hover:bg-slate-50 transition-colors z-10 border border-slate-200"
+                  className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 bg-white shadow-lg rounded-full items-center justify-center hover:bg-slate-50 transition-colors z-10 border border-slate-200 flex"
                   aria-label="Previous posts"
                 >
                   <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-slate-600" />
@@ -226,7 +244,7 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
                 
                 <button
                   onClick={nextPage}
-                  className="hidden md:flex absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 bg-white shadow-lg rounded-full items-center justify-center hover:bg-slate-50 transition-colors z-10 border border-slate-200"
+                  className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 bg-white shadow-lg rounded-full items-center justify-center hover:bg-slate-50 transition-colors z-10 border border-slate-200 flex"
                   aria-label="Next posts"
                 >
                   <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-slate-600" />
@@ -235,12 +253,30 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
             )}
           </div>
 
-          {/* Mobile Navigation - En alttaki kartta */}
-          {totalPages > 1 && (
-            <div className="md:hidden relative">
-              <div className="flex justify-center space-x-4">
+          {/* Mobile Layout - Tek kart */}
+          <div className="md:hidden">
+            <div 
+              ref={carouselRef}
+              className="overflow-hidden"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+              style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+            >
+              {getCurrentMobilePost() && (
+                <BlogCard key={getCurrentMobilePost()!.slug} post={getCurrentMobilePost()!} />
+              )}
+            </div>
+
+            {/* Mobile Navigation - En alttaki kartta */}
+            {mobileTotalPages > 1 && (
+              <div className="flex justify-center space-x-4 mt-6">
                 <button
-                  onClick={prevPage}
+                  onClick={prevMobilePage}
                   className="w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors border border-slate-200"
                   aria-label="Previous posts"
                 >
@@ -248,19 +284,37 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
                 </button>
                 
                 <button
-                  onClick={nextPage}
+                  onClick={nextMobilePage}
                   className="w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors border border-slate-200"
                   aria-label="Next posts"
                 >
                   <ChevronRight className="w-5 h-5 text-slate-600" />
                 </button>
               </div>
-            </div>
-          )}
+            )}
 
-          {/* Dots Indicator - Mobil responsive */}
+            {/* Dots Indicator - Mobil için */}
+            {mobileTotalPages > 1 && (
+              <div className="flex justify-center space-x-3 mt-6">
+                {Array.from({ length: mobileTotalPages }, (_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentPage(index)}
+                    className={`w-3 h-3 rounded-full transition-colors ${
+                      index === currentPage 
+                        ? 'bg-slate-600' 
+                        : 'bg-slate-300 hover:bg-slate-400'
+                    }`}
+                    aria-label={`Go to page ${index + 1}`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Dots Indicator - Desktop için */}
           {totalPages > 1 && (
-            <div className="flex justify-center space-x-3">
+            <div className="hidden md:flex justify-center space-x-3">
               {Array.from({ length: totalPages }, (_, index) => (
                 <button
                   key={index}
