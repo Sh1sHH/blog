@@ -239,31 +239,31 @@ export default function PracticalTips() {
             {/* İkinci kart - Navigation okları ile */}
             {getSecondCardPost() && (
               <div className="relative">
-                {/* Navigation Arrows - Sadece ikinci kartın üstünde */}
-                {posts.length > 1 && (
-                  <>
-                    <button
-                      onClick={prevMobileSlide}
-                      className="absolute left-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10 border border-slate-200"
-                      aria-label="Previous tip"
-                    >
-                      <ChevronLeft className="w-5 h-5 text-slate-600" />
-                    </button>
-                    
-                    <button
-                      onClick={nextMobileSlide}
-                      className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10 border border-slate-200"
-                      aria-label="Next tip"
-                    >
-                      <ChevronRight className="w-5 h-5 text-slate-600" />
-                    </button>
-                  </>
-                )}
-                
                 <BlogCardMobile post={getSecondCardPost()!} categoryLabel="Practical Tips" />
               </div>
             )}
           </div>
+
+          {/* Mobile Navigation - En alttaki kartta */}
+          {posts.length > 1 && (
+            <div className="flex justify-center space-x-4 mt-6">
+              <button
+                onClick={prevMobileSlide}
+                className="w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors border border-slate-200"
+                aria-label="Previous tip"
+              >
+                <ChevronLeft className="w-5 h-5 text-slate-600" />
+              </button>
+              
+              <button
+                onClick={nextMobileSlide}
+                className="w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors border border-slate-200"
+                aria-label="Next tip"
+              >
+                <ChevronRight className="w-5 h-5 text-slate-600" />
+              </button>
+            </div>
+          )}
 
           {/* Dots Indicator - Mobil için */}
           {posts.length > 1 && (

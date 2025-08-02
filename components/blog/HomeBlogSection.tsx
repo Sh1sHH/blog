@@ -195,27 +195,6 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
         <div className="space-y-6">
           {/* Carousel Container */}
           <div className="relative">
-            {/* Navigation Arrows - Mobil responsive */}
-            {totalPages > 1 && (
-              <>
-                <button
-                  onClick={prevPage}
-                  className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10 border border-slate-200"
-                  aria-label="Previous posts"
-                >
-                  <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-slate-600" />
-                </button>
-                
-                <button
-                  onClick={nextPage}
-                  className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors z-10 border border-slate-200"
-                  aria-label="Next posts"
-                >
-                  <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-slate-600" />
-                </button>
-              </>
-            )}
-
             {/* Posts Grid with Touch Support */}
             <div 
               ref={carouselRef}
@@ -233,7 +212,51 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
                 <BlogCard key={post.slug} post={post} />
               ))}
             </div>
+
+            {/* Navigation Arrows - Desktop için */}
+            {totalPages > 1 && (
+              <>
+                <button
+                  onClick={prevPage}
+                  className="hidden md:flex absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 bg-white shadow-lg rounded-full items-center justify-center hover:bg-slate-50 transition-colors z-10 border border-slate-200"
+                  aria-label="Previous posts"
+                >
+                  <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-slate-600" />
+                </button>
+                
+                <button
+                  onClick={nextPage}
+                  className="hidden md:flex absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-12 h-12 sm:w-14 sm:h-14 bg-white shadow-lg rounded-full items-center justify-center hover:bg-slate-50 transition-colors z-10 border border-slate-200"
+                  aria-label="Next posts"
+                >
+                  <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-slate-600" />
+                </button>
+              </>
+            )}
           </div>
+
+          {/* Mobile Navigation - En alttaki kartta */}
+          {totalPages > 1 && (
+            <div className="md:hidden relative">
+              <div className="flex justify-center space-x-4">
+                <button
+                  onClick={prevPage}
+                  className="w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors border border-slate-200"
+                  aria-label="Previous posts"
+                >
+                  <ChevronLeft className="w-5 h-5 text-slate-600" />
+                </button>
+                
+                <button
+                  onClick={nextPage}
+                  className="w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-slate-50 transition-colors border border-slate-200"
+                  aria-label="Next posts"
+                >
+                  <ChevronRight className="w-5 h-5 text-slate-600" />
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* Dots Indicator - Mobil responsive */}
           {totalPages > 1 && (
