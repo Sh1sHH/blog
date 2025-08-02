@@ -5,6 +5,7 @@ import { BlogPostMeta } from '@/lib/blog';
 import BlogCard from './BlogCard';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import RotatingText from '@/components/ui/rotating-text';
+import Link from 'next/link';
 
 interface HomeBlogSectionProps {
   posts: BlogPostMeta[];
@@ -26,9 +27,9 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
   const postsPerPage = 3;
   const totalPages = Math.ceil(remainingPosts.length / postsPerPage);
   
-  // Mobil için sadece 1 kart değişsin
-  const mobilePosts = posts.slice(6);
-  const mobileTotalPages = mobilePosts.length;
+  // Mobil için sadece 1 kart değişsin - maksimum 10 yazı
+  const mobilePosts = posts.slice(6, 16); // 6-16 arası = 10 yazı
+  const mobileTotalPages = Math.min(mobilePosts.length, 10); // Maksimum 10
   
   const getCurrentPagePosts = () => {
     const startIndex = currentPage * postsPerPage;
@@ -310,6 +311,17 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
                 ))}
               </div>
             )}
+
+            {/* Bütün yazıları göster butonu - Mobil için */}
+            <div className="flex justify-center mt-8">
+              <Link 
+                href="/blog" 
+                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+              >
+                Bütün yazıları göster
+                <ChevronRight className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
 
           {/* Dots Indicator - Desktop için */}
