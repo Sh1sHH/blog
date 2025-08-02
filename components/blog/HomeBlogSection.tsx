@@ -318,7 +318,7 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
                 href="/blog" 
                 className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
               >
-                Bütün yazıları göster
+                All Articles
                 <ChevronRight className="w-4 h-4" />
               </Link>
             </div>
