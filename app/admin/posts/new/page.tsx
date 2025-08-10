@@ -25,7 +25,7 @@ export default function NewPostPage() {
     category: 'General',
     tags: [] as string[],
     featured: false,
-    published: false,
+    published: true, // 🔥 Yeni yazılar artık default olarak yayınlanacak
     customSlug: '',
     seoTitle: '',
     seoDescription: '',
