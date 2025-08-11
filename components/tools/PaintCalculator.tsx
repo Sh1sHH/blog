@@ -19,8 +19,20 @@ import {
   DollarSign
 } from 'lucide-react';
 
+// Tip tanımları
+type PaintType = {
+  name: string;
+  coverage: number;
+  price: number;
+};
+
+type SurfaceType = {
+  name: string;
+  multiplier: number;
+};
+
 // Boya türleri ve verimleri (m²/litre)
-const paintTypes = {
+const paintTypes: Record<string, PaintType> = {
   'acrylic-mat': { name: 'Akrilik Mat', coverage: 12, price: 45 },
   'acrylic-silk': { name: 'Akrilik İpek Mat', coverage: 10, price: 55 },
   'acrylic-semi': { name: 'Akrilik Yarı Mat', coverage: 10, price: 50 },
@@ -29,7 +41,7 @@ const paintTypes = {
 };
 
 // Yüzey türleri ve katsayıları
-const surfaceTypes = {
+const surfaceTypes: Record<string, SurfaceType> = {
   'smooth': { name: 'Düz Sıva', multiplier: 1.0 },
   'textured': { name: 'Dokulu Sıva', multiplier: 1.2 },
   'plaster': { name: 'Alçı', multiplier: 1.1 },
@@ -93,12 +105,23 @@ export default function PaintCalculator() {
     const doorArea = doorC * doorW * doorH;
     const netArea = wallArea - windowArea - doorArea;
 
-    // Yüzey çarpanı uygula
-    const surfaceMultiplier = surfaceTypes[surfaceType].multiplier;
+    // Yüzey çarpanı uygula - güvenli erişim
+    const surfaceData = surfaceTypes[surfaceType];
+    if (!surfaceData) {
+      alert('Geçersiz yüzey türü seçildi!');
+      setIsCalculating(false);
+      return;
+    }
+    const surfaceMultiplier = surfaceData.multiplier;
     const adjustedArea = netArea * surfaceMultiplier;
 
-    // Boya hesaplama
+    // Boya hesaplama - güvenli erişim
     const paintData = paintTypes[paintType];
+    if (!paintData) {
+      alert('Geçersiz boya türü seçildi!');
+      setIsCalculating(false);
+      return;
+    }
     const paintNeeded = (adjustedArea * coatCount) / paintData.coverage;
     const paintWithWaste = includeWaste ? paintNeeded * 1.15 : paintNeeded;
 
@@ -155,8 +178,8 @@ Pencere/Kapı Bilgileri:
 - Kapı: ${doorCount} adet (${doorWidth}×${doorHeight} m)
 
 Boya Detayları:
-- Boya Türü: ${paintTypes[paintType].name}
-- Yüzey Türü: ${surfaceTypes[surfaceType].name}
+- Boya Türü: ${paintTypes[paintType]?.name || 'Bilinmeyen'}
+- Yüzey Türü: ${surfaceTypes[surfaceType]?.name || 'Bilinmeyen'}
 - Kat Sayısı: ${coats}
 
 SONUÇLAR:
@@ -516,7 +539,7 @@ CleverSpaceSolutions.com/tools/paint-calculator ile hesapladım!`;
                       {result.totalCost.toLocaleString('tr-TR')} ₺
                     </div>
                     <div className="text-xs text-gray-500 mt-1">
-                      ({paintTypes[paintType].name})
+                      ({paintTypes[paintType]?.name || 'Bilinmeyen Boya'})
                     </div>
                   </div>
 
