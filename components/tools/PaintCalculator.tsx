@@ -31,22 +31,22 @@ type SurfaceType = {
   multiplier: number;
 };
 
-// Boya türleri ve verimleri (m²/litre)
+// Paint types and coverage (sq ft/gallon)
 const paintTypes: Record<string, PaintType> = {
-  'acrylic-mat': { name: 'Akrilik Mat', coverage: 12, price: 45 },
-  'acrylic-silk': { name: 'Akrilik İpek Mat', coverage: 10, price: 55 },
-  'acrylic-semi': { name: 'Akrilik Yarı Mat', coverage: 10, price: 50 },
-  'plastic': { name: 'Plastik Boya', coverage: 14, price: 35 },
-  'oil': { name: 'Yağlı Boya', coverage: 8, price: 65 }
+  'flat': { name: 'Flat/Matte', coverage: 400, price: 35 },
+  'eggshell': { name: 'Eggshell', coverage: 350, price: 40 },
+  'satin': { name: 'Satin', coverage: 350, price: 42 },
+  'semi-gloss': { name: 'Semi-Gloss', coverage: 300, price: 45 },
+  'gloss': { name: 'High Gloss', coverage: 300, price: 50 }
 };
 
-// Yüzey türleri ve katsayıları
+// Surface types and multipliers
 const surfaceTypes: Record<string, SurfaceType> = {
-  'smooth': { name: 'Düz Sıva', multiplier: 1.0 },
-  'textured': { name: 'Dokulu Sıva', multiplier: 1.2 },
-  'plaster': { name: 'Alçı', multiplier: 1.1 },
-  'wood': { name: 'Ahşap', multiplier: 1.3 },
-  'concrete': { name: 'Beton', multiplier: 1.4 }
+  'drywall': { name: 'Drywall', multiplier: 1.0 },
+  'textured': { name: 'Textured Wall', multiplier: 1.2 },
+  'plaster': { name: 'Plaster', multiplier: 1.1 },
+  'wood': { name: 'Wood', multiplier: 1.3 },
+  'brick': { name: 'Brick/Concrete', multiplier: 1.4 }
 };
 
 interface CalculationResult {
@@ -64,13 +64,13 @@ export default function PaintCalculator() {
   const [roomWidth, setRoomWidth] = useState<string>('');
   const [roomHeight, setRoomHeight] = useState<string>('');
   const [windowCount, setWindowCount] = useState<string>('2');
-  const [windowWidth, setWindowWidth] = useState<string>('1.2');
-  const [windowHeight, setWindowHeight] = useState<string>('1.5');
+  const [windowWidth, setWindowWidth] = useState<string>('4');
+  const [windowHeight, setWindowHeight] = useState<string>('5');
   const [doorCount, setDoorCount] = useState<string>('1');
-  const [doorWidth, setDoorWidth] = useState<string>('0.8');
-  const [doorHeight, setDoorHeight] = useState<string>('2.1');
-  const [paintType, setPaintType] = useState<string>('acrylic-mat');
-  const [surfaceType, setSurfaceType] = useState<string>('smooth');
+  const [doorWidth, setDoorWidth] = useState<string>('3');
+  const [doorHeight, setDoorHeight] = useState<string>('7');
+  const [paintType, setPaintType] = useState<string>('eggshell');
+  const [surfaceType, setSurfaceType] = useState<string>('drywall');
   const [coats, setCoats] = useState<string>('2');
   const [includeWaste, setIncludeWaste] = useState<boolean>(true);
 
@@ -78,10 +78,10 @@ export default function PaintCalculator() {
   const [result, setResult] = useState<CalculationResult | null>(null);
   const [isCalculating, setIsCalculating] = useState<boolean>(false);
 
-  // Hesaplama fonksiyonu
+  // Calculation function
   const calculatePaint = () => {
     if (!roomLength || !roomWidth || !roomHeight) {
-      alert('Lütfen oda boyutlarını girin!');
+      alert('Please enter room dimensions!');
       return;
     }
 
@@ -108,17 +108,17 @@ export default function PaintCalculator() {
     // Yüzey çarpanı uygula - güvenli erişim
     const surfaceData = surfaceTypes[surfaceType];
     if (!surfaceData) {
-      alert('Geçersiz yüzey türü seçildi!');
+      alert('Invalid surface type selected!');
       setIsCalculating(false);
       return;
     }
     const surfaceMultiplier = surfaceData.multiplier;
     const adjustedArea = netArea * surfaceMultiplier;
 
-    // Boya hesaplama - güvenli erişim
+    // Paint calculation - safe access
     const paintData = paintTypes[paintType];
     if (!paintData) {
-      alert('Geçersiz boya türü seçildi!');
+      alert('Invalid paint type selected!');
       setIsCalculating(false);
       return;
     }
@@ -246,50 +246,50 @@ CleverSpaceSolutions.com/tools/paint-calculator ile hesapladım!`;
           {/* Oda Boyutları */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Home className="h-5 w-5 text-blue-600" />
-                Oda Boyutları
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-3 gap-4">
-                <div>
-                  <Label htmlFor="length">En (m)</Label>
-                  <Input
-                    id="length"
-                    type="number"
-                    step="0.1"
-                    placeholder="4.0"
-                    value={roomLength}
-                    onChange={(e) => setRoomLength(e.target.value)}
-                    className="mt-1"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="width">Boy (m)</Label>
-                  <Input
-                    id="width"
-                    type="number"
-                    step="0.1"
-                    placeholder="3.5"
-                    value={roomWidth}
-                    onChange={(e) => setRoomWidth(e.target.value)}
-                    className="mt-1"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="height">Yükseklik (m)</Label>
-                  <Input
-                    id="height"
-                    type="number"
-                    step="0.1"
-                    placeholder="2.7"
-                    value={roomHeight}
-                    onChange={(e) => setRoomHeight(e.target.value)}
-                    className="mt-1"
-                  />
-                </div>
+                          <CardTitle className="flex items-center gap-2">
+              <Home className="h-5 w-5 text-blue-600" />
+              Room Dimensions
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <Label htmlFor="length">Length (ft)</Label>
+                <Input
+                  id="length"
+                  type="number"
+                  step="0.5"
+                  placeholder="12"
+                  value={roomLength}
+                  onChange={(e) => setRoomLength(e.target.value)}
+                  className="mt-1"
+                />
               </div>
+              <div>
+                <Label htmlFor="width">Width (ft)</Label>
+                <Input
+                  id="width"
+                  type="number"
+                  step="0.5"
+                  placeholder="10"
+                  value={roomWidth}
+                  onChange={(e) => setRoomWidth(e.target.value)}
+                  className="mt-1"
+                />
+              </div>
+              <div>
+                <Label htmlFor="height">Height (ft)</Label>
+                <Input
+                  id="height"
+                  type="number"
+                  step="0.5"
+                  placeholder="9"
+                  value={roomHeight}
+                  onChange={(e) => setRoomHeight(e.target.value)}
+                  className="mt-1"
+                />
+              </div>
+            </div>
             </CardContent>
           </Card>
 

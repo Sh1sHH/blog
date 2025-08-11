@@ -2,12 +2,12 @@ import { Metadata } from 'next';
 import PaintCalculator from '@/components/tools/PaintCalculator';
 
 export const metadata: Metadata = {
-  title: 'Oda Boya Miktarı Hesaplayıcı | Ücretsiz Boya Hesaplama Aracı',
-  description: 'Odanızın boyutlarına göre kaç litre boya ihtiyacınız olduğunu hesaplayın. Pencere, kapı sayısını da dahil ederek en doğru sonucu alın. Ücretsiz ve kolay kullanım.',
-  keywords: ['boya hesaplayıcı', 'boya miktarı', 'oda boyası', 'duvar boyası', 'boya hesaplama', 'kaç litre boya', 'boya maliyeti'],
+  title: 'Paint Calculator | Free Room Paint Estimator Tool',
+  description: 'Calculate how much paint you need for your room. Enter room dimensions, windows, and doors for accurate paint estimation. Free and easy to use paint calculator.',
+  keywords: ['paint calculator', 'paint estimator', 'room paint', 'wall paint', 'paint calculation', 'how much paint', 'paint cost'],
   openGraph: {
-    title: 'Oda Boya Miktarı Hesaplayıcı - CleverSpaceSolutions',
-    description: 'Odanızın boyutlarına göre kaç litre boya ihtiyacınız olduğunu hesaplayın. Ücretsiz ve pratik araç.',
+    title: 'Paint Calculator - CleverSpaceSolutions',
+    description: 'Calculate how much paint you need for your room. Free and practical tool for accurate paint estimation.',
     url: 'https://cleverspacesolutions.com/tools/paint-calculator',
     siteName: 'CleverSpaceSolutions',
     images: [
@@ -15,16 +15,16 @@ export const metadata: Metadata = {
         url: '/images/tools/paint-calculator-og.jpg',
         width: 1200,
         height: 630,
-        alt: 'Boya Miktarı Hesaplayıcı',
+        alt: 'Paint Calculator Tool',
       },
     ],
-    locale: 'tr_TR',
+    locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Oda Boya Miktarı Hesaplayıcı',
-    description: 'Odanızın boyutlarına göre kaç litre boya ihtiyacınız olduğunu hesaplayın.',
+    title: 'Room Paint Calculator',
+    description: 'Calculate how much paint you need for your room with accurate estimation.',
     images: ['/images/tools/paint-calculator-og.jpg'],
   },
   alternates: {
@@ -36,15 +36,15 @@ export const metadata: Metadata = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "Oda Boya Miktarı Hesaplayıcı",
-  "description": "Odanızın boyutlarına göre kaç litre boya ihtiyacınız olduğunu hesaplayan ücretsiz araç",
+  "name": "Room Paint Calculator",
+  "description": "Free tool to calculate how much paint you need based on your room dimensions",
   "url": "https://cleverspacesolutions.com/tools/paint-calculator",
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "offers": {
     "@type": "Offer",
     "price": "0",
-    "priceCurrency": "TRY"
+    "priceCurrency": "USD"
   },
   "provider": {
     "@type": "Organization",
@@ -52,12 +52,12 @@ const jsonLd = {
     "url": "https://cleverspacesolutions.com"
   },
   "featureList": [
-    "Oda boyutu hesaplama",
-    "Pencere ve kapı çıkarma",
-    "Boya kat sayısı seçimi",
-    "Farklı boya türleri",
-    "Maliyet tahmini",
-    "PDF rapor indirme"
+    "Room size calculation",
+    "Window and door deduction",
+    "Paint coat selection",
+    "Different paint types",
+    "Cost estimation",
+    "PDF report download"
   ]
 };
 
@@ -70,22 +70,25 @@ export default function PaintCalculatorPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8">
+      <div className="min-h-screen bg-slate-50 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header Section */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              🎨 Oda Boya Miktarı Hesaplayıcı
+            <div className="inline-flex items-center gap-2 bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-sm font-medium mb-4">
+              🎨 Free Tool
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+              Room Paint Calculator
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">
-              Odanızın boyutlarını girin, kaç litre boya ihtiyacınız olduğunu öğrenin. 
-              Pencere, kapı sayısını da hesaba katarak en doğru sonucu alın.
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto mb-6">
+              Enter your room dimensions and get accurate paint estimates. 
+              Include windows and doors for the most precise results.
             </p>
             <div className="flex flex-wrap justify-center gap-2 text-sm">
-              <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full">✅ Ücretsiz</span>
-              <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">📊 Detaylı Hesaplama</span>
-              <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full">💰 Maliyet Tahmini</span>
-              <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full">📄 PDF Rapor</span>
+              <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full">✅ 100% Free</span>
+              <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full">📊 Detailed Calculation</span>
+              <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full">💰 Cost Estimation</span>
+              <span className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full">📄 PDF Report</span>
             </div>
           </div>
 
@@ -95,52 +98,52 @@ export default function PaintCalculatorPage() {
           {/* SEO Content Section */}
           <div className="mt-16 max-w-4xl mx-auto">
             <div className="bg-white rounded-xl shadow-lg p-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                Boya Miktarı Nasıl Hesaplanır?
+              <h2 className="text-3xl font-bold text-slate-900 mb-6">
+                How to Calculate Paint Amount?
               </h2>
               
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                    📐 Temel Hesaplama
+                  <h3 className="text-xl font-semibold text-slate-800 mb-4">
+                    📐 Basic Calculation
                   </h3>
-                  <ul className="space-y-2 text-gray-600">
-                    <li>• Duvar alanı = (En × Yükseklik) × 4 duvar</li>
-                    <li>• Pencere ve kapı alanları çıkarılır</li>
-                    <li>• Boya verimi (m²/litre) ile bölünür</li>
-                    <li>• Kat sayısı ile çarpılır</li>
+                  <ul className="space-y-2 text-slate-600">
+                    <li>• Wall area = (Length × Height) × 4 walls</li>
+                    <li>• Subtract window and door areas</li>
+                    <li>• Divide by paint coverage (sq ft/gallon)</li>
+                    <li>• Multiply by number of coats</li>
                   </ul>
                 </div>
                 
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-800 mb-4">
-                    🎯 Önemli Faktörler
+                  <h3 className="text-xl font-semibold text-slate-800 mb-4">
+                    🎯 Important Factors
                   </h3>
-                  <ul className="space-y-2 text-gray-600">
-                    <li>• Duvar yüzeyi türü (sıva, alçı, ahşap)</li>
-                    <li>• Boya türü (mat, ipek mat, yarı mat)</li>
-                    <li>• Renk değişikliği durumu</li>
-                    <li>• %10-15 fire payı eklenmeli</li>
+                  <ul className="space-y-2 text-slate-600">
+                    <li>• Wall surface type (drywall, plaster, wood)</li>
+                    <li>• Paint type (flat, eggshell, satin, semi-gloss)</li>
+                    <li>• Color change situation</li>
+                    <li>• Add 10-15% waste allowance</li>
                   </ul>
                 </div>
               </div>
 
-              <div className="mt-8 p-6 bg-blue-50 rounded-lg">
-                <h3 className="text-xl font-semibold text-blue-900 mb-4">
-                  💡 Profesyonel İpuçları
+              <div className="mt-8 p-6 bg-slate-50 rounded-lg">
+                <h3 className="text-xl font-semibold text-slate-900 mb-4">
+                  💡 Professional Tips
                 </h3>
-                <div className="grid md:grid-cols-3 gap-4 text-sm text-blue-800">
+                <div className="grid md:grid-cols-3 gap-4 text-sm text-slate-700">
                   <div>
-                    <strong>Boya Seçimi:</strong>
-                    <p>Yatak odası için mat, mutfak için yarı mat boya tercih edin.</p>
+                    <strong>Paint Selection:</strong>
+                    <p>Use flat paint for bedrooms, semi-gloss for kitchens and bathrooms.</p>
                   </div>
                   <div>
-                    <strong>Uygulama:</strong>
-                    <p>İlk kat astar, ikinci kat son kat boya uygulaması idealdir.</p>
+                    <strong>Application:</strong>
+                    <p>Prime first, then apply two coats of paint for best results.</p>
                   </div>
                   <div>
-                    <strong>Maliyet:</strong>
-                    <p>Kaliteli boya uzun vadede daha ekonomiktir.</p>
+                    <strong>Cost:</strong>
+                    <p>Quality paint is more economical in the long run.</p>
                   </div>
                 </div>
               </div>
@@ -150,48 +153,48 @@ export default function PaintCalculatorPage() {
           {/* FAQ Section */}
           <div className="mt-12 max-w-4xl mx-auto">
             <div className="bg-white rounded-xl shadow-lg p-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-                Sık Sorulan Sorular
+              <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">
+                Frequently Asked Questions
               </h2>
               
               <div className="space-y-6">
                 <div className="border-b pb-4">
-                  <h3 className="font-semibold text-gray-900 mb-2">
-                    Hesaplama ne kadar doğru?
+                  <h3 className="font-semibold text-slate-900 mb-2">
+                    How accurate is the calculation?
                   </h3>
-                  <p className="text-gray-600">
-                    Hesaplayıcımız profesyonel standartlara göre %95 doğruluk oranında sonuç verir. 
-                    Ancak yüzey durumu ve uygulama tekniği sonucu etkileyebilir.
+                  <p className="text-slate-600">
+                    Our calculator provides 95% accuracy based on professional standards. 
+                    However, surface condition and application technique may affect the final result.
                   </p>
                 </div>
                 
                 <div className="border-b pb-4">
-                  <h3 className="font-semibold text-gray-900 mb-2">
-                    Fire payı dahil mi?
+                  <h3 className="font-semibold text-slate-900 mb-2">
+                    Is waste allowance included?
                   </h3>
-                  <p className="text-gray-600">
-                    Evet, hesaplayıcımız otomatik olarak %15 fire payı ekler. Bu, dökülen boya, 
-                    ikinci kat ihtiyacı ve gelecekteki rötuşlar için yeterlidir.
+                  <p className="text-slate-600">
+                    Yes, our calculator automatically adds 15% waste allowance. This covers spills, 
+                    touch-ups, and future maintenance needs.
                   </p>
                 </div>
                 
                 <div className="border-b pb-4">
-                  <h3 className="font-semibold text-gray-900 mb-2">
-                    Farklı boya türleri için geçerli mi?
+                  <h3 className="font-semibold text-slate-900 mb-2">
+                    Does it work for different paint types?
                   </h3>
-                  <p className="text-gray-600">
-                    Evet, akrilik, plastik, yağlı boya gibi tüm iç mekan boyaları için kullanabilirsiniz. 
-                    Boya türüne göre verim oranları otomatik ayarlanır.
+                  <p className="text-slate-600">
+                    Yes, you can use it for all interior paint types including latex, acrylic, and oil-based paints. 
+                    Coverage rates are automatically adjusted based on paint type.
                   </p>
                 </div>
                 
                 <div>
-                  <h3 className="font-semibold text-gray-900 mb-2">
-                    Tavan boyası da hesaplanıyor mu?
+                  <h3 className="font-semibold text-slate-900 mb-2">
+                    Does it calculate ceiling paint?
                   </h3>
-                  <p className="text-gray-600">
-                    Şu anda sadece duvar boyası hesaplanıyor. Tavan boyası için 
-                    oda alanı (en × boy) × boya verimi formülünü kullanabilirsiniz.
+                  <p className="text-slate-600">
+                    Currently, it calculates wall paint only. For ceiling paint, 
+                    use the formula: room area (length × width) ÷ paint coverage.
                   </p>
                 </div>
               </div>

@@ -88,36 +88,91 @@ export default async function Home() {
       <GiftItems />
 
       {/* Paint Calculator CTA Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-indigo-700 py-16 my-16">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              🎨 Odanızı Boyamak İstiyorsunuz?
-            </h2>
-            <p className="text-xl text-blue-100 mb-8">
-              Kaç litre boya almanız gerektiğini merak ediyorsanız, ücretsiz hesaplayıcımızı kullanın!
-              Pencere, kapı sayısını da hesaba katarak en doğru sonucu alın.
-            </p>
-            <div className="flex flex-wrap justify-center items-center gap-4 mb-8">
-              <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
-                <span className="text-white font-semibold">✅ Ücretsiz</span>
+      <section className="bg-white border-t py-16 my-16">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              
+              {/* Left Content */}
+              <div>
+                <div className="inline-flex items-center gap-2 bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-sm font-medium mb-4">
+                  🎨 Free Tool
+                </div>
+                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                  Planning to Paint Your Room?
+                </h2>
+                <p className="text-lg text-slate-600 mb-6">
+                  Calculate exactly how much paint you need with our free paint calculator. 
+                  Input your room dimensions, windows, and doors for the most accurate results.
+                </p>
+                
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                      <span className="text-green-600 font-semibold">✓</span>
+                    </div>
+                    <span className="text-slate-700 font-medium">100% Free</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <span className="text-blue-600 font-semibold">📊</span>
+                    </div>
+                    <span className="text-slate-700 font-medium">Detailed Calculation</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                      <span className="text-purple-600 font-semibold">💰</span>
+                    </div>
+                    <span className="text-slate-700 font-medium">Cost Estimation</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                      <span className="text-orange-600 font-semibold">📄</span>
+                    </div>
+                    <span className="text-slate-700 font-medium">PDF Report</span>
+                  </div>
+                </div>
+                
+                <Link href="/tools/paint-calculator">
+                  <Button 
+                    size="lg" 
+                    className="bg-slate-900 text-white hover:bg-slate-800 font-semibold px-8 py-4 text-lg"
+                  >
+                    Calculate Paint Amount
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
               </div>
-              <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
-                <span className="text-white font-semibold">📊 Detaylı Hesaplama</span>
+
+              {/* Right Visual */}
+              <div className="relative">
+                <div className="bg-slate-50 rounded-2xl p-8">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm border">
+                      <span className="text-slate-600">Room Size</span>
+                      <span className="font-semibold text-slate-900">12' × 10' × 9'</span>
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm border">
+                      <span className="text-slate-600">Windows</span>
+                      <span className="font-semibold text-slate-900">2 windows</span>
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm border">
+                      <span className="text-slate-600">Doors</span>
+                      <span className="font-semibold text-slate-900">1 door</span>
+                    </div>
+                    <div className="flex items-center justify-between p-4 bg-slate-900 text-white rounded-lg">
+                      <span>Paint Needed</span>
+                      <span className="font-bold text-xl">2.3 gallons</span>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Decorative Elements */}
+                <div className="absolute -top-4 -right-4 w-20 h-20 bg-blue-100 rounded-full opacity-60"></div>
+                <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-purple-100 rounded-full opacity-60"></div>
               </div>
-              <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
-                <span className="text-white font-semibold">💰 Maliyet Tahmini</span>
-              </div>
+              
             </div>
-            <Link href="/tools/paint-calculator">
-              <Button 
-                size="lg" 
-                className="bg-white text-blue-600 hover:bg-blue-50 font-semibold px-8 py-4 text-lg"
-              >
-                Boya Miktarını Hesapla
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
           </div>
         </div>
       </section>

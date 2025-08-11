@@ -65,12 +65,12 @@ export default function Header() {
               <Link href="/categories/office" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
                 Home Office
               </Link>
-              {/* Tools Menüsü - Öne Çıkarılmış */}
+              {/* Tools Menu - Highlighted */}
               <Link 
                 href="/tools/paint-calculator" 
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors no-underline font-medium"
+                className="bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors no-underline font-medium"
               >
-                🎨 Boya Hesaplayıcı
+                🎨 Paint Calculator
               </Link>
             </div>
           </div>
@@ -184,13 +184,13 @@ export default function Header() {
             Home Office
           </Link>
           
-          {/* Tools Menüsü - Mobil */}
+          {/* Tools Menu - Mobile */}
           <Link 
             href="/tools/paint-calculator" 
-            className="block px-3 py-2 mx-2 mt-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors no-underline font-medium text-center"
+            className="block px-3 py-2 mx-2 mt-2 rounded-md bg-slate-900 text-white hover:bg-slate-800 transition-colors no-underline font-medium text-center"
             onClick={() => setIsMobileMenuOpen(false)}
           >
-            🎨 Boya Hesaplayıcı
+            🎨 Paint Calculator
           </Link>
           
           {/* Mobil Sosyal Medya */}
