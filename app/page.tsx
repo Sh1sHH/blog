@@ -87,6 +87,41 @@ export default async function Home() {
       {/* Gift Items Section */}
       <GiftItems />
 
+      {/* Paint Calculator CTA Section */}
+      <section className="bg-gradient-to-r from-blue-600 to-indigo-700 py-16 my-16">
+        <div className="container mx-auto px-4 text-center">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              🎨 Odanızı Boyamak İstiyorsunuz?
+            </h2>
+            <p className="text-xl text-blue-100 mb-8">
+              Kaç litre boya almanız gerektiğini merak ediyorsanız, ücretsiz hesaplayıcımızı kullanın!
+              Pencere, kapı sayısını da hesaba katarak en doğru sonucu alın.
+            </p>
+            <div className="flex flex-wrap justify-center items-center gap-4 mb-8">
+              <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
+                <span className="text-white font-semibold">✅ Ücretsiz</span>
+              </div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
+                <span className="text-white font-semibold">📊 Detaylı Hesaplama</span>
+              </div>
+              <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2">
+                <span className="text-white font-semibold">💰 Maliyet Tahmini</span>
+              </div>
+            </div>
+            <Link href="/tools/paint-calculator">
+              <Button 
+                size="lg" 
+                className="bg-white text-blue-600 hover:bg-blue-50 font-semibold px-8 py-4 text-lg"
+              >
+                Boya Miktarını Hesapla
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Practical Tips Section - Moved to bottom */}
       <PracticalTips />
     </main>

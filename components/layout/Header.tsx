@@ -46,7 +46,7 @@ export default function Header() {
 
           {/* Ana Menü - Ortalanmış */}
           <div className="hidden md:flex flex-1 items-center justify-center">
-            <div className="flex items-center space-x-12">
+            <div className="flex items-center space-x-8">
               <Link href="/categories/living-room" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
                 Living Room
               </Link>
@@ -64,6 +64,13 @@ export default function Header() {
               </Link>
               <Link href="/categories/office" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
                 Home Office
+              </Link>
+              {/* Tools Menüsü - Öne Çıkarılmış */}
+              <Link 
+                href="/tools/paint-calculator" 
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors no-underline font-medium"
+              >
+                🎨 Boya Hesaplayıcı
               </Link>
             </div>
           </div>
@@ -175,6 +182,15 @@ export default function Header() {
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Home Office
+          </Link>
+          
+          {/* Tools Menüsü - Mobil */}
+          <Link 
+            href="/tools/paint-calculator" 
+            className="block px-3 py-2 mx-2 mt-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors no-underline font-medium text-center"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            🎨 Boya Hesaplayıcı
           </Link>
           
           {/* Mobil Sosyal Medya */}
