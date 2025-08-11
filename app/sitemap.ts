@@ -1,18 +1,18 @@
 import { MetadataRoute } from 'next';
 import { getAllPosts } from '@/lib/blog';
 
-// Base URL - production'da gerçek domain'iniz ile değiştirin
+// Base URL for production
 const BASE_URL = 'https://cleverspacesolutions.com';
 
-// Sitemap'in cache edilmemesi için
+// Prevent sitemap caching
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
-    console.log('🔄 Sitemap oluşturuluyor...');
+    console.log('🔄 Generating sitemap...');
     
-    // Statik sayfalar
+    // Static pages
     const staticPages = [
       {
         url: BASE_URL,
@@ -54,21 +54,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url: `${BASE_URL}/tools/paint-calculator`,
         lastModified: new Date(),
         changeFrequency: 'monthly' as const,
-        priority: 0.9, // Yüksek öncelik - değerli araç
+        priority: 0.9, // High priority - valuable tool
       },
     ];
 
-    // Blog yazılarını al
+    // Get blog posts
     const posts = await getAllPosts();
-    console.log(`📝 Sitemap için ${posts.length} blog yazısı bulundu`);
-    console.log('📋 Son 5 yazı:', posts.slice(0, 5).map(p => ({ 
+    console.log(`📝 Found ${posts.length} blog posts for sitemap`);
+    console.log('📋 Latest 5 posts:', posts.slice(0, 5).map(p => ({ 
       title: p.title, 
       slug: p.slug, 
       date: p.date,
       published: p.published 
     })));
     
-    // Blog yazılarını sitemap formatına çevir
+    // Convert blog posts to sitemap format
     const blogPages = posts.map((post) => ({
       url: `${BASE_URL}/blog/${post.slug}`,
       lastModified: new Date(post.date),
@@ -76,7 +76,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     }));
 
-    // Kategori sayfaları
+    // Category pages
     const uniqueCategories = posts.map(post => post.category);
     const categories = Array.from(new Set(uniqueCategories));
     const categoryPages = categories.map((category) => ({
@@ -86,15 +86,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.5,
     }));
 
-    console.log(`✅ Sitemap tamamlandı: ${staticPages.length} statik + ${blogPages.length} blog + ${categoryPages.length} kategori = ${staticPages.length + blogPages.length + categoryPages.length} sayfa`);
+    console.log(`✅ Sitemap completed: ${staticPages.length} static + ${blogPages.length} blog + ${categoryPages.length} category = ${staticPages.length + blogPages.length + categoryPages.length} pages`);
 
-    // Tüm sayfaları birleştir
+    // Combine all pages
     return [...staticPages, ...blogPages, ...categoryPages];
     
   } catch (error) {
-    console.error('❌ Sitemap oluşturulurken hata:', error);
+    console.error('❌ Error generating sitemap:', error);
     
-    // Hata durumunda en azından ana sayfayı döndür
+    // Return at least homepage in case of error
     return [
       {
         url: BASE_URL,
