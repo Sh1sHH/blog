@@ -91,11 +91,11 @@ export default function HomeCarousel({
           carouselContent.map((post) => (
             <Carousel.Item key={post.slug}>
               <Link href={`/blog/${post.slug}`}>
-                <div className="relative w-full h-64 md:h-80 lg:h-[350px] cursor-pointer group overflow-hidden rounded-lg bg-gray-100">
+                <div className="relative w-full h-64 md:h-80 lg:h-[350px] cursor-pointer group overflow-hidden rounded-lg">
                   <img
                     src={post.image}
                     alt={post.title}
-                    className="absolute inset-0 w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+                    className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent group-hover:from-black/80 group-hover:via-black/40 transition-all duration-300" />
                   
@@ -138,11 +138,11 @@ export default function HomeCarousel({
           // Varsayılan statik içerikleri göster
           items.map((item) => (
             <Carousel.Item key={item.id}>
-              <div className="relative w-full h-64 md:h-80 lg:h-[350px] overflow-hidden rounded-lg bg-gray-100">
+              <div className="relative w-full h-64 md:h-80 lg:h-[350px] overflow-hidden rounded-lg">
                 <img
                   src={item.imageUrl}
                   alt={item.title}
-                  className="absolute inset-0 w-full h-full object-contain"
+                  className="absolute inset-0 w-full h-full object-cover object-center"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
                 
