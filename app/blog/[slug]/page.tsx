@@ -199,7 +199,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
 
         {/* Featured Image */}
-        <div className="aspect-[16/9] rounded-lg md:rounded-xl overflow-hidden mb-6 md:mb-8 bg-gray-100">
+        <div className="aspect-[4/5] md:aspect-[16/9] rounded-lg md:rounded-xl overflow-hidden mb-6 md:mb-8 bg-gray-100">
           <Image
             src={post.image}
             alt={post.title}
