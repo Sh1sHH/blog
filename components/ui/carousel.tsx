@@ -91,7 +91,7 @@ export default function HomeCarousel({
           carouselContent.map((post) => (
             <Carousel.Item key={post.slug}>
               <Link href={`/blog/${post.slug}`}>
-                <div className="relative w-full h-80 md:h-96 lg:h-[450px] cursor-pointer group overflow-hidden rounded-lg bg-gray-100">
+                <div className="relative w-full h-64 md:h-80 lg:h-[350px] cursor-pointer group overflow-hidden rounded-lg bg-gray-100">
                   <img
                     src={post.image}
                     alt={post.title}
@@ -144,7 +144,7 @@ export default function HomeCarousel({
           // Varsayılan statik içerikleri göster
           items.map((item) => (
             <Carousel.Item key={item.id}>
-              <div className="relative w-full h-80 md:h-96 lg:h-[450px] overflow-hidden rounded-lg bg-gray-100">
+              <div className="relative w-full h-64 md:h-80 lg:h-[350px] overflow-hidden rounded-lg bg-gray-100">
                 <img
                   src={item.imageUrl}
                   alt={item.title}

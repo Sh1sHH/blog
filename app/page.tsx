@@ -27,11 +27,11 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen">
-      {/* Hero Section - Carousel and Categories Side by Side */}
+      {/* Hero Section - Pinterest Style Layout */}
       <section className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-          {/* Carousel - Takes 2/3 of the space - Now shows all blog posts */}
-          <div className="lg:col-span-2">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Left Column - Carousel */}
+          <div className="lg:col-span-5">
             <HomeCarousel
               posts={allPosts} // All blog posts (regardless of category)
               autoplay={true}
@@ -40,9 +40,74 @@ export default async function Home() {
             />
           </div>
           
-          {/* Room Categories - Takes 1/3 of the space */}
-          <div className="lg:col-span-1">
+          {/* Middle Column - Room Categories */}
+          <div className="lg:col-span-3">
             <RoomCategories />
+          </div>
+
+          {/* Right Column - Paint Calculator Tool */}
+          <div className="lg:col-span-4">
+            <div className="bg-white border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <div className="inline-flex items-center gap-2 bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-sm font-medium mb-4">
+                🎨 Free Tool
+              </div>
+              <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-3">
+                Paint Calculator
+              </h3>
+              <p className="text-sm text-slate-600 mb-4">
+                Calculate exactly how much paint you need for your room project.
+              </p>
+              
+              <div className="grid grid-cols-2 gap-3 mb-6">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                    <span className="text-green-600 font-semibold text-sm">✓</span>
+                  </div>
+                  <span className="text-slate-700 font-medium text-sm">100% Free</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <span className="text-blue-600 font-semibold text-sm">📊</span>
+                  </div>
+                  <span className="text-slate-700 font-medium text-sm">Accurate</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <span className="text-purple-600 font-semibold text-sm">💰</span>
+                  </div>
+                  <span className="text-slate-700 font-medium text-sm">Cost Estimate</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                    <span className="text-orange-600 font-semibold text-sm">📄</span>
+                  </div>
+                  <span className="text-slate-700 font-medium text-sm">PDF Report</span>
+                </div>
+              </div>
+
+              {/* Mini Preview */}
+              <div className="bg-slate-50 rounded-xl p-4 mb-4">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between p-2 bg-white rounded-lg text-xs">
+                    <span className="text-slate-600">Room Size</span>
+                    <span className="font-semibold text-slate-900">12' × 10'</span>
+                  </div>
+                  <div className="flex items-center justify-between p-2 bg-slate-900 text-white rounded-lg">
+                    <span className="text-xs">Paint Needed</span>
+                    <span className="font-bold text-sm">2.3 gallons</span>
+                  </div>
+                </div>
+              </div>
+              
+              <Link href="/tools/paint-calculator">
+                <Button 
+                  className="w-full bg-slate-900 text-white hover:bg-slate-800 font-semibold"
+                >
+                  Try Calculator
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -87,95 +152,7 @@ export default async function Home() {
       {/* Gift Items Section */}
       <GiftItems />
 
-      {/* Paint Calculator CTA Section */}
-      <section className="bg-white border-t py-16 my-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              
-              {/* Left Content */}
-              <div>
-                <div className="inline-flex items-center gap-2 bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-sm font-medium mb-4">
-                  🎨 Free Tool
-                </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-                  Planning to Paint Your Room?
-                </h2>
-                <p className="text-lg text-slate-600 mb-6">
-                  Calculate exactly how much paint you need with our free paint calculator. 
-                  Input your room dimensions, windows, and doors for the most accurate results.
-                </p>
-                
-                <div className="grid grid-cols-2 gap-4 mb-8">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                      <span className="text-green-600 font-semibold">✓</span>
-                    </div>
-                    <span className="text-slate-700 font-medium">100% Free</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <span className="text-blue-600 font-semibold">📊</span>
-                    </div>
-                    <span className="text-slate-700 font-medium">Detailed Calculation</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                      <span className="text-purple-600 font-semibold">💰</span>
-                    </div>
-                    <span className="text-slate-700 font-medium">Cost Estimation</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                      <span className="text-orange-600 font-semibold">📄</span>
-                    </div>
-                    <span className="text-slate-700 font-medium">PDF Report</span>
-                  </div>
-                </div>
-                
-                <Link href="/tools/paint-calculator">
-                  <Button 
-                    size="lg" 
-                    className="bg-slate-900 text-white hover:bg-slate-800 font-semibold px-8 py-4 text-lg"
-                  >
-                    Calculate Paint Amount
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-              </div>
 
-              {/* Right Visual */}
-              <div className="relative">
-                <div className="bg-slate-50 rounded-2xl p-8">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm border">
-                      <span className="text-slate-600">Room Size</span>
-                      <span className="font-semibold text-slate-900">12' × 10' × 9'</span>
-                    </div>
-                    <div className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm border">
-                      <span className="text-slate-600">Windows</span>
-                      <span className="font-semibold text-slate-900">2 windows</span>
-                    </div>
-                    <div className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm border">
-                      <span className="text-slate-600">Doors</span>
-                      <span className="font-semibold text-slate-900">1 door</span>
-                    </div>
-                    <div className="flex items-center justify-between p-4 bg-slate-900 text-white rounded-lg">
-                      <span>Paint Needed</span>
-                      <span className="font-bold text-xl">2.3 gallons</span>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Decorative Elements */}
-                <div className="absolute -top-4 -right-4 w-20 h-20 bg-blue-100 rounded-full opacity-60"></div>
-                <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-purple-100 rounded-full opacity-60"></div>
-              </div>
-              
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Practical Tips Section - Moved to bottom */}
       <PracticalTips />
