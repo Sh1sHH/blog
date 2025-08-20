@@ -29,25 +29,29 @@ export default async function Home() {
     <main className="min-h-screen">
       {/* Hero Section - Pinterest Style Layout */}
       <section className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           {/* Left Column - Carousel */}
-          <div className="lg:col-span-5">
-            <HomeCarousel
-              posts={allPosts} // All blog posts (regardless of category)
-              autoplay={true}
-              autoplayDelay={4000}
-              pauseOnHover={true}
-            />
+          <div className="lg:col-span-5 flex">
+            <div className="w-full">
+              <HomeCarousel
+                posts={allPosts} // All blog posts (regardless of category)
+                autoplay={true}
+                autoplayDelay={4000}
+                pauseOnHover={true}
+              />
+            </div>
           </div>
           
           {/* Middle Column - Room Categories */}
-          <div className="lg:col-span-3">
-            <RoomCategories />
+          <div className="lg:col-span-3 flex">
+            <div className="w-full">
+              <RoomCategories />
+            </div>
           </div>
 
           {/* Right Column - Paint Calculator Tool */}
-          <div className="lg:col-span-4">
-            <div className="bg-white border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div className="lg:col-span-4 flex">
+            <div className="bg-white border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow w-full h-full flex flex-col">
               <div className="inline-flex items-center gap-2 bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-sm font-medium mb-4">
                 🎨 Free Tool
               </div>
@@ -85,8 +89,8 @@ export default async function Home() {
                 </div>
               </div>
 
-              {/* Mini Preview */}
-              <div className="bg-slate-50 rounded-xl p-4 mb-4">
+              {/* Mini Preview - Flex grow to fill space */}
+              <div className="bg-slate-50 rounded-xl p-4 mb-4 flex-grow flex flex-col justify-center">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between p-2 bg-white rounded-lg text-xs">
                     <span className="text-slate-600">Room Size</span>
@@ -101,7 +105,7 @@ export default async function Home() {
               
               <Link href="/tools/paint-calculator">
                 <Button 
-                  className="w-full bg-slate-900 text-white hover:bg-slate-800 font-semibold"
+                  className="w-full bg-slate-900 text-white hover:bg-slate-800 font-semibold mt-auto"
                 >
                   Try Calculator
                   <ArrowRight className="ml-2 h-4 w-4" />

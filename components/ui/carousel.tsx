@@ -99,39 +99,33 @@ export default function HomeCarousel({
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent group-hover:from-black/80 group-hover:via-black/40 transition-all duration-300" />
                   
-                  {/* Content Overlay */}
-                  <div className="absolute inset-0 p-4 md:p-6 lg:p-8 flex flex-col justify-end text-white">
+                  {/* Content Overlay - Minimal */}
+                  <div className="absolute inset-0 p-3 md:p-4 flex flex-col justify-between text-white">
                     {/* Category Badge */}
-                    <div className="absolute top-4 left-4 md:top-6 md:left-6">
-                      <span className="inline-block px-3 py-1 text-xs font-semibold bg-blue-600 text-white rounded-full backdrop-blur-sm">
+                    <div className="flex justify-between items-start">
+                      <span className="inline-block px-2 py-1 text-xs font-semibold bg-blue-600 text-white rounded-full backdrop-blur-sm">
                         {post.category}
                       </span>
+                      <div className="flex items-center gap-1 text-xs text-gray-300 bg-black/30 px-2 py-1 rounded-full backdrop-blur-sm">
+                        <Clock className="w-3 h-3" />
+                        <span>{post.readTime} min</span>
+                      </div>
                     </div>
 
-                    {/* Article Info */}
-                    <div className="space-y-2 md:space-y-3">
-                      <h3 className="text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold leading-tight line-clamp-2 group-hover:text-blue-300 transition-colors">
+                    {/* Bottom Content - Minimal */}
+                    <div className="space-y-1">
+                      <h3 className="text-sm md:text-base lg:text-lg font-bold leading-tight line-clamp-2 group-hover:text-blue-300 transition-colors">
                         {post.title}
                       </h3>
                       
-                      <p className="text-sm md:text-base text-gray-200 line-clamp-2">
-                        {post.description}
-                      </p>
-
-                      {/* Meta Information */}
-                      <div className="flex items-center gap-3 md:gap-4 text-xs md:text-sm text-gray-300">
-                        <div className="flex items-center gap-1">
-                          <Calendar className="w-3 h-3 md:w-4 md:h-4" />
-                          <span>{new Date(post.date).toLocaleDateString('en-US')}</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Clock className="w-3 h-3 md:w-4 md:h-4" />
-                          <span>{post.readTime} min read</span>
-                        </div>
+                      {/* Date */}
+                      <div className="flex items-center gap-1 text-xs text-gray-300">
+                        <Calendar className="w-3 h-3" />
+                        <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
                       </div>
 
-                      {/* Read More Indicator */}
-                      <div className="inline-block px-3 py-1 md:px-4 md:py-2 bg-white/10 backdrop-blur-sm rounded-full text-xs md:text-sm font-medium group-hover:bg-white/20 transition-all">
+                      {/* Read More Indicator - Small */}
+                      <div className="inline-block px-2 py-1 bg-white/10 backdrop-blur-sm rounded-full text-xs font-medium group-hover:bg-white/20 transition-all">
                         Read Article →
                       </div>
                     </div>
@@ -152,12 +146,14 @@ export default function HomeCarousel({
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
                 
-                <div className="absolute inset-0 p-4 md:p-6 lg:p-8 flex flex-col justify-end text-white">
-                  <span className="inline-block px-3 py-1 mb-3 text-xs font-semibold bg-white/20 backdrop-blur-sm rounded-full text-white w-fit">
+                <div className="absolute inset-0 p-3 md:p-4 flex flex-col justify-between text-white">
+                  <span className="inline-block px-2 py-1 text-xs font-semibold bg-white/20 backdrop-blur-sm rounded-full text-white w-fit">
                     {item.category}
                   </span>
-                  <h3 className="text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold mb-2">{item.title}</h3>
-                  <p className="text-sm md:text-base text-gray-200">{item.description}</p>
+                  <div className="space-y-1">
+                    <h3 className="text-sm md:text-base lg:text-lg font-bold leading-tight">{item.title}</h3>
+                    <p className="text-xs text-gray-200 line-clamp-1">{item.description}</p>
+                  </div>
                 </div>
               </div>
             </Carousel.Item>
