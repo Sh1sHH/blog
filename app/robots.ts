@@ -5,9 +5,9 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        allow: '/',
-        // Next.js image optimization'ı izin ver, diğer _next dosyalarını blokla
+        // Ana sayfaya ve image optimization'a izin ver
         allow: [
+          '/',
           '/_next/image*',
           '/_next/static/media*',
         ],
@@ -23,9 +23,9 @@ export default function robots(): MetadataRoute.Robots {
       },
       {
         userAgent: 'Googlebot',
-        allow: '/',
         // Google için de image optimization'a izin ver
         allow: [
+          '/',
           '/_next/image*',
           '/_next/static/media*',
         ],
@@ -40,8 +40,8 @@ export default function robots(): MetadataRoute.Robots {
       },
       {
         userAgent: 'Bingbot',
-        allow: '/',
         allow: [
+          '/',
           '/_next/image*',
           '/_next/static/media*',
         ],
