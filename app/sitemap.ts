@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { getAllPosts } from '@/lib/blog';
 
-// Base URL for production
+// Base URL for production - trailing slash olmadan
 const BASE_URL = 'https://cleverspacesolutions.com';
 
 // Prevent sitemap caching
@@ -12,7 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     console.log('🔄 Generating sitemap...');
     
-    // Static pages
+    // Static pages - URL'lerin sonunda slash olmamasına dikkat et
     const staticPages = [
       {
         url: BASE_URL,
@@ -58,10 +58,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     ];
 
-    // Get blog posts
+    // Get blog posts - sadece yayınlanmış postları al
     const posts = await getAllPosts();
-    console.log(`📝 Found ${posts.length} blog posts for sitemap`);
-    console.log('📋 Latest 5 posts:', posts.slice(0, 5).map(p => ({ 
+    const publishedPosts = posts.filter(post => post.published !== false);
+    console.log(`📝 Found ${publishedPosts.length} published blog posts for sitemap`);
+    console.log('📋 Latest 5 posts:', publishedPosts.slice(0, 5).map(p => ({ 
       title: p.title, 
       slug: p.slug, 
       date: p.date,
@@ -69,15 +70,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })));
     
     // Convert blog posts to sitemap format
-    const blogPages = posts.map((post) => ({
+    const blogPages = publishedPosts.map((post) => ({
       url: `${BASE_URL}/blog/${post.slug}`,
       lastModified: new Date(post.date),
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     }));
 
-    // Category pages
-    const uniqueCategories = posts.map(post => post.category);
+    // Category pages - sadece yayınlanmış postların kategorileri
+    const uniqueCategories = publishedPosts.map(post => post.category);
     const categories = Array.from(new Set(uniqueCategories));
     const categoryPages = categories.map((category) => ({
       url: `${BASE_URL}/categories/${category.toLowerCase().replace(/\s+/g, '-')}`,
@@ -88,8 +89,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     console.log(`✅ Sitemap completed: ${staticPages.length} static + ${blogPages.length} blog + ${categoryPages.length} category = ${staticPages.length + blogPages.length + categoryPages.length} pages`);
 
-    // Combine all pages
-    return [...staticPages, ...blogPages, ...categoryPages];
+    // Combine all pages - URL'lerin geçerli olduğundan emin ol
+    const allPages = [...staticPages, ...blogPages, ...categoryPages];
+    
+    // URL validation - boş veya geçersiz URL'leri filtrele
+    const validPages = allPages.filter(page => 
+      page.url && 
+      page.url.startsWith('https://') && 
+      !page.url.includes('undefined') &&
+      !page.url.includes('null')
+    );
+
+    console.log(`🔍 Filtered ${allPages.length - validPages.length} invalid URLs from sitemap`);
+    
+    return validPages;
     
   } catch (error) {
     console.error('❌ Error generating sitemap:', error);

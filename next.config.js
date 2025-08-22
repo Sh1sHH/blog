@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // URL normalizasyonu için trailing slash'i false yap
+  trailingSlash: false,
   eslint: {
     ignoreDuringBuilds: true,
   },
