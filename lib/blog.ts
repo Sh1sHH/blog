@@ -116,8 +116,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
 
     const htmlContent = marked(firestorePost.content) as string;
 
-    // Increment views
-    await firestoreDB.incrementViews(slug);
+    // Views will be incremented on client-side via API
 
     return {
       slug: firestorePost.slug,

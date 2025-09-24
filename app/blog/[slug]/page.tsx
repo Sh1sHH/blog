@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import ShareButton from '@/components/ui/share-button';
 import AffiliateDisclosure from '@/components/ui/affiliate-disclosure';
+import ViewTracker from '@/components/blog/ViewTracker';
 import { hasAffiliateLinks } from '@/lib/utils';
 
 interface BlogPostPageProps {
@@ -136,6 +137,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      
+      {/* Client-side view tracking */}
+      <ViewTracker slug={post.slug} />
       
       <article className="min-h-screen bg-white overflow-x-hidden">
       {/* Back Button */}
