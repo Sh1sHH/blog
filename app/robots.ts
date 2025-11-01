@@ -4,57 +4,24 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
-        userAgent: '*',
-        // Ana sayfaya ve image optimization'a izin ver
+        userAgent: '*', // Tüm botlar için geçerli
+        
+        // Sitenizin taranmasına ve kaynaklarının okunmasına izin ver
         allow: [
-          '/',
-          '/_next/image*',
-          '/_next/static/media*',
+          '/', // Ana sayfa ve tüm alt sayfalara izin ver
+          '/_next/image*', // Next.js resim optimizasyonuna izin ver
+          '/_next/static/', // Sitenin çalışması için gereken tüm JS/CSS dosyalarına izin ver
         ],
+        
+        // Sadece taranmasını istemediğiniz özel dizinleri engelle
         disallow: [
           '/admin/',
           '/api/',
           '/test-login/',
-          '/_next/static/chunks/',
-          '/_next/static/css/',
-          '/_next/static/js/',
-          '/favicon.ico',
-        ],
-      },
-      {
-        userAgent: 'Googlebot',
-        // Google için de image optimization'a izin ver
-        allow: [
-          '/',
-          '/_next/image*',
-          '/_next/static/media*',
-        ],
-        disallow: [
-          '/admin/',
-          '/api/',
-          '/test-login/',
-          '/_next/static/chunks/',
-          '/_next/static/css/',
-          '/_next/static/js/',
-        ],
-      },
-      {
-        userAgent: 'Bingbot',
-        allow: [
-          '/',
-          '/_next/image*',
-          '/_next/static/media*',
-        ],
-        disallow: [
-          '/admin/',
-          '/api/',
-          '/test-login/',
-          '/_next/static/chunks/',
-          '/_next/static/css/',
-          '/_next/static/js/',
         ],
       },
     ],
+    // Sitemap URL'nizi belirtin
     sitemap: 'https://cleverspacesolutions.com/sitemap.xml',
   };
-} 
+}
