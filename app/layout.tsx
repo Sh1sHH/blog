@@ -15,6 +15,9 @@ export const metadata: Metadata = {
   description: 'Tired of clutter? Discover clever storage solutions & organization ideas for small spaces. Turn your tiny home into a tidy, organized oasis. Reclaim your space!',
   keywords: ['storage solutions', 'small spaces', 'organization', 'home organization', 'space saving', 'declutter', 'tiny home', 'clever storage'],
   authors: [{ name: 'CleverSpace Editorial Team' }],
+  alternates: {
+    canonical: 'https://cleverspacesolutions.com',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',

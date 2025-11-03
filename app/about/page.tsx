@@ -6,6 +6,15 @@ export const metadata: Metadata = {
   title: 'About | CleverSpace Solutions - Joesp H.',
   description: 'Discover the story behind CleverSpace Solutions. Learn how we help transform homes and lives through smart organization, beautiful design, and practical lifestyle tips.',
   keywords: ['about us', 'home organization', 'interior design', 'lifestyle blogger', 'home inspiration', 'clever space solutions'],
+  alternates: {
+    canonical: 'https://cleverspacesolutions.com/about',
+  },
+  openGraph: {
+    title: 'About | CleverSpace Solutions - Joesp H.',
+    description: 'Discover the story behind CleverSpace Solutions. Learn how we help transform homes and lives through smart organization, beautiful design, and practical lifestyle tips.',
+    url: 'https://cleverspacesolutions.com/about',
+    type: 'website',
+  },
   robots: 'index, follow',
 };
 

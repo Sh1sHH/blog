@@ -11,6 +11,23 @@ interface BlogPageProps {
 export const metadata: Metadata = {
   title: 'Blog | CleverSpaceSolutions',
   description: 'Explore our comprehensive collection of articles, reviews, and guides covering storage solutions, organization tips, and space-saving ideas.',
+  alternates: {
+    canonical: 'https://cleverspacesolutions.com/blog',
+  },
+  openGraph: {
+    title: 'Blog | CleverSpaceSolutions',
+    description: 'Explore our comprehensive collection of articles, reviews, and guides covering storage solutions, organization tips, and space-saving ideas.',
+    url: 'https://cleverspacesolutions.com/blog',
+    type: 'website',
+    images: [
+      {
+        url: '/images/navbar/logo2.webp',
+        width: 1200,
+        height: 630,
+        alt: 'CleverSpaceSolutions Blog',
+      },
+    ],
+  },
 };
 
 // Vercel ISR: Blog sayfasını her 15 dakikada bir yeniden generate et (günde 1 yazı için optimize)

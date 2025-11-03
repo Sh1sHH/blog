@@ -3,6 +3,9 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Privacy Policy | CleverSpace Solutions',
   description: 'Our Privacy Policy explains how we collect, use, and protect your personal information in compliance with GDPR, CCPA, and other privacy laws.',
+  alternates: {
+    canonical: 'https://cleverspacesolutions.com/privacy-policy',
+  },
   robots: 'index, follow',
 };
 

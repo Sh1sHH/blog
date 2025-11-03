@@ -48,9 +48,14 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   return {
     title: `${firebaseCategory} Articles - CleverSpaceSolutions`,
     description: `Browse all articles in ${firebaseCategory} category. Discover tips, guides, and insights about ${firebaseCategory.toLowerCase()}.`,
+    alternates: {
+      canonical: `https://cleverspacesolutions.com/categories/${params.category}`,
+    },
     openGraph: {
       title: `${firebaseCategory} Articles | CleverSpaceSolutions`,
       description: `Browse all articles in ${firebaseCategory} category. Discover tips, guides, and insights about ${firebaseCategory.toLowerCase()}.`,
+      url: `https://cleverspacesolutions.com/categories/${params.category}`,
+      type: 'website',
     },
   };
 }

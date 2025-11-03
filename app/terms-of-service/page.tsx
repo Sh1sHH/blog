@@ -3,6 +3,9 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Terms of Service | CleverSpace Solutions',
   description: 'Our Terms of Service outline the rules and regulations for using CleverSpace Solutions website and services.',
+  alternates: {
+    canonical: 'https://cleverspacesolutions.com/terms-of-service',
+  },
   robots: 'index, follow',
 };
 

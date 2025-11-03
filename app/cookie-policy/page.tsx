@@ -3,6 +3,9 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Cookie Policy | CleverSpace Solutions',
   description: 'Learn about how CleverSpace Solutions uses cookies and similar technologies to improve your browsing experience.',
+  alternates: {
+    canonical: 'https://cleverspacesolutions.com/cookie-policy',
+  },
   robots: 'index, follow',
 };
 

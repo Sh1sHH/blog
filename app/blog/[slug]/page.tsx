@@ -57,10 +57,14 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     description: post.description,
     keywords: post.tags,
     authors: [{ name: post.author }],
+    alternates: {
+      canonical: `https://cleverspacesolutions.com/blog/${post.slug}`,
+    },
     openGraph: {
       title: post.title,
       description: post.description,
       type: 'article',
+      url: `https://cleverspacesolutions.com/blog/${post.slug}`,
       publishedTime: post.date,
       authors: [post.author],
       images: [
