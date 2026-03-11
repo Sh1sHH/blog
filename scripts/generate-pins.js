@@ -9,6 +9,7 @@
  */
 
 const { createCanvas, loadImage } = require('canvas');
+const { GoogleGenAI } = require('@google/genai');
 const cloudinary = require('cloudinary').v2;
 const admin = require('firebase-admin');
 const fs = require('fs');
@@ -45,6 +46,42 @@ if (!admin.apps.length) {
   });
 }
 const db = admin.firestore();
+const ai = new GoogleGenAI({ apiKey: env.GEMINI_API_KEY });
+
+// ─── Gemini Image Generation ──────────────────────────────────────────────────
+
+const BASE_STYLE = 'bright natural daylight, minimal Scandinavian interior photography, white walls, light oak wood accents, clean uncluttered composition, warm neutral tones (cream ivory beige), professional lifestyle photography, no people, no text, no watermarks, photorealistic, high resolution, vertical 2:3 aspect ratio';
+
+const CATEGORY_SCENE = {
+  'Kitchen': 'beautiful styled small kitchen interior',
+  'Bedroom': 'cozy minimalist small bedroom interior',
+  'Bathroom': 'elegant small bathroom with spa feel',
+  'Living Room': 'bright airy small living room with sofa',
+  'Balcony': 'small outdoor balcony with plants and seating',
+  'Office': 'clean productive home office desk setup',
+  'Decoration': 'beautifully decorated minimal living room',
+  'Gift Items': 'curated home decor items styled on shelf',
+  'Practical Tips': 'organized functional interior with smart storage',
+  'General': 'bright Scandinavian interior room',
+  'Hediyelik Eşyalar': 'curated home decor items styled on shelf',
+  'Pratik Bilgiler': 'organized functional interior with smart storage',
+  'Dekorasyon': 'beautifully decorated minimal living room',
+};
+
+async function generateImageWithGemini(post) {
+  const scene = CATEGORY_SCENE[post.category] || 'bright minimal interior room';
+  const titleHint = post.title.replace(/[^a-zA-Z0-9 ]/g, ' ').substring(0, 60).trim();
+  const prompt = `${scene}, inspired by: ${titleHint}. Wide angle shot showing full room. ${BASE_STYLE}`;
+
+  const response = await ai.models.generateImages({
+    model: 'imagen-4.0-fast-generate-001',
+    prompt,
+    config: { numberOfImages: 1, aspectRatio: '9:16' },
+  });
+
+  if (!response.generatedImages?.length) throw new Error('No image returned');
+  return Buffer.from(response.generatedImages[0].image.imageBytes, 'base64');
+}
 
 // ─── Template Constants ───────────────────────────────────────────────────────
 
@@ -263,14 +300,16 @@ async function processPost(post) {
   console.log(`\n📌 ${post.slug}`);
 
   const imgPath = findLocalImage(post.slug);
-  if (!imgPath) {
-    console.log('   ⏭️  No image found — skipping');
-    return { slug: post.slug, skipped: true };
-  }
 
   try {
-    console.log(`   📂 Using: ${path.basename(imgPath)}`);
-    const imageBuffer = fs.readFileSync(imgPath);
+    let imageBuffer;
+    if (imgPath) {
+      console.log(`   📂 Using local: ${path.basename(imgPath)}`);
+      imageBuffer = fs.readFileSync(imgPath);
+    } else {
+      console.log('   🤖 Generating with Gemini...');
+      imageBuffer = await generateImageWithGemini(post);
+    }
 
     console.log('   🖼️  Building pin...');
     const pinBuffer = await buildPin(post, imageBuffer);
