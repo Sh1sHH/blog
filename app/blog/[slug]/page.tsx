@@ -95,6 +95,24 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   // Get latest posts (excluding current post)
   const latestPosts = await getLatestPosts(post.slug, 3);
 
+  // Extract FAQ pairs from post content for FAQPage schema
+  function extractFAQs(html: string) {
+    const faqStart = html.search(/<h2[^>]*>[^<]*(?:FAQ|Frequently Asked|Questions)[^<]*<\/h2>/i);
+    if (faqStart === -1) return [];
+    const section = html.slice(faqStart);
+    const faqs: { question: string; answer: string }[] = [];
+    const re = /<h3[^>]*>([\s\S]*?)<\/h3>\s*<p[^>]*>([\s\S]*?)<\/p>/gi;
+    let m;
+    while ((m = re.exec(section)) !== null) {
+      const question = m[1].replace(/<[^>]*>/g, '').trim();
+      const answer = m[2].replace(/<[^>]*>/g, '').trim();
+      if (question && answer) faqs.push({ question, answer });
+    }
+    return faqs.slice(0, 10);
+  }
+
+  const faqs = extractFAQs(post.content);
+
   // JSON-LD structured data for SEO - English only
   const jsonLd = {
     "@context": "https://schema.org",
@@ -110,15 +128,24 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     "author": {
       "@type": "Person",
       "name": post.author,
-      "url": "https://cleverspacesolutions.com/about"
+      "url": "https://cleverspacesolutions.com/about",
+      "sameAs": [
+        "https://cleverspacesolutions.com/about"
+      ]
     },
     "publisher": {
       "@type": "Organization",
       "name": "CleverSpaceSolutions",
+      "url": "https://cleverspacesolutions.com",
       "logo": {
         "@type": "ImageObject",
         "url": "https://cleverspacesolutions.com/images/navbar/logo2.webp"
-      }
+      },
+      "sameAs": [
+        "https://pinterest.com/cleverspacesolutions/",
+        "https://www.instagram.com/cleverspacesolutions/",
+        "https://www.tiktok.com/@cleverspacesolutions"
+      ]
     },
     "datePublished": post.date,
     "dateModified": post.updatedAt || post.date,
@@ -144,6 +171,19 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     ],
   };
 
+  const faqJsonLd = faqs.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(({ question, answer }) => ({
+      "@type": "Question",
+      "name": question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": answer
+      }
+    }))
+  } : null;
+
   return (
     <>
       {/* JSON-LD structured data for Google */}
@@ -155,6 +195,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
       
       {/* Client-side view tracking */}
       <ViewTracker slug={post.slug} />
