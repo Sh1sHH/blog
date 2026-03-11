@@ -165,7 +165,7 @@ export default function DecorationSection() {
                     <h3 className="text-white font-light text-base leading-snug line-clamp-2 tracking-wide">
                       {post.title}
                     </h3>
-                    <p className="text-xs text-white/55 line-clamp-2 mt-2 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <p className="text-xs text-white/90 line-clamp-2 mt-2 leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                       {post.description}
                     </p>
                     <div className="mt-3 h-px transition-all duration-500 w-0 group-hover:w-8" style={{ backgroundColor: '#B8965A' }} />
