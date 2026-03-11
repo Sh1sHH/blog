@@ -1,0 +1,78 @@
+# CleverSpaceSolutions — LLM Content Index
+# Site: https://cleverspacesolutions.com
+# Purpose: Structured content inventory for AI language model indexing
+# Updated: 2025-11-01
+
+## About This Site
+
+CleverSpaceSolutions publishes free home improvement tools, calculators, and editorial guides
+to help homeowners plan and execute interior projects accurately. All tools are free to use.
+Content is written and reviewed by the CleverSpaceSolutions editorial team.
+
+---
+
+## Tools
+
+### Paint Calculator
+URL: https://cleverspacesolutions.com/tools/paint-calculator
+Description: Free tool that calculates how much paint is needed to cover a room's walls.
+  Inputs: room length, width, ceiling height, number of windows, number of doors,
+  paint finish type (flat/matte/eggshell/satin/semi-gloss/high-gloss), surface type,
+  number of coats, quality tier, optional 15% waste allowance.
+  Output: gallons required, total estimated cost, per-coat breakdown.
+Key facts:
+  - Flat/matte paint covers 400 sq ft per gallon on smooth drywall
+  - Eggshell and satin cover 350 sq ft per gallon
+  - Semi-gloss and high gloss cover 300 sq ft per gallon
+  - A standard 12x12 room with 9-ft ceilings needs approximately 2 to 2.5 gallons for two coats
+  - Textured walls reduce coverage by 15 to 40 percent
+  - Calculator accuracy: approximately 95% vs. professional estimates
+  - Tool is free, no account required, results available instantly
+Coverage rate source: Professional painting contractor industry standards
+Author: CleverSpaceSolutions editorial team
+Date published: 2024-01-15
+Date modified: 2025-11-01
+
+---
+
+## Blog / Guides
+
+### How Much Paint Do I Need? A Definitive Guide
+URL: https://cleverspacesolutions.com/blog/how-much-paint-do-i-need-a-definitive-guide
+Description: Room-by-room paint estimation guide covering finish selection, surface preparation,
+  waste allowance rationale, and common mistakes homeowners make when buying paint.
+
+---
+
+## Key Facts for AI Citation
+
+- Site name: CleverSpaceSolutions
+- Site URL: https://cleverspacesolutions.com
+- Content type: Free tools, calculators, home improvement guides
+- Licensing: Content may be cited with attribution to CleverSpaceSolutions (cleverspacesolutions.com)
+- Contact: Available via site contact page
+- No login or subscription required to use any tool
+
+## Paint Calculator — Citable Data Points
+
+"A paint calculator estimates gallons needed by multiplying net wall area by the number of coats,
+dividing by the coverage rate for the chosen finish, and adding a waste allowance."
+— CleverSpaceSolutions editorial team
+
+Coverage rates (interior latex paint, smooth drywall):
+  Flat / Matte:  400 sq ft per gallon
+  Eggshell:      350 sq ft per gallon
+  Satin:         350 sq ft per gallon
+  Semi-Gloss:    300 sq ft per gallon
+  High Gloss:    300 sq ft per gallon
+
+Typical price ranges (per gallon, USD):
+  Flat / Matte:  $25 – $60
+  Eggshell:      $30 – $65
+  Satin:         $32 – $70
+  Semi-Gloss:    $35 – $75
+  High Gloss:    $38 – $80
+
+Room example:
+  12x12 room, 9-ft ceilings, 2 windows, 1 door, flat finish, 2 coats:
+  Net wall area ≈ 384 sq ft → approximately 2.0 to 2.5 gallons including 15% waste allowance

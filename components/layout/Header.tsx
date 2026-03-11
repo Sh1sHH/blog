@@ -65,12 +65,13 @@ export default function Header() {
               <Link href="/categories/office" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
                 Home Office
               </Link>
-              {/* Tools Menu - Highlighted */}
-              <Link 
-                href="/tools/paint-calculator" 
-                className="bg-slate-900 text-white px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors no-underline font-medium"
+              {/* Tools — separator + minimal label */}
+              <span className="h-4 w-px bg-slate-300 mx-2" aria-hidden="true" />
+              <Link
+                href="/tools/paint-calculator"
+                className="text-[11px] tracking-[0.15em] uppercase font-semibold text-slate-700 hover:text-slate-900 transition-colors no-underline border border-slate-300 hover:border-slate-600 px-3 py-1.5 rounded"
               >
-                🎨 Paint Calculator
+                Paint Calculator
               </Link>
             </div>
           </div>
@@ -185,13 +186,15 @@ export default function Header() {
           </Link>
           
           {/* Tools Menu - Mobile */}
-          <Link 
-            href="/tools/paint-calculator" 
-            className="block px-3 py-2 mx-2 mt-2 rounded-md bg-slate-900 text-white hover:bg-slate-800 transition-colors no-underline font-medium text-center"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            🎨 Paint Calculator
-          </Link>
+          <div className="border-t border-slate-200 mx-3 mt-2 pt-3 pb-1">
+            <Link
+              href="/tools/paint-calculator"
+              className="block px-3 py-2 text-[11px] tracking-[0.15em] uppercase font-semibold text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded border border-slate-300 text-center transition-colors no-underline"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Paint Calculator
+            </Link>
+          </div>
           
           {/* Mobil Sosyal Medya */}
           <div className="flex items-center justify-center gap-4 pt-4 border-t">

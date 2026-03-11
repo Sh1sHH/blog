@@ -1,7 +1,7 @@
 import Link from 'next/link';
+import { Cormorant_Garamond } from 'next/font/google';
 import { getAllPosts, getFeaturedPosts } from '@/lib/blog';
 import HomeBlogSection from "@/components/blog/HomeBlogSection";
-import RoomCategories from "@/components/RoomCategories";
 import HomeCarousel from "@/components/ui/carousel";
 import RotatingText from "@/components/ui/rotating-text";
 import PracticalTips from "@/components/PracticalTips";
@@ -10,6 +10,13 @@ import GiftItems from "@/components/GiftItems";
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import ScrollArrow from '@/components/ui/scroll-arrow';
+
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['300', '600'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+});
 
 // Vercel ISR: Sayfayı her 30 dakikada bir yeniden generate et (günde 1 yazı için optimize)
 export const revalidate = 1800;
@@ -29,102 +36,129 @@ export default async function Home() {
     <main className="min-h-screen">
       {/* Hero Section - Pinterest Style Layout */}
       <section className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        {/* Editorial section label */}
+        <div className="flex items-center gap-4 mb-8">
+          <span className="text-[10px] tracking-[0.3em] uppercase font-semibold text-slate-400 shrink-0">Latest & Featured</span>
+          <div className="flex-1 h-px bg-slate-200" />
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           {/* Left Column - Carousel */}
-          <div className="lg:col-span-5 flex">
+          <div className="lg:col-span-7 flex">
             <div className="w-full">
               <HomeCarousel
-                posts={allPosts} // All blog posts (regardless of category)
+                posts={allPosts}
                 autoplay={true}
                 autoplayDelay={4000}
                 pauseOnHover={true}
               />
             </div>
           </div>
-          
-          {/* Middle Column - Room Categories */}
-          <div className="lg:col-span-3 flex">
-            <div className="w-full">
-              <RoomCategories />
-            </div>
-          </div>
 
           {/* Right Column - Paint Calculator Tool */}
-          <div className="lg:col-span-4 flex">
-            <div className="bg-white border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow w-full h-full flex flex-col">
-              <div className="inline-flex items-center gap-2 bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-sm font-medium mb-4">
-                🎨 Free Tool
+          <div className="lg:col-span-5 flex">
+            <div className="bg-white border border-slate-200 rounded-2xl w-full h-full flex flex-col overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+
+              {/* Top: label + title */}
+              <div className="px-7 pt-7 pb-0">
+                <p className="text-[10px] tracking-[0.25em] uppercase font-semibold text-slate-400 mb-5">
+                  Estimation Tool
+                </p>
+                <h3 className={`${cormorant.className} leading-tight tracking-tight text-slate-900`} style={{ fontSize: 'clamp(30px, 3.2vw, 44px)' }}>
+                  <span className="block font-light text-slate-400">Measure once.</span>
+                  <span className="block font-semibold">Buy exactly.</span>
+                </h3>
+                <p className="mt-3 text-xs text-slate-500 leading-relaxed" style={{ maxWidth: '220px' }}>
+                  Dimensions, finish, coats — precise gallon count and cost in seconds.
+                </p>
               </div>
-              <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-3">
-                Paint Calculator
-              </h3>
-              <p className="text-sm text-slate-600 mb-4">
-                Calculate exactly how much paint you need for your room project.
-              </p>
-              
-              <div className="grid grid-cols-2 gap-3 mb-6">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                    <span className="text-green-600 font-semibold text-sm">✓</span>
+
+              {/* Light preview block */}
+              <div className="mx-7 mt-5 rounded-lg flex-grow flex flex-col justify-center bg-slate-50 border border-slate-100" style={{ padding: '16px' }}>
+                <div className="space-y-2 font-mono text-xs">
+                  <div className="flex justify-between">
+                    <span className="uppercase tracking-widest text-[10px] text-slate-400">Room</span>
+                    <span className="text-slate-600">12 × 10 × 9 ft</span>
                   </div>
-                  <span className="text-slate-700 font-medium text-sm">100% Free</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <span className="text-blue-600 font-semibold text-sm">📊</span>
+                  <div className="flex justify-between">
+                    <span className="uppercase tracking-widest text-[10px] text-slate-400">Finish</span>
+                    <span className="text-slate-600">Eggshell · 2 coats</span>
                   </div>
-                  <span className="text-slate-700 font-medium text-sm">Accurate</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
-                    <span className="text-purple-600 font-semibold text-sm">💰</span>
+                  <div className="flex justify-between pt-2 mt-1 border-t border-slate-200">
+                    <span className="uppercase tracking-widest text-[10px] text-slate-400">Needed</span>
+                    <span className="font-semibold" style={{ color: '#B8965A' }}>2.3 gal · ~$104</span>
                   </div>
-                  <span className="text-slate-700 font-medium text-sm">Cost Estimate</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
-                    <span className="text-orange-600 font-semibold text-sm">📄</span>
-                  </div>
-                  <span className="text-slate-700 font-medium text-sm">PDF Report</span>
                 </div>
               </div>
 
-              {/* Mini Preview - Flex grow to fill space */}
-              <div className="bg-slate-50 rounded-xl p-4 mb-4 flex-grow flex flex-col justify-center">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between p-2 bg-white rounded-lg text-xs">
-                    <span className="text-slate-600">Room Size</span>
-                    <span className="font-semibold text-slate-900">12' × 10'</span>
-                  </div>
-                  <div className="flex items-center justify-between p-2 bg-slate-900 text-white rounded-lg">
-                    <span className="text-xs">Paint Needed</span>
-                    <span className="font-bold text-sm">2.3 gallons</span>
-                  </div>
-                </div>
+              {/* CTA */}
+              <div className="px-7 py-6">
+                <Link href="/tools/paint-calculator">
+                  <Button className="w-full bg-slate-900 text-white hover:bg-slate-800 font-semibold tracking-wide text-sm">
+                    Open Calculator
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
               </div>
-              
-              <Link href="/tools/paint-calculator">
-                <Button 
-                  className="w-full bg-slate-900 text-white hover:bg-slate-800 font-semibold mt-auto"
-                >
-                  Try Calculator
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+
             </div>
           </div>
         </div>
       </section>
 
+      {/* Category Cards Section */}
+      <section className="container mx-auto px-4 pb-4">
+        <div className="flex items-center gap-4 mb-6">
+          <span className="text-[10px] tracking-[0.3em] uppercase font-semibold text-slate-400 shrink-0">Browse by Category</span>
+          <div className="flex-1 h-px bg-slate-200" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {[
+            { name: 'Decoration Ideas', sub: 'Style & Aesthetics', image: '/images/menu/decors.png', href: '/categories/decoration' },
+            { name: 'Gift Ideas',       sub: 'For Every Budget',   image: '/images/menu/gifts.png',  href: '/categories/gift-items' },
+            { name: 'Practical Tips',   sub: 'Smart Solutions',    image: '/images/menu/tips.png',   href: '/categories/practical-tips' },
+          ].map((cat) => (
+            <Link
+              key={cat.href}
+              href={cat.href}
+              className="group block rounded-xl overflow-hidden relative no-underline"
+              style={{ aspectRatio: '4/3' }}
+            >
+              <img
+                src={cat.image}
+                alt={cat.name}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 via-[40%] to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-5">
+                <p className="text-[9px] tracking-[0.25em] uppercase text-white/40 mb-1">{cat.sub}</p>
+                <h3
+                  className={`${cormorant.className} text-white font-light leading-tight`}
+                  style={{ fontSize: 'clamp(22px, 2.5vw, 30px)' }}
+                >
+                  {cat.name}
+                </h3>
+                <div
+                  className="mt-2 h-px transition-all duration-500 w-0 group-hover:w-8"
+                  style={{ backgroundColor: '#B8965A' }}
+                />
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
       {/* Title Section */}
-      <section className="container mx-auto px-4 py-8 md:py-16">
+      <section className="container mx-auto px-4 py-8 md:py-20">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-800 leading-tight">
-            <span className="block mb-2">Discover your next</span>
-            <span className="block text-blue-600">
+          <p className="text-[10px] tracking-[0.3em] uppercase font-semibold text-slate-400 mb-8">
+            Smart Home · Interior Ideas
+          </p>
+          <h2 className={`${cormorant.className} leading-none tracking-tight`} style={{ fontSize: 'clamp(44px, 6vw, 80px)' }}>
+            <span className="block font-light text-slate-400 mb-2">Discover your next</span>
+            <span className="block font-semibold text-slate-900">
               <RotatingText
                 texts={['smart', 'clever', 'modern', 'creative']}
-                mainClassName="px-1 bg-blue-600 text-white overflow-hidden py-0.5 rounded"
+                mainClassName="px-3 bg-slate-900 text-white overflow-hidden py-1 rounded-sm"
                 staggerFrom="last"
                 initial={{ y: "100%" }}
                 animate={{ y: 0 }}
@@ -133,10 +167,10 @@ export default async function Home() {
                 splitLevelClassName="overflow-hidden"
                 transition={{ type: "spring", damping: 30, stiffness: 400 }}
                 rotationInterval={2000}
-              /> space idea
+              />{' '}space idea
             </span>
           </h2>
-          
+
           {/* Down Arrow to guide users */}
           <ScrollArrow targetId="blog-section" />
         </div>

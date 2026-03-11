@@ -316,7 +316,7 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
             <div className="flex justify-center mt-8">
               <Link 
                 href="/blog" 
-                className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors font-medium tracking-wide text-sm"
               >
                 All Articles
                 <ChevronRight className="w-4 h-4" />
@@ -332,9 +332,9 @@ export default function HomeBlogSection({ posts, title = "Latest Articles" }: Ho
                   key={index}
                   onClick={() => goToPage(index)}
                   className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-colors ${
-                    index === currentPage 
-                      ? 'bg-slate-600' 
-                      : 'bg-slate-300 hover:bg-slate-400'
+                    index === currentPage
+                      ? 'bg-slate-900'
+                      : 'bg-slate-200 hover:bg-slate-400'
                   }`}
                   aria-label={`Go to page ${index + 1}`}
                 />

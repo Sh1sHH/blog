@@ -99,34 +99,33 @@ export default function HomeCarousel({
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent group-hover:from-black/80 group-hover:via-black/40 transition-all duration-300" />
                   
-                  {/* Content Overlay - Minimal */}
-                  <div className="absolute inset-0 p-3 md:p-4 flex flex-col justify-between text-white">
-                    {/* Category Badge */}
+                  {/* Content Overlay */}
+                  <div className="absolute inset-0 p-4 md:p-5 flex flex-col justify-between text-white">
+                    {/* Top row — category + read time */}
                     <div className="flex justify-between items-start">
-                      <span className="inline-block px-2 py-1 text-xs font-semibold bg-blue-600 text-white rounded-full backdrop-blur-sm">
+                      <span className="inline-block px-2 py-1 text-[9px] tracking-[0.2em] uppercase font-medium bg-black/35 backdrop-blur-sm text-white/75 border border-white/10 rounded-sm">
                         {post.category}
                       </span>
-                      <div className="flex items-center gap-1 text-xs text-gray-300 bg-black/30 px-2 py-1 rounded-full backdrop-blur-sm">
+                      <div className="flex items-center gap-1 text-[10px] text-white/50 bg-black/25 px-2 py-1 rounded-sm backdrop-blur-sm">
                         <Clock className="w-3 h-3" />
                         <span>{post.readTime} min</span>
                       </div>
                     </div>
 
-                    {/* Bottom Content - Minimal */}
-                    <div className="space-y-1">
-                      <h3 className="text-sm md:text-base lg:text-lg font-bold leading-tight line-clamp-2 group-hover:text-blue-300 transition-colors">
+                    {/* Bottom content */}
+                    <div className="space-y-2">
+                      <h3 className="text-sm md:text-base lg:text-lg font-medium leading-tight line-clamp-2 transition-opacity group-hover:opacity-80">
                         {post.title}
                       </h3>
-                      
-                      {/* Date */}
-                      <div className="flex items-center gap-1 text-xs text-gray-300">
-                        <Calendar className="w-3 h-3" />
-                        <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
-                      </div>
 
-                      {/* Read More Indicator - Small */}
-                      <div className="inline-block px-2 py-1 bg-white/10 backdrop-blur-sm rounded-full text-xs font-medium group-hover:bg-white/20 transition-all">
-                        Read Article →
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1 text-[10px] text-white/40">
+                          <Calendar className="w-3 h-3" />
+                          <span>{new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+                        </div>
+                        <span className="text-[9px] tracking-[0.2em] uppercase text-white/50 group-hover:text-white/80 transition-colors">
+                          Read →
+                        </span>
                       </div>
                     </div>
                   </div>

@@ -398,7 +398,7 @@ Calculated with CleverSpaceSolutions.com/tools/paint-calculator!`;
           </Card>
           
           <div className="flex flex-wrap gap-3">
-            <Button onClick={calculatePaint} disabled={isCalculating} className="flex-1 min-w-[200px]" size="lg">
+            <Button onClick={calculatePaint} disabled={isCalculating} className="flex-1 min-w-[200px] bg-slate-900 hover:bg-slate-800 text-white" size="lg">
               {isCalculating ? (<><RefreshCw className="mr-2 h-4 w-4 animate-spin" />Calculating...</>) : (<><Calculator className="mr-2 h-4 w-4" />Calculate</>)}
             </Button>
             <Button variant="outline" onClick={resetForm} size="lg"><RefreshCw className="mr-2 h-4 w-4" />Reset</Button>

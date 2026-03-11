@@ -11,42 +11,28 @@ interface BlogCardMobileProps {
 
 export default function BlogCardMobile({ post, categoryLabel }: BlogCardMobileProps) {
   return (
-    <Link href={`/blog/${post.slug}`}>
-      <div className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer flex flex-col">
-        {/* Image Container */}
-        <div className="relative h-32 sm:h-40 overflow-hidden flex-shrink-0">
-          <img 
-            src={post.image} 
-            alt={post.title}
-            className="w-full h-full object-cover object-bottom group-hover:scale-105 transition-transform duration-300"
-          />
-          
-          {/* Reading Time Badge */}
-          <div className="absolute top-2 left-2">
-            <div className="bg-white bg-opacity-90 backdrop-blur-sm text-slate-700 text-xs px-2 py-0.5 rounded-full flex items-center gap-1">
-              <Clock className="w-2.5 h-2.5" />
-              {post.readTime} min
-            </div>
+    <Link href={`/blog/${post.slug}`} className="no-underline block">
+      <div className="group relative rounded-xl overflow-hidden cursor-pointer" style={{ height: '240px' }}>
+        <img
+          src={post.image}
+          alt={post.title}
+          className="w-full h-full object-cover object-bottom group-hover:scale-105 transition-transform duration-700"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 via-[40%] to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 p-4">
+          <div className="flex items-center gap-1 mb-2 text-white/40" style={{ fontSize: '9px', letterSpacing: '0.2em' }}>
+            <Clock className="w-3 h-3" />
+            <span className="uppercase">{post.readTime} min read</span>
           </div>
-        </div>
-
-        {/* Content */}
-        <div className="p-3 sm:p-4 flex-1 flex flex-col">
-          <h3 className="text-base font-semibold text-slate-800 group-hover:text-blue-600 transition-colors line-clamp-2 mb-1">
+          <h3 className="text-white font-light text-sm leading-snug line-clamp-2 tracking-wide">
             {post.title}
           </h3>
-          
-          <p className="text-xs text-slate-600 line-clamp-2 flex-1 mb-2">
-            {post.description}
-          </p>
-          
-          <div className="mt-auto">
-            <span className="inline-block bg-slate-100 text-slate-600 text-xs px-2 py-0.5 rounded-full">
-              {categoryLabel || post.category}
-            </span>
-          </div>
+          <div
+            className="mt-2 h-px transition-all duration-500 w-0 group-hover:w-6"
+            style={{ backgroundColor: '#B8965A' }}
+          />
         </div>
       </div>
     </Link>
   );
-} 
+}
