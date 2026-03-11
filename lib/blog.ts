@@ -26,6 +26,7 @@ export interface BlogPost {
   title: string;
   description: string;
   date: string;
+  updatedAt?: string;
   author: string;
   category: string;
   tags: string[];
@@ -123,6 +124,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       title: firestorePost.title,
       description: firestorePost.description,
       date: firestorePost.createdAt.toISOString(),
+      updatedAt: firestorePost.updatedAt?.toISOString(),
       author: firestorePost.author,
       category: getCategoryDisplayName(firestorePost.category), // İngilizce kategori adı
       tags: firestorePost.tags,

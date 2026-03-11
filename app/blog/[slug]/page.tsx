@@ -121,7 +121,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       }
     },
     "datePublished": post.date,
-    "dateModified": post.date,
+    "dateModified": post.updatedAt || post.date,
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": `https://cleverspacesolutions.com/blog/${post.slug}`
