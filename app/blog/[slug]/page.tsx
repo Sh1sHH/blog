@@ -9,7 +9,6 @@ import { Badge } from '@/components/ui/badge';
 import ShareButton from '@/components/ui/share-button';
 import AffiliateDisclosure from '@/components/ui/affiliate-disclosure';
 import ViewTracker from '@/components/blog/ViewTracker';
-import AdUnit from '@/components/blog/AdUnit';
 import { hasAffiliateLinks } from '@/lib/utils';
 
 interface BlogPostPageProps {
@@ -223,15 +222,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {/* Content */}
       <div className="w-full max-w-4xl mx-auto px-3 sm:px-6 lg:px-8">
 
-        {/* Ad: İçerik başı */}
-        <AdUnit slot="7215787856" format="horizontal" className="mb-6 md:mb-8" />
-
         <div className="prose prose-sm md:prose-base lg:prose-lg prose-gray w-full max-w-none prose-headings:font-bold prose-p:text-gray-700 prose-p:leading-relaxed prose-img:rounded-lg prose-img:shadow-md prose-img:max-w-full">
           <div dangerouslySetInnerHTML={{ __html: post.content }} />
         </div>
-
-        {/* Ad: İçerik sonu */}
-        <AdUnit slot="7215787856" format="rectangle" className="mt-8 md:mt-10" />
 
         {/* Affiliate Disclosure - Tags kısmının üstünde */}
         {hasAffiliateLinks(post.content) && (
