@@ -153,7 +153,7 @@ export default function DecorationSection() {
           <div className="grid grid-cols-2 gap-4">
             {getCurrentSlide().map(post => (
               <Link key={post.slug} href={`/blog/${post.slug}`} className="no-underline">
-                <div className="group relative rounded-xl overflow-hidden cursor-pointer" style={{ height: '380px' }}>
+                <div className="group relative rounded-xl overflow-hidden cursor-pointer" style={{ height: '320px' }}>
                   <img src={post.image} alt={post.title}
                     className="w-full h-full object-cover object-bottom group-hover:scale-105 transition-transform duration-700" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 via-[40%] to-transparent" />

@@ -123,7 +123,7 @@ export default async function Home() {
               key={cat.href}
               href={cat.href}
               className="group block rounded-xl overflow-hidden relative no-underline"
-              style={{ aspectRatio: '4/3' }}
+              style={{ aspectRatio: '8/3' }}
             >
               <Image
                 src={cat.image}
