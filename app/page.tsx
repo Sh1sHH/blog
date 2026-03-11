@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Cormorant_Garamond } from 'next/font/google';
 import { getAllPosts, getFeaturedPosts } from '@/lib/blog';
 import HomeBlogSection from "@/components/blog/HomeBlogSection";
@@ -34,11 +35,12 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen">
+      <h1 className="sr-only">CleverSpaceSolutions — Small Space Organization, Decoration &amp; Storage Ideas</h1>
       {/* Hero Section - Pinterest Style Layout */}
       <section className="container mx-auto px-4 py-12">
         {/* Editorial section label */}
         <div className="flex items-center gap-4 mb-8">
-          <span className="text-[10px] tracking-[0.3em] uppercase font-semibold text-slate-400 shrink-0">Latest & Featured</span>
+          <h2 className="text-[10px] tracking-[0.3em] uppercase font-semibold text-slate-400 shrink-0">Latest &amp; Featured</h2>
           <div className="flex-1 h-px bg-slate-200" />
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
@@ -108,7 +110,7 @@ export default async function Home() {
       {/* Category Cards Section */}
       <section className="container mx-auto px-4 pb-4">
         <div className="flex items-center gap-4 mb-6">
-          <span className="text-[10px] tracking-[0.3em] uppercase font-semibold text-slate-400 shrink-0">Browse by Category</span>
+          <h2 className="text-[10px] tracking-[0.3em] uppercase font-semibold text-slate-400 shrink-0">Browse by Category</h2>
           <div className="flex-1 h-px bg-slate-200" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -123,10 +125,12 @@ export default async function Home() {
               className="group block rounded-xl overflow-hidden relative no-underline"
               style={{ aspectRatio: '4/3' }}
             >
-              <img
+              <Image
                 src={cat.image}
                 alt={cat.name}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-700"
+                sizes="(max-width: 768px) 100vw, 33vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 via-[40%] to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-5">

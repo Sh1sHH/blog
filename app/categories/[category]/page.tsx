@@ -1,176 +1,201 @@
-import { getAllPosts, getCategoryDisplayName } from '@/lib/blog';
+import { getAllPosts } from '@/lib/blog';
 import BlogCard from '@/components/blog/BlogCard';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import { Cormorant_Garamond } from 'next/font/google';
 import { ArrowLeft } from 'lucide-react';
 
-// Vercel ISR: Kategori sayfalarını her 10 dakikada bir yeniden generate et (günde 1 yazı için optimize)
 export const revalidate = 600;
 
-// Valid categories mapping Turkish to English
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['300', '600'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+});
+
 const categoryMapping: { [key: string]: string } = {
   'pratik-bilgiler': 'Practical Tips',
   'practical-tips': 'Practical Tips',
-  'dekorasyon': 'Decoration', 
+  'dekorasyon': 'Decoration',
   'decoration': 'Decoration',
   'hediyelik-esyalar': 'Gift Items',
   'gift-items': 'Gift Items',
   'kitchen': 'Kitchen',
-  'bathroom': 'Bathroom', 
+  'bathroom': 'Bathroom',
   'living-room': 'Living Room',
   'office': 'Office',
   'bedroom': 'Bedroom',
   'balcony': 'Balcony',
-  'general': 'General'
+  'general': 'General',
+};
+
+const categoryMeta: { [key: string]: { sub: string; description: string } } = {
+  'Practical Tips':  { sub: 'Smart Solutions',    description: 'Actionable guides and expert advice for a more organized, efficient everyday life at home.' },
+  'Decoration':      { sub: 'Style & Aesthetics',  description: 'Design inspiration and decoration ideas to transform every corner of your living space.' },
+  'Gift Items':      { sub: 'For Every Budget',    description: 'Thoughtful gift picks and home décor recommendations for the people you care about.' },
+  'Kitchen':         { sub: 'Cook & Organize',     description: 'Kitchen organization tips, small kitchen ideas, and functional design upgrades.' },
+  'Bathroom':        { sub: 'Refresh & Renew',     description: 'Bathroom décor, storage hacks, and design ideas for every budget and style.' },
+  'Living Room':     { sub: 'Gather & Relax',      description: 'Living room arrangement ideas, furniture tips, and cozy décor inspiration.' },
+  'Office':          { sub: 'Work from Home',       description: 'Home office setup guides, desk organization, and productivity-boosting space ideas.' },
+  'Bedroom':         { sub: 'Rest & Restore',      description: 'Bedroom decoration, storage solutions, and design ideas for a calm, personal retreat.' },
+  'Balcony':         { sub: 'Outdoor Living',       description: 'Small balcony garden ideas, outdoor décor, and compact patio solutions.' },
+  'General':         { sub: 'All Topics',           description: 'A mix of home improvement ideas, lifestyle tips, and space-saving inspiration.' },
 };
 
 interface CategoryPageProps {
-  params: { category: string }
+  params: { category: string };
 }
 
-// Get category name from URL
 function getCategoryFromUrl(urlCategory: string): string | null {
-  const decodedCategory = decodeURIComponent(urlCategory.toLowerCase());
-  return categoryMapping[decodedCategory] || null;
+  const decoded = decodeURIComponent(urlCategory.toLowerCase());
+  return categoryMapping[decoded] || null;
 }
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
-  const firebaseCategory = getCategoryFromUrl(params.category);
-  
-  if (!firebaseCategory) {
+  const category = getCategoryFromUrl(params.category);
+
+  if (!category) {
     return {
-      title: 'Category Not Found - CleverSpaceSolutions',
+      title: 'Category Not Found — CleverSpaceSolutions',
       description: 'The requested category was not found.',
     };
   }
-  
+
+  const allPosts = await getAllPosts();
+  const posts = allPosts.filter(p => p.category === category && p.published);
+  const meta = categoryMeta[category];
+
   return {
-    title: `${firebaseCategory} Articles - CleverSpaceSolutions`,
-    description: `Browse all articles in ${firebaseCategory} category. Discover tips, guides, and insights about ${firebaseCategory.toLowerCase()}.`,
+    title: `${category} — CleverSpaceSolutions`,
+    description: meta?.description ?? `Browse all ${category} articles on CleverSpaceSolutions.`,
     alternates: {
       canonical: `https://cleverspacesolutions.com/categories/${params.category}`,
     },
     openGraph: {
-      title: `${firebaseCategory} Articles | CleverSpaceSolutions`,
-      description: `Browse all articles in ${firebaseCategory} category. Discover tips, guides, and insights about ${firebaseCategory.toLowerCase()}.`,
+      title: `${category} | CleverSpaceSolutions`,
+      description: meta?.description ?? `Browse all ${category} articles on CleverSpaceSolutions.`,
       url: `https://cleverspacesolutions.com/categories/${params.category}`,
       type: 'website',
+      images: [{ url: '/images/og-default.png', width: 1200, height: 630 }],
     },
+    robots: posts.length === 0 ? 'noindex, follow' : 'index, follow',
   };
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  const firebaseCategory = getCategoryFromUrl(params.category);
-  
-  // Check if category exists
-  if (!firebaseCategory) {
-    notFound();
-  }
+  const category = getCategoryFromUrl(params.category);
+  if (!category) notFound();
 
   const allPosts = await getAllPosts();
-  
-  // Filter posts by category - artık İngilizce kategori adlarını kullanıyoruz
-  const categoryPosts = allPosts.filter(post => 
-    post.category === firebaseCategory && post.published
-  );
-
-  // Category descriptions in English
-  const getCategoryDescription = (category: string) => {
-    switch (category) {
-      case 'Practical Tips':
-        return 'Practical tips, guides, and expert recommendations for daily life, health, and productivity';
-      case 'Decoration':
-        return 'Decoration ideas and design inspiration to beautify every corner of your home';
-      case 'Gift Items':
-        return 'Special gift ideas and home decoration gift recommendations to make your loved ones happy';
-      case 'Kitchen':
-        return 'Kitchen decoration and organization tips and ideas';
-      case 'Bathroom':
-        return 'Bathroom decoration and design recommendations';
-      case 'Living Room':
-        return 'Living room decoration and arrangement ideas';
-      case 'Office':
-        return 'Home office and workspace organization recommendations';
-      case 'Bedroom':
-        return 'Bedroom decoration and design ideas';
-      case 'Balcony':
-        return 'Balcony decoration and outdoor space ideas';
-      default:
-        return `Discover all articles in ${category} category`;
-    }
-  };
+  const posts = allPosts.filter(p => p.category === category && p.published);
+  const meta = categoryMeta[category] ?? { sub: 'Articles', description: '' };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-6 md:py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Back to Home Button */}
-        <div className="mb-6">
-          <Link 
-            href="/" 
-            className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Home
-          </Link>
-        </div>
+    <div className="min-h-screen bg-slate-50">
 
-        {/* Page Header */}
-        <div className="text-center mb-8 md:mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">
-            {firebaseCategory}
-          </h1>
-          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-            {getCategoryDescription(firebaseCategory)}
-          </p>
-          <div className="w-16 md:w-24 h-1 bg-blue-600 mx-auto mt-4 md:mt-6 rounded"></div>
-          
-          {/* Post Count */}
-          <div className="mt-6">
-            <span className="inline-block px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
-              {categoryPosts.length} {categoryPosts.length === 1 ? 'article' : 'articles'} found
-            </span>
-          </div>
-        </div>
+      {/* ── HERO BAND ── */}
+      <div className="bg-white border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-14">
 
-        {/* Posts Grid */}
-        {categoryPosts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
-            {categoryPosts.map((post) => (
-              <BlogCard key={post.slug} post={post} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12">
-            <div className="max-w-md mx-auto">
-              <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                No articles yet
-              </h3>
-              <p className="text-gray-600 mb-6">
-                There are no published articles in the {firebaseCategory} category yet.
+          {/* Breadcrumb */}
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 mb-12"
+            style={{ fontSize: '11px', letterSpacing: '0.18em' }}>
+            <Link href="/" className="uppercase text-slate-400 no-underline hover:opacity-70 transition-opacity">
+              Home
+            </Link>
+            <span className="text-slate-200">/</span>
+            <Link href="/blog" className="uppercase text-slate-400 no-underline hover:opacity-70 transition-opacity">
+              Blog
+            </Link>
+            <span className="text-slate-200">/</span>
+            <span className="uppercase text-slate-600">{category}</span>
+          </nav>
+
+          {/* Title block */}
+          <div className="grid md:grid-cols-5 gap-8 md:gap-16 items-end">
+            <div className="md:col-span-3">
+              <p className="mb-5 uppercase font-medium" style={{ fontSize: '11px', letterSpacing: '0.35em', color: '#B8965A' }}>
+                — {meta.sub}
               </p>
-              <Link 
-                href="/blog" 
-                className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                View All Articles
-              </Link>
+              <h1 className={`${cormorant.className} leading-none tracking-tight`}
+                style={{ fontSize: 'clamp(52px, 7vw, 96px)' }}>
+                <span className="block font-light text-slate-400">Browse</span>
+                <span className="block font-semibold text-slate-900">{category}</span>
+              </h1>
             </div>
+
+            <div className="md:col-span-2 pb-1">
+              <p className="text-sm leading-relaxed text-slate-500 mb-8" style={{ maxWidth: '300px' }}>
+                {meta.description}
+              </p>
+              <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '20px' }}>
+                <div className="flex items-baseline gap-2">
+                  <span className={`${cormorant.className} font-semibold tabular-nums text-slate-900`}
+                    style={{ fontSize: '32px' }}>
+                    {posts.length}
+                  </span>
+                  <span className="uppercase text-slate-400" style={{ fontSize: '10px', letterSpacing: '0.15em' }}>
+                    {posts.length === 1 ? 'Article' : 'Articles'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── CONTENT ── */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+
+        {posts.length > 0 ? (
+          <>
+            {/* Section label */}
+            <div className="flex items-center gap-4 mb-10">
+              <span className="text-[10px] tracking-[0.3em] uppercase font-semibold text-slate-400 shrink-0">
+                All Articles
+              </span>
+              <div className="flex-1 h-px bg-slate-200" />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {posts.map((post) => (
+                <BlogCard key={post.slug} post={post} />
+              ))}
+            </div>
+          </>
+        ) : (
+          /* Empty state */
+          <div className="flex flex-col items-center justify-center py-24 text-center">
+            <div style={{ width: 2, height: 60, backgroundColor: '#e2e8f0', marginBottom: 32 }} />
+            <p className="uppercase text-slate-400 mb-4" style={{ fontSize: '10px', letterSpacing: '0.3em' }}>
+              Coming Soon
+            </p>
+            <h2 className={`${cormorant.className} font-light text-slate-700 mb-6`}
+              style={{ fontSize: 'clamp(28px, 4vw, 48px)' }}>
+              No articles yet in {category}
+            </h2>
+            <p className="text-sm text-slate-400 mb-10" style={{ maxWidth: 340 }}>
+              We&apos;re working on it. In the meantime, explore all our articles below.
+            </p>
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-2 bg-slate-900 text-white text-xs uppercase tracking-widest px-6 py-3 hover:bg-slate-800 transition-colors no-underline"
+            >
+              View All Articles
+            </Link>
           </div>
         )}
 
-        {/* Back to Categories */}
-        <div className="mt-12 text-center">
-          <Link 
-            href="/" 
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+        {/* Back link */}
+        <div className="mt-16 pt-8 border-t border-slate-200 flex items-center gap-3">
+          <div style={{ width: 2, height: 16, backgroundColor: '#B8965A' }} />
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-xs uppercase tracking-widest text-slate-500 hover:text-slate-900 transition-colors no-underline"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-3 h-3" />
             Back to Home
           </Link>
         </div>
@@ -179,7 +204,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   );
 }
 
-// Generate static params for better performance
 export async function generateStaticParams() {
   return [
     { category: 'practical-tips' },
@@ -191,6 +215,6 @@ export async function generateStaticParams() {
     { category: 'office' },
     { category: 'bedroom' },
     { category: 'balcony' },
-    { category: 'general' }
+    { category: 'general' },
   ];
-} 
+}

@@ -4,9 +4,8 @@ import { getAllPosts } from '@/lib/blog';
 // Base URL for production - trailing slash olmadan
 const BASE_URL = 'https://cleverspacesolutions.com';
 
-// Prevent sitemap caching
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// Sitemap'i saatte bir yenile (Firebase okumalarını azaltır)
+export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
@@ -16,15 +15,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const staticPages = [
       {
         url: BASE_URL,
-        lastModified: new Date(),
+        lastModified: new Date('2024-01-15'),
         changeFrequency: 'weekly' as const,
         priority: 1,
       },
       {
         url: `${BASE_URL}/about`,
-        lastModified: new Date(),
+        lastModified: new Date('2024-06-01'),
         changeFrequency: 'monthly' as const,
         priority: 0.8,
+      },
+      {
+        url: `${BASE_URL}/contact`,
+        lastModified: new Date('2024-06-01'),
+        changeFrequency: 'monthly' as const,
+        priority: 0.6,
       },
       {
         url: `${BASE_URL}/blog`,
@@ -34,25 +39,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
       {
         url: `${BASE_URL}/privacy-policy`,
-        lastModified: new Date(),
+        lastModified: new Date('2024-01-15'),
         changeFrequency: 'yearly' as const,
         priority: 0.3,
       },
       {
         url: `${BASE_URL}/terms-of-service`,
-        lastModified: new Date(),
+        lastModified: new Date('2024-01-15'),
         changeFrequency: 'yearly' as const,
         priority: 0.3,
       },
       {
         url: `${BASE_URL}/cookie-policy`,
-        lastModified: new Date(),
+        lastModified: new Date('2024-01-15'),
         changeFrequency: 'yearly' as const,
         priority: 0.3,
       },
       {
         url: `${BASE_URL}/tools/paint-calculator`,
-        lastModified: new Date(),
+        lastModified: new Date('2025-11-01'),
         changeFrequency: 'monthly' as const,
         priority: 0.9, // High priority - valuable tool
       },

@@ -3,17 +3,31 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'About | CleverSpace Solutions - Joesp H.',
+  title: 'About | CleverSpaceSolutions - Joesp H.',
   description: 'Discover the story behind CleverSpace Solutions. Learn how we help transform homes and lives through smart organization, beautiful design, and practical lifestyle tips.',
   keywords: ['about us', 'home organization', 'interior design', 'lifestyle blogger', 'home inspiration', 'clever space solutions'],
   alternates: {
     canonical: 'https://cleverspacesolutions.com/about',
   },
   openGraph: {
-    title: 'About | CleverSpace Solutions - Joesp H.',
+    title: 'About | CleverSpaceSolutions - Joesp H.',
     description: 'Discover the story behind CleverSpace Solutions. Learn how we help transform homes and lives through smart organization, beautiful design, and practical lifestyle tips.',
     url: 'https://cleverspacesolutions.com/about',
     type: 'website',
+    images: [
+      {
+        url: '/images/og-default.png',
+        width: 1200,
+        height: 630,
+        alt: 'About Joesp H. — CleverSpaceSolutions',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About | CleverSpaceSolutions - Joesp H.',
+    description: 'Discover the story behind CleverSpace Solutions. Learn how we help transform homes and lives through smart organization, beautiful design, and practical lifestyle tips.',
+    images: ['/images/og-default.png'],
   },
   robots: 'index, follow',
 };
@@ -21,6 +35,28 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "Joesp H.",
+            "url": "https://cleverspacesolutions.com/about",
+            "description": "Home organization specialist and founder of CleverSpaceSolutions. Helps people create organized, functional small spaces.",
+            "sameAs": [
+              "https://pinterest.com/cleverspacesolutions/",
+              "https://www.instagram.com/cleverspacesolutions/",
+              "https://www.tiktok.com/@cleverspacesolutions"
+            ],
+            "worksFor": {
+              "@type": "Organization",
+              "name": "CleverSpaceSolutions",
+              "url": "https://cleverspacesolutions.com"
+            }
+          })
+        }}
+      />
       {/* Hero Section */}
       <section className="py-24">
         <div className="container mx-auto px-4 max-w-3xl text-center">

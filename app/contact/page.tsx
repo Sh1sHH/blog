@@ -2,16 +2,30 @@ import { Metadata } from 'next';
 import { Mail, Clock, MessageSquare } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Contact | CleverSpace Solutions',
+  title: 'Contact | CleverSpaceSolutions',
   description: 'Get in touch with CleverSpace Solutions. Have a question about home organization, small space decor, or want to collaborate? We\'d love to hear from you.',
   alternates: {
     canonical: 'https://cleverspacesolutions.com/contact',
   },
   openGraph: {
-    title: 'Contact | CleverSpace Solutions',
+    title: 'Contact | CleverSpaceSolutions',
     description: 'Get in touch with CleverSpace Solutions. Questions, collaborations, or just want to say hi — we respond within 48 hours.',
     url: 'https://cleverspacesolutions.com/contact',
     type: 'website',
+    images: [
+      {
+        url: '/images/og-default.png',
+        width: 1200,
+        height: 630,
+        alt: 'Contact CleverSpaceSolutions',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Contact | CleverSpaceSolutions',
+    description: 'Get in touch with CleverSpace Solutions. Questions, collaborations, or just want to say hi — we respond within 48 hours.',
+    images: ['/images/og-default.png'],
   },
   robots: 'index, follow',
 };

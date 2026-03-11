@@ -18,6 +18,18 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://cleverspacesolutions.com',
   },
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -27,7 +39,7 @@ export const metadata: Metadata = {
     description: 'Tired of clutter? Discover clever storage solutions & organization ideas for small spaces. Turn your tiny home into a tidy, organized oasis.',
     images: [
       {
-        url: '/images/navbar/logo2.webp',
+        url: '/images/og-default.png',
         width: 1200,
         height: 630,
         alt: 'CleverSpaceSolutions - Storage Solutions for Small Spaces',
@@ -38,6 +50,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@cleverspacesolutions',
     creator: '@cleverspacesolutions',
+    images: ['/images/og-default.png'],
   },
   robots: {
     index: true,
@@ -70,7 +83,9 @@ export default function RootLayout({
       "@type": "ContactPoint",
       "contactType": "customer service",
       "availableLanguage": "English"
-    }
+    },
+    "email": "cleverspacesolutions@gmail.com",
+    "sameAs": ["https://pinterest.com/cleverspacesolutions/", "https://www.instagram.com/cleverspacesolutions/", "https://www.tiktok.com/@cleverspacesolutions"]
   };
 
   const websiteJsonLd = {
@@ -79,12 +94,7 @@ export default function RootLayout({
     "name": "CleverSpaceSolutions",
     "url": "https://cleverspacesolutions.com",
     "description": "Tired of clutter? Discover clever storage solutions & organization ideas for small spaces. Turn your tiny home into a tidy, organized oasis.",
-    "inLanguage": "en-US",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://cleverspacesolutions.com/search?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
+    "inLanguage": "en-US"
   };
 
   return (
@@ -120,9 +130,9 @@ export default function RootLayout({
         />
         
         {/* Google AdSense Verification Script */}
-        <script 
-          async 
+        <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6430440480434971"
+          strategy="afterInteractive"
           crossOrigin="anonymous"
         />
       </head>

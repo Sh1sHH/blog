@@ -62,10 +62,6 @@ const jsonLdApp = {
     "5 paint finish types with coverage rates", "3 quality tiers with pricing",
     "5 surface type adjustments", "15% waste allowance", "Cost estimation", "Downloadable report",
   ],
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.8", "ratingCount": "127", "bestRating": "5", "worstRating": "1",
-  },
 };
 
 const jsonLdBreadcrumb = {
@@ -241,8 +237,11 @@ export default function PaintCalculatorPage() {
               multipliers used by painting contractors to produce estimates accurate to within 10 percent.
             </p>
             <p className="text-sm leading-relaxed mt-4" style={{ color: '#9ca3af', maxWidth: '640px' }}>
-              Published by the CleverSpaceSolutions editorial team. Coverage rates referenced from
-              industry standards used by professional painting contractors.
+              Published by the CleverSpaceSolutions editorial team. Coverage rates referenced from{' '}
+              <a href="https://www.paintquality.com/en/understanding-paint/coverage-and-application" target="_blank" rel="noopener noreferrer"
+                style={{ color: '#B8965A', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
+                professional painting contractor industry standards
+              </a>.
             </p>
           </section>
 
