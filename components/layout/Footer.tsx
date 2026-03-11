@@ -24,7 +24,9 @@ export default function Footer() {
                               <Link href="/about" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
                   About Us
                 </Link>
-                
+              <Link href="/contact" className="text-slate-600 hover:text-slate-900 transition-colors no-underline">
+                  Contact
+                </Link>
             </div>
             
             {/* Yasal Linkler */}
