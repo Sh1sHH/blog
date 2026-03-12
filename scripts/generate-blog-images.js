@@ -137,9 +137,13 @@ async function processFile(filePath) {
       const imgUrl = result.secure_url;
 
       // Build <figure> replacement
-      const altText = description.replace(/"/g, '&quot;').substring(0, 120);
+      // Alt text: full description, no truncation (max 200 chars), no trailing spaces
+      const altText = description.replace(/"/g, '&quot;').replace(/\s+$/, '').substring(0, 200);
+      // First image: fetchpriority=high (LCP optimization), rest: loading=lazy
+      const loadAttr = i === 0 ? 'fetchpriority="high"' : 'loading="lazy"';
+      // width/height: Gemini generates 16:9 images → 1200x675 closest standard
       const figure = `<figure class="blog-image">
-  <img src="${imgUrl}" alt="${altText}" loading="lazy" style="width:100%;height:auto;border-radius:8px;" />
+  <img src="${imgUrl}" alt="${altText}" width="1200" height="675" ${loadAttr} style="width:100%;height:auto;border-radius:8px;" />
 </figure>`;
 
       html = html.replace(full, figure);
