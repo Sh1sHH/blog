@@ -32,6 +32,11 @@ export async function POST(request: NextRequest) {
     },
   };
 
+  console.log('[Pinterest Pin] API Host:', apiHost);
+  console.log('[Pinterest Pin] Sandbox:', sandbox);
+  console.log('[Pinterest Pin] Board:', board_id);
+  console.log('[Pinterest Pin] Image URL:', image_url);
+
   const response = await fetch(`${apiHost}/v5/pins`, {
     method: 'POST',
     headers: {
@@ -45,6 +50,7 @@ export async function POST(request: NextRequest) {
   const data = await response.json();
 
   if (!response.ok) {
+    console.error('[Pinterest Pin] Error:', response.status, JSON.stringify(data));
     return NextResponse.json(
       { error: 'Failed to create pin', details: data },
       { status: response.status }
