@@ -14,6 +14,8 @@ import {
   Send,
   LogOut,
   RefreshCw,
+  Upload,
+  RotateCcw,
 } from 'lucide-react';
 
 interface Board {
@@ -64,6 +66,10 @@ export default function PinterestAdmin() {
   // Pin state
   const [pinningSlug, setPinningSlug] = useState<string | null>(null);
   const [pinResults, setPinResults] = useState<PinResult[]>([]);
+
+  // Custom pin images per post
+  const [customPinImages, setCustomPinImages] = useState<Record<string, string>>({});
+  const [uploadingSlug, setUploadingSlug] = useState<string | null>(null);
 
   // Handle OAuth callback code
   useEffect(() => {
@@ -196,6 +202,40 @@ export default function PinterestAdmin() {
     }
   }
 
+  async function handlePinImageUpload(slug: string, file: File) {
+    if (!file.type.startsWith('image/')) return;
+    if (file.size > 10 * 1024 * 1024) return; // 10MB limit
+
+    setUploadingSlug(slug);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('folder', 'pinterest-pins');
+
+      const response = await fetch('/api/admin/upload/image', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setCustomPinImages(prev => ({ ...prev, [slug]: result.url }));
+      }
+    } catch (err) {
+      console.error('Pin image upload failed:', err);
+    } finally {
+      setUploadingSlug(null);
+    }
+  }
+
+  function resetPinImage(slug: string) {
+    setCustomPinImages(prev => {
+      const next = { ...prev };
+      delete next[slug];
+      return next;
+    });
+  }
+
   async function createPin(post: Post) {
     if (!accessToken || !selectedBoard) return;
 
@@ -217,7 +257,7 @@ export default function PinterestAdmin() {
           title: post.title,
           description,
           link: `https://cleverspacesolutions.com/blog/${post.slug}`,
-          image_url: post.image || '',
+          image_url: customPinImages[post.slug] || post.image || '',
         }),
       });
 
@@ -415,6 +455,9 @@ export default function PinterestAdmin() {
               {posts.map(post => {
                 const result = getPinResult(post.slug);
                 const isPinning = pinningSlug === post.slug;
+                const isUploading = uploadingSlug === post.slug;
+                const pinImage = customPinImages[post.slug] || post.image;
+                const hasCustomImage = !!customPinImages[post.slug];
 
                 return (
                   <div
@@ -422,19 +465,57 @@ export default function PinterestAdmin() {
                     className="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-slate-300 transition-colors"
                   >
                     <div className="flex items-center space-x-4 flex-1 min-w-0">
-                      {/* Thumbnail */}
-                      <div className="w-16 h-16 rounded-lg bg-slate-100 flex-shrink-0 overflow-hidden">
-                        {post.image ? (
-                          <img
-                            src={post.image}
-                            alt={post.title}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <ImageIcon className="w-6 h-6 text-slate-400" />
-                          </div>
-                        )}
+                      {/* Pin Image Preview + Upload */}
+                      <div className="flex-shrink-0 space-y-1.5">
+                        <div className={`w-16 h-24 rounded-lg bg-slate-100 overflow-hidden relative ${hasCustomImage ? 'ring-2 ring-red-400' : ''}`}>
+                          {pinImage ? (
+                            <img
+                              src={pinImage}
+                              alt={post.title}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <ImageIcon className="w-6 h-6 text-slate-400" />
+                            </div>
+                          )}
+                          {isUploading && (
+                            <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                              <Loader2 className="w-5 h-5 text-white animate-spin" />
+                            </div>
+                          )}
+                          {hasCustomImage && (
+                            <span className="absolute top-0.5 left-0.5 bg-red-500 text-white text-[8px] px-1 rounded font-bold">PIN</span>
+                          )}
+                        </div>
+                        <div className="flex gap-1">
+                          <label className="cursor-pointer flex-1">
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              disabled={isUploading}
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) handlePinImageUpload(post.slug, file);
+                                e.target.value = '';
+                              }}
+                            />
+                            <span className="flex items-center justify-center w-full px-1 py-0.5 text-[10px] text-slate-500 hover:text-red-600 hover:bg-red-50 rounded border border-slate-200 transition-colors">
+                              <Upload className="w-2.5 h-2.5 mr-0.5" />
+                              Change
+                            </span>
+                          </label>
+                          {hasCustomImage && (
+                            <button
+                              onClick={() => resetPinImage(post.slug)}
+                              className="flex items-center justify-center px-1 py-0.5 text-[10px] text-slate-400 hover:text-slate-600 rounded border border-slate-200 transition-colors"
+                              title="Reset to original"
+                            >
+                              <RotateCcw className="w-2.5 h-2.5" />
+                            </button>
+                          )}
+                        </div>
                       </div>
 
                       <div className="min-w-0 flex-1">
@@ -476,7 +557,7 @@ export default function PinterestAdmin() {
                       <Button
                         size="sm"
                         onClick={() => createPin(post)}
-                        disabled={isPinning || !post.image}
+                        disabled={isPinning || !pinImage}
                         className="bg-red-600 hover:bg-red-700 text-white"
                       >
                         {isPinning ? (
