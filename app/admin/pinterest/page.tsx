@@ -204,7 +204,7 @@ export default function PinterestAdmin() {
 
   async function handlePinImageUpload(slug: string, file: File) {
     if (!file.type.startsWith('image/')) return;
-    if (file.size > 10 * 1024 * 1024) return; // 10MB limit
+    if (file.size > 10 * 1024 * 1024) return;
 
     setUploadingSlug(slug);
     try {
@@ -217,9 +217,16 @@ export default function PinterestAdmin() {
         body: formData,
       });
 
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(`Upload failed (${response.status}): ${text.slice(0, 200)}`);
+      }
+
       const result = await response.json();
       if (result.success) {
         setCustomPinImages(prev => ({ ...prev, [slug]: result.url }));
+      } else {
+        console.error('Upload rejected:', result.error);
       }
     } catch (err) {
       console.error('Pin image upload failed:', err);
