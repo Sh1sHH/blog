@@ -86,7 +86,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const uniqueCategories = publishedPosts.map(post => post.category);
     const categories = Array.from(new Set(uniqueCategories));
     const categoryPages = categories.map((category) => ({
-      url: `${BASE_URL}/categories/${category.toLowerCase().replace(/\s+/g, '-')}`,
+      url: `${BASE_URL}/categories/${category.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '')}`,
       lastModified: new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.5,
