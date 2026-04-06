@@ -30,29 +30,38 @@ export default function ImageUpload({
   const [previewUrl, setPreviewUrl] = useState<string | null>(currentImage || null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Dosya yükleme fonksiyonu
+  // Dosya yükleme fonksiyonu (direct-to-Cloudinary, bypasses Vercel 4.5MB limit)
   const uploadFile = useCallback(async (file: File) => {
     setIsUploading(true);
     setError(null);
 
     try {
+      // 1. Get signed params
+      const signRes = await fetch(`/api/admin/upload/image?folder=${encodeURIComponent(folder)}`);
+      if (!signRes.ok) throw new Error('Failed to get upload signature');
+      const { cloudName, apiKey, timestamp, signature, folder: signedFolder } = await signRes.json();
+
+      // 2. Upload directly to Cloudinary
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('folder', folder);
+      formData.append('folder', signedFolder);
+      formData.append('timestamp', timestamp);
+      formData.append('api_key', apiKey);
+      formData.append('signature', signature);
 
-      const response = await fetch('/api/admin/upload/image', {
-        method: 'POST',
-        body: formData,
-      });
+      const uploadRes = await fetch(
+        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+        { method: 'POST', body: formData },
+      );
 
-      const result = await response.json();
-
-      if (result.success) {
-        setPreviewUrl(result.url);
-        onImageUpload(result.url);
-      } else {
-        setError(result.error || 'Dosya yükleme başarısız');
+      if (!uploadRes.ok) {
+        const errData = await uploadRes.json();
+        throw new Error(errData.error?.message || 'Upload failed');
       }
+
+      const data = await uploadRes.json();
+      setPreviewUrl(data.secure_url);
+      onImageUpload(data.secure_url);
     } catch (err) {
       setError('Dosya yükleme sırasında hata oluştu');
       console.error('Upload error:', err);

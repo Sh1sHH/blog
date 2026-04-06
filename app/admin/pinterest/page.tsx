@@ -204,30 +204,35 @@ export default function PinterestAdmin() {
 
   async function handlePinImageUpload(slug: string, file: File) {
     if (!file.type.startsWith('image/')) return;
-    if (file.size > 10 * 1024 * 1024) return;
+    if (file.size > 20 * 1024 * 1024) return;
 
     setUploadingSlug(slug);
     try {
+      // 1. Get signed params from our API (tiny request, no file)
+      const signRes = await fetch('/api/admin/upload/image?folder=pinterest-pins');
+      if (!signRes.ok) throw new Error('Failed to get upload signature');
+      const { cloudName, apiKey, timestamp, signature, folder } = await signRes.json();
+
+      // 2. Upload directly to Cloudinary from browser (bypasses Vercel 4.5MB limit)
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('folder', 'pinterest-pins');
+      formData.append('folder', folder);
+      formData.append('timestamp', timestamp);
+      formData.append('api_key', apiKey);
+      formData.append('signature', signature);
 
-      const response = await fetch('/api/admin/upload/image', {
-        method: 'POST',
-        body: formData,
-      });
+      const uploadRes = await fetch(
+        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+        { method: 'POST', body: formData },
+      );
 
-      if (!response.ok) {
-        const text = await response.text();
-        throw new Error(`Upload failed (${response.status}): ${text.slice(0, 200)}`);
+      if (!uploadRes.ok) {
+        const err = await uploadRes.json();
+        throw new Error(err.error?.message || 'Cloudinary upload failed');
       }
 
-      const result = await response.json();
-      if (result.success) {
-        setCustomPinImages(prev => ({ ...prev, [slug]: result.url }));
-      } else {
-        console.error('Upload rejected:', result.error);
-      }
+      const data = await uploadRes.json();
+      setCustomPinImages(prev => ({ ...prev, [slug]: data.secure_url }));
     } catch (err) {
       console.error('Pin image upload failed:', err);
     } finally {
