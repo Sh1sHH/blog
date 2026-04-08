@@ -1,0 +1,141 @@
+# CleverSpaceSolutions — Project Instructions
+
+## Blog Yazma Otomasyonu (Adım Adım)
+
+Yeni blog yazısı oluşturma akışı:
+
+1. **BLOG-QUEUE.md'den sıradaki konuyu al** — Durum "⏳ Bekliyor" olan ilk yazıyı seç
+2. **`/blog write` ile içerik oluştur** — HTML formatında, site-rules.md kurallarına uygun:
+   - Birinci şahıs (I, we, in my experience)
+   - Em-dash yasak (— ve -- kullanma)
+   - Gerçek kaynaklı istatistikler (tier 1-3 sources)
+   - `[IMAGE: description — search terms: "..."]` marker'ları (5-7 adet)
+   - TL;DR blockquote, SVG chart, FAQ bölümü
+   - Internal linkler gerçek `/blog/slug` URL'lere çözülmüş olmalı
+   - Hedef: 3000-4000 kelime
+3. **Dosyayı kaydet** — `{slug}-content.html` olarak proje kök dizinine
+4. **Kalite kontrolü yap:**
+   - `—` ve `--` araması (0 sonuç olmalı, IMAGE marker'lar hariç)
+   - `[INTERNAL-LINK:` araması (0 sonuç olmalı, hepsi çözülmüş)
+   - Internal link sayısı (5-10 arası)
+   - IMAGE marker sayısı (5-7)
+   - Kelime sayısı (3000-4000)
+5. **Görselleri üret** — `node scripts/generate-blog-images.js {slug}-content.html`
+   - Gemini AI ile görsel üretir, Cloudinary'e yükler
+   - IMAGE marker'ları `<figure>` tag'leriyle değiştirir
+6. **Firebase'e yükle** — `node scripts/create-post.js {slug} --title "..." --description "..." --category "..." --tags "..." --keywords "..." --seo-title "..." --seo-desc "..."`
+   - Description: 120-160 karakter
+   - SEO title: 60-65 karakter
+   - Kapak görseli otomatik tespit edilir (content'teki ilk img)
+7. **Pinterest pin (kapak görseli) üret** — `node scripts/generate-pins.js {slug}`
+   - Gemini ile 9:16 dikey görsel üretir
+   - 1000x1500 pin template'i oluşturur (gold border, başlık overlay, site URL)
+   - Cloudinary'e `pinterest-pins/pin_{slug}` olarak yükler
+   - Firebase'deki `image` alanını günceller (bu kapak görseli olur)
+8. **Pinterest API ile pin at** — `node scripts/post-to-pinterest.js {slug}`
+   - Sandbox: `PINTEREST_SANDBOX=true` (.env.local'da)
+   - Production: `PINTEREST_SANDBOX=false`, gerçek board ID ve production token gerekli
+   - Pin: Cloudinary'deki pin görseli + blog URL + description + hashtag'ler
+9. **BLOG-QUEUE.md güncelle** — Durumu "✅ Yazıldı" olarak değiştir
+10. **Bu dosyaya (CLAUDE.md) yapılanları kaydet** — Aşağıdaki log bölümüne ekle
+
+## Yapılan İşlemler Logu
+
+### 2026-04-07 — Blog #7: multifunctional-furniture-small-apartment
+- **Konu:** The Best Multifunctional Furniture for Small Apartments in 2026
+- **Adımlar:**
+  1. BLOG-QUEUE.md'den #7 seçildi
+  2. blog-researcher agent ile 15 istatistik araştırıldı (GMInsights, RentCafe, U.S. Census Bureau, Future Market Insights, Business Research Insights, Robert Half, IMARC Group, Pixie Survey, StorageCafe/SSA, UCLA/Saxbe&Repetti, NAHB, IKEA/Ingka Group, Pinterest Spring Trend Report 2026, iPropertyManagement)
+  3. ~4040 kelimelik HTML içerik yazıldı (10 H2 bölüm, 5 FAQ, 2 SVG chart, 7 IMAGE marker, 8 unique internal link)
+  4. Kalite kontrolü geçti (em-dash: 0, çözülmemiş link: 0, IMAGE: 7, internal link: 10 instance/8 unique)
+  5. `generate-blog-images.js` ile 7 görsel üretildi ve Cloudinary'e yüklendi
+  6. `create-post.js` ile Firebase'e yüklendi (ID: sQHH8o8PaNNjyuHQ9wXi)
+  7. `generate-pins.js` ile Pinterest pin kapak görseli üretildi ve Firebase `image` alanı güncellendi
+     - URL: https://res.cloudinary.com/dvmvs8s9t/image/upload/v1775534901/pinterest-pins/pin_multifunctional-furniture-small-apartment.webp
+  8. `post-to-pinterest.js` Pinterest API 401 auth hatası (token expired, manuel post gerekli)
+  9. BLOG-QUEUE.md durumu "✅ Yazıldı" olarak güncellendi
+- **URL:** /blog/multifunctional-furniture-small-apartment
+- **Durum:** Yayında (Pinterest pin bekliyor)
+
+### 2026-03-21 — Blog #5: small-closet-organization-ideas
+- **Konu:** Small Closet Organization Ideas That Actually Work in 2026
+- **Adımlar:**
+  1. BLOG-QUEUE.md'den #5 seçildi
+  2. blog-researcher agent ile 15 istatistik araştırıldı (NAPO, Mordor Intelligence, Business Research Company, ClosetMaid, Pixie Survey, U.S. Census Bureau, RentCafe, Future Market Insights, UCLA/Saxbe&Repetti, Decluttr/NAPO, StorageCafe/SSA, NAHB, Strategic Market Research, Pinterest Predicts, Rawshot.ai)
+  3. ~3841 kelimelik HTML içerik yazıldı (10 H2 bölüm, 5 FAQ, 2 SVG chart, 7 IMAGE marker, 9 unique internal link)
+  4. Kalite kontrolü geçti (em-dash: 0, çözülmemiş link: 0, IMAGE: 7, internal link: 12 instance/9 unique)
+  5. `generate-blog-images.js` ile 7 görsel üretildi ve Cloudinary'e yüklendi
+  6. `create-post.js` ile Firebase'e yüklendi (ID: z5oYB8XpHPAHgd7mmV4T)
+  7. `generate-pins.js` ile Pinterest pin kapak görseli üretildi ve Firebase `image` alanı güncellendi
+     - URL: https://res.cloudinary.com/dvmvs8s9t/image/upload/v1774114334/pinterest-pins/pin_small-closet-organization-ideas.webp
+  8. BLOG-QUEUE.md durumu "✅ Yazıldı" olarak güncellendi
+- **URL:** /blog/small-closet-organization-ideas
+- **Durum:** Yayında
+
+### 2026-03-19 — Blog #4: how-to-create-entryway-in-apartment
+- **Konu:** How to Create a Stylish Entryway When Your Apartment Doesn't Have One
+- **Adımlar:**
+  1. BLOG-QUEUE.md'den #4 seçildi
+  2. blog-researcher agent ile 15 istatistik araştırıldı (RentCafe, Harvard JCHS, iPropertyManagement, Rently, NAR, UCLA/Saxbe&Repetti, Pixie Survey, Redfin, Business Research Company, Mordor Intelligence, Business Research Insights, NAHB, Pinterest Predicts, KURU Footwear)
+  3. ~4228 kelimelik HTML içerik yazıldı (5 setup, 10 H2 bölüm, 5 FAQ, 2 SVG chart, 7 IMAGE marker, 11 internal link)
+  4. Kalite kontrolü geçti (em-dash: 0, çözülmemiş link: 0, IMAGE: 7, internal link: 11)
+  5. `generate-blog-images.js` ile 7 görsel üretildi ve Cloudinary'e yüklendi
+  6. `create-post.js` ile Firebase'e yüklendi (ID: lCjfYCbhqcXE5KSqFoVt)
+  7. `generate-pins.js` ile Pinterest pin kapak görseli üretildi ve Firebase `image` alanı güncellendi
+     - URL: https://res.cloudinary.com/dvmvs8s9t/image/upload/v1773886904/pinterest-pins/pin_how-to-create-entryway-in-apartment.webp
+  8. BLOG-QUEUE.md durumu "✅ Yazıldı" olarak güncellendi
+- **URL:** /blog/how-to-create-entryway-in-apartment
+- **Durum:** Yayında
+
+### 2026-03-17 — Blog #3: renter-friendly-wall-decor
+- **Konu:** 30 Renter-Friendly Wall Decor Ideas for Small Apartments (No Holes, No Damage)
+- **Adımlar:**
+  1. BLOG-QUEUE.md'den #3 seçildi
+  2. blog-researcher agent ile 12 istatistik araştırıldı (Zillow, Lemonade, Rently, Allied Market Research, Data Horizon, Fortune Business Insights, Harvard JCHS, Redfin, iPropertyManagement)
+  3. 3563 kelimelik HTML içerik yazıldı (30 fikir, 8 H2 bölüm, 5 FAQ, 2 SVG chart, 6 IMAGE marker, 11 internal link)
+  4. Kalite kontrolü geçti (em-dash: 0, çözülmemiş link: 0)
+  5. `generate-blog-images.js` ile 6 görsel üretildi ve Cloudinary'e yüklendi
+  6. `create-post.js` ile Firebase'e yüklendi (ID: Dh60p19o3fOiPNk3Zp0l)
+  7. `generate-pins.js` ile Pinterest pin kapak görseli üretildi ve Firebase `image` alanı güncellendi
+     - URL: https://res.cloudinary.com/dvmvs8s9t/image/upload/v1773758700/pinterest-pins/pin_renter-friendly-wall-decor.webp
+  8. BLOG-QUEUE.md durumu "✅ Yazıldı" olarak güncellendi
+- **URL:** /blog/renter-friendly-wall-decor
+- **Durum:** Yayında
+
+### 2026-03-24 — Blog #6: biophilic-design-small-apartment
+- **Konu:** Biophilic Design for Small Apartments: How to Create a Living Green Corner
+- **Adımlar:**
+  1. BLOG-QUEUE.md'den #6 seçildi
+  2. blog-researcher agent ile 14 istatistik araştırıldı (PMC/PLoS ONE, Scientific Reports, Drexel University, Mordor Intelligence, iPropertyManagement, RentCafe, NGA, Gitnux, UF IFAS Extension, Monstera Plant Resource, Green Oasis, Pinterest Predicts 2026)
+  3. ~4046 kelimelik HTML içerik yazıldı (10 H2 bölüm, 5 FAQ, 2 SVG chart, 5 IMAGE marker, 8 unique internal link, 7 Pexels görseli)
+  4. Kalite kontrolü geçti (em-dash sadece IMAGE marker'larda, çözülmemiş link: 0, IMAGE: 5, internal link: 8 unique)
+  5. `generate-blog-images.js` ile 5 görsel üretildi ve Cloudinary'e yüklendi
+  6. `create-post.js` ile Firebase'e yüklendi (ID: bxZ7BCsrcCOiRLuRxzWP)
+  7. `generate-pins.js` ile Pinterest pin kapak görseli üretildi ve Firebase `image` alanı güncellendi
+     - URL: https://res.cloudinary.com/dvmvs8s9t/image/upload/v1774315268/pinterest-pins/pin_biophilic-design-small-apartment.webp
+  8. `post-to-pinterest.js` ile Pinterest Sandbox API'ye pin atıldı (ID: 1014787728554214207)
+  9. BLOG-QUEUE.md durumu "✅ Yazıldı" olarak güncellendi
+- **URL:** /blog/biophilic-design-small-apartment
+- **Durum:** Yayında
+- **Pinterest Pin:** 1014787728554214207 (Sandbox)
+
+### 2026-04-08 — Blog #8: apartment-lighting-no-overhead-light
+- **Konu:** How to Light an Apartment with No Overhead Lighting (Room-by-Room Guide)
+- **Adımlar:**
+  1. BLOG-QUEUE.md'den #8 seçildi (yeni eklenen konular arasından ilk)
+  2. blog-researcher agent ile 12 istatistik araştırıldı (NEC 210.70(A), APA, PMC/Harvard, EIA RECS 2024, DOE, IES/Super Bright LEDs, Parks Associates, GM Insights)
+  3. ~3837 kelimelik HTML içerik yazıldı (9 H2 bölüm, 5 FAQ, 2 SVG chart, 6 IMAGE marker, 9 internal link)
+  4. Kalite kontrolü geçti (em-dash: 0, çözülmemiş link: 0, IMAGE: 6, internal link: 9)
+  5. `generate-blog-images.js` ile 6 görsel üretildi ve Cloudinary'e yüklendi
+  6. `create-post.js` ile Firebase'e yüklendi (ID: QmOHXp25Pvc2pe2GlUsm)
+  7. `generate-pins.js` ile Pinterest pin kapak görseli üretildi ve Firebase `image` alanı güncellendi
+     - URL: https://res.cloudinary.com/dvmvs8s9t/image/upload/v1775664972/pinterest-pins/pin_apartment-lighting-no-overhead-light.webp
+  8. BLOG-QUEUE.md durumu "✅ Yazıldı" olarak güncellendi
+- **URL:** /blog/apartment-lighting-no-overhead-light
+- **Durum:** Yayında (Pinterest pin bekliyor)
+
+### 2026-03-15 — Blog #2: color-drenching-small-spaces
+- Daha önce yazıldı (bu log'dan önce)
+
+### 2026-03-13 — Blog #1: cozy-reading-nook-small-apartment
+- Daha önce yazıldı (bu log'dan önce)
