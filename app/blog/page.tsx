@@ -17,14 +17,14 @@ interface BlogPageProps {
 }
 
 export const metadata: Metadata = {
-  title: 'Blog | CleverSpaceSolutions',
-  description: 'Practical guides, decoration ideas, and space-saving tips for small homes. Browse storage solutions, kitchen organization, and room makeover articles by the CleverSpaceSolutions team.',
+  title: 'Small Space Blog: Decor & Organization | CleverSpaceSolutions',
+  description: 'Browse 50+ expert guides on small space decorating, kitchen organization, bedroom styling, and apartment hacks. Practical tips with sourced data.',
   alternates: {
     canonical: 'https://cleverspacesolutions.com/blog',
   },
   openGraph: {
-    title: 'Blog | CleverSpaceSolutions',
-    description: 'Practical guides, decoration ideas, and space-saving tips for small homes. Browse storage solutions, kitchen organization, and room makeover articles by the CleverSpaceSolutions team.',
+    title: 'Small Space Blog: Decor & Organization | CleverSpaceSolutions',
+    description: 'Browse 50+ expert guides on small space decorating, kitchen organization, bedroom styling, and apartment hacks. Practical tips with sourced data.',
     url: 'https://cleverspacesolutions.com/blog',
     type: 'website',
     images: [{ url: '/images/og-default.png', width: 1200, height: 630, alt: 'CleverSpaceSolutions Blog' }],
@@ -37,8 +37,40 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const allPosts = await getAllPosts();
   const category = searchParams.category as string | undefined;
 
+  // CollectionPage + BreadcrumbList JSON-LD for blog listing
+  const collectionJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Small Space Decorating Blog | CleverSpaceSolutions",
+    "description": "Practical guides, decoration ideas, and space-saving tips for small homes. Browse 50+ articles on kitchen organization, bedroom styling, apartment decor, and more.",
+    "url": "https://cleverspacesolutions.com/blog",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "CleverSpaceSolutions",
+      "url": "https://cleverspacesolutions.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CleverSpaceSolutions",
+      "url": "https://cleverspacesolutions.com"
+    },
+    "inLanguage": "en-US",
+    "numberOfItems": allPosts.length
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cleverspacesolutions.com" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://cleverspacesolutions.com/blog" },
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-slate-50">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
       {/* ── HERO BAND ── */}
       <div className="bg-white border-b border-slate-100">

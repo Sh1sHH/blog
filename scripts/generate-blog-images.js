@@ -137,8 +137,12 @@ async function processFile(filePath) {
       const imgUrl = result.secure_url;
 
       // Build <figure> replacement
-      // Alt text: full description, no truncation (max 200 chars), no trailing spaces
-      const altText = description.replace(/"/g, '&quot;').replace(/\s+$/, '').substring(0, 200);
+      // Alt text: clean description, strip any leaked search terms/keywords artifacts
+      const altText = description
+        .replace(/\s*[—–-]+\s*(?:search terms?|keywords?)\s*:.*$/i, '')
+        .replace(/"/g, '&quot;')
+        .replace(/\s+$/, '')
+        .substring(0, 200);
       // First image: fetchpriority=high (LCP optimization), rest: loading=lazy
       const loadAttr = i === 0 ? 'fetchpriority="high"' : 'loading="lazy"';
       // width/height: Gemini generates 16:9 images → 1200x675 closest standard

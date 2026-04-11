@@ -50,7 +50,7 @@ const jsonLdApp = {
   "applicationCategory": "UtilityApplication",
   "operatingSystem": "Any",
   "datePublished": "2024-01-15",
-  "dateModified": "2025-11-01",
+  "dateModified": "2026-04-11",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
   "provider": {
     "@type": "Organization",
@@ -73,42 +73,41 @@ const jsonLdBreadcrumb = {
   ],
 };
 
-const jsonLdFaq = {
+// HowTo schema for "The Formula" section - eligible for rich results
+const jsonLdHowTo = {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How accurate is the paint calculator?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Our calculator provides approximately 95% accuracy based on professional painting standards. It applies industry coverage rates — 400 sq ft/gal for flat, 350 for eggshell and satin, 300 for semi-gloss and high gloss — along with surface type multipliers for textured, raw, or brick walls. Surface condition and application technique may still affect final results. We recommend enabling the optional 15% waste allowance to account for real-world variance." },
-    },
-    {
-      "@type": "Question",
-      "name": "How many gallons of paint do I need for a 12x12 room?",
-      "acceptedAnswer": { "@type": "Answer", "text": "For a standard 12x12 room with 9-foot ceilings, 2 standard windows, and 1 door, you will need approximately 2 to 2.5 gallons of paint for two coats on smooth drywall. Using eggshell or satin finish (350 sq ft/gal coverage) on the same room adds roughly 0.3 gallons compared to flat paint. Use our calculator above for a precise estimate based on your exact dimensions and chosen finish." },
-    },
-    {
-      "@type": "Question",
-      "name": "Does the calculator include waste allowance?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Yes. You can enable an optional 15% waste allowance, which accounts for roller absorption, paint lost during cutting-in at edges, minor spills, and keeping a small reserve for future touch-ups. Professional painters consistently recommend purchasing at least 10 to 15 percent more than the bare minimum calculated amount. Running out mid-job is a significant risk because a second-batch purchase may not match the original dye lot." },
-    },
-    {
-      "@type": "Question",
-      "name": "Which paint finish should I use for my room?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Use flat or matte paint for bedrooms and ceilings where low reflectivity conceals surface imperfections. Eggshell works well for living rooms and dining rooms because it is slightly more washable than flat. Satin is ideal for hallways and kids rooms due to its durability and easy cleaning. Semi-gloss is best for kitchens and bathrooms where moisture resistance matters. High gloss is typically reserved for trim, cabinets, and doors where a hard, scrubbable surface is needed." },
-    },
-    {
-      "@type": "Question",
-      "name": "Does one gallon of paint cover 400 square feet?",
-      "acceptedAnswer": { "@type": "Answer", "text": "One gallon of flat or matte paint typically covers 400 sq ft on smooth, previously painted drywall. Eggshell and satin finishes cover around 350 sq ft per gallon because their binders are denser. Semi-gloss and high gloss finishes cover approximately 300 sq ft per gallon. Textured walls, raw wood, and brick absorb considerably more and can reduce coverage by 25 to 40 percent. Our calculator applies these exact rates automatically based on the finish and surface type you select." },
-    },
-    {
-      "@type": "Question",
-      "name": "How much does it cost to paint a room?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Paint material cost depends on finish type and quality tier. Basic flat paint starts around $25 per gallon, mid-grade eggshell around $45 per gallon, and premium satin around $70 per gallon. Semi-gloss and high gloss paints in premium tiers can reach $80 per gallon. A standard 12x12 room typically requires $50 to $175 in paint materials for two coats, excluding primer. Our calculator provides a full cost estimate based on your selected finish and quality tier. Professional labor costs are not included." },
-    },
+  "@type": "HowTo",
+  "name": "How to Calculate How Much Paint You Need for a Room",
+  "description": "A 6-step formula used by professional painters to estimate the exact number of gallons needed for any room size, finish type, and surface condition.",
+  "totalTime": "PT2M",
+  "estimatedCost": { "@type": "MonetaryAmount", "currency": "USD", "value": "50-175" },
+  "tool": [
+    { "@type": "HowToTool", "name": "Tape measure" },
+    { "@type": "HowToTool", "name": "Paint calculator (this tool)" }
   ],
+  "step": [
+    { "@type": "HowToStep", "position": 1, "name": "Measure wall area", "text": "Calculate total wall area: (Length + Width) x 2 x Ceiling Height. For a 12x12 room with 9-foot ceilings, that is (12 + 12) x 2 x 9 = 432 square feet." },
+    { "@type": "HowToStep", "position": 2, "name": "Subtract windows and doors", "text": "Subtract the area of each window (typically 15 sq ft) and door (typically 21 sq ft). A room with 2 windows and 1 door loses about 51 sq ft." },
+    { "@type": "HowToStep", "position": 3, "name": "Adjust for surface type", "text": "Textured walls absorb 15-25% more paint. Raw drywall absorbs 25-35% more. Brick and masonry absorb 30-40% more. Smooth, previously painted drywall is the baseline." },
+    { "@type": "HowToStep", "position": 4, "name": "Divide by paint coverage rate", "text": "Flat paint covers 400 sq ft per gallon. Eggshell and satin cover 350 sq ft. Semi-gloss and high gloss cover 300 sq ft per gallon." },
+    { "@type": "HowToStep", "position": 5, "name": "Multiply by number of coats", "text": "Most rooms need 2 coats for even coverage. New or unpainted drywall may need a primer coat plus 2 finish coats." },
+    { "@type": "HowToStep", "position": 6, "name": "Add 15% waste allowance", "text": "Professional painters recommend 10-15% extra for roller absorption, edge cutting, spills, and keeping a reserve for touch-ups from the same dye lot." }
+  ]
 };
+
+// Speakable schema - AI citation targeting
+const jsonLdSpeakable = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": ["#what-is-paint-calculator + p", ".faq-answer", ".room-sizes-table"]
+  },
+  "url": "https://cleverspacesolutions.com/tools/paint-calculator"
+};
+
+// FAQPage JSON-LD removed (restricted to gov/health sites since Aug 2023)
+// FAQ content still displayed visually via the faqs[] array below
 
 const paintFinishes = [
   { name: 'Flat / Matte',  coverage: '400 sq ft / gal', price: '$25 – $60', bestFor: 'Bedrooms, ceilings',        sheen: 1 },
@@ -150,7 +149,8 @@ export default function PaintCalculatorPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdApp) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFaq) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdHowTo) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSpeakable) }} />
 
       {/* ── HERO — light editorial band ── */}
       <div style={{ backgroundColor: '#f5f4f1' }}>
@@ -362,6 +362,56 @@ export default function PaintCalculatorPage() {
             </div>
           </section>
 
+          {/* Quick Reference — Common Room Sizes (GEO citable table) */}
+          <section>
+            <div className="flex items-baseline justify-between mb-4" style={{ borderBottom: '2px solid #0a0a0a', paddingBottom: '12px' }}>
+              <h2 className={`${cormorant.className} font-semibold tracking-tight`} style={{ fontSize: '28px', color: '#0a0a0a' }}>
+                How Much Paint for Common Room Sizes
+              </h2>
+            </div>
+            <p className="text-sm leading-relaxed mb-8" style={{ color: '#9ca3af', maxWidth: '640px' }}>
+              Quick reference for standard rooms with 9-foot ceilings, 2 windows, 1 door, smooth drywall, 2 coats of flat paint (400 sq ft/gal), 15% waste included.
+            </p>
+
+            <div className="overflow-x-auto room-sizes-table">
+              <table className="w-full text-sm" style={{ borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr>
+                    {['Room', 'Dimensions', 'Wall Area', 'Gallons (2 coats)', 'Est. Cost'].map(h => (
+                      <th key={h} className="text-left font-medium uppercase" style={{
+                        fontSize: '10px', letterSpacing: '0.18em', color: '#9ca3af',
+                        paddingBottom: '10px', paddingRight: '20px', borderBottom: '1px solid #d6d3cd',
+                      }}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { room: 'Small Bedroom',   dim: '10 x 10 ft', area: '309 sq ft', gal: '1.5 - 2', cost: '$40 - $120' },
+                    { room: 'Standard Bedroom', dim: '12 x 12 ft', area: '381 sq ft', gal: '2 - 2.5',  cost: '$50 - $150' },
+                    { room: 'Large Bedroom',    dim: '14 x 14 ft', area: '453 sq ft', gal: '2.5 - 3', cost: '$65 - $180' },
+                    { room: 'Small Living Room', dim: '12 x 16 ft', area: '453 sq ft', gal: '2.5 - 3', cost: '$65 - $180' },
+                    { room: 'Large Living Room', dim: '16 x 20 ft', area: '597 sq ft', gal: '3 - 3.5', cost: '$80 - $210' },
+                    { room: 'Small Kitchen',    dim: '10 x 10 ft', area: '309 sq ft', gal: '1.5 - 2', cost: '$50 - $140' },
+                    { room: 'Bathroom',         dim: '8 x 10 ft',  area: '273 sq ft', gal: '1.5 - 2', cost: '$55 - $150' },
+                    { room: 'Home Office',      dim: '10 x 12 ft', area: '345 sq ft', gal: '2 - 2.5',  cost: '$50 - $150' },
+                  ].map((r) => (
+                    <tr key={r.room} style={{ borderBottom: '1px solid #e5e2dc' }}>
+                      <td className="font-medium" style={{ padding: '12px 20px 12px 0', color: '#0a0a0a' }}>{r.room}</td>
+                      <td className="tabular-nums" style={{ padding: '12px 20px 12px 0', color: '#6b6560' }}>{r.dim}</td>
+                      <td className="tabular-nums" style={{ padding: '12px 20px 12px 0', color: '#6b6560' }}>{r.area}</td>
+                      <td className="tabular-nums" style={{ padding: '12px 20px 12px 0', color: '#6b6560' }}>{r.gal}</td>
+                      <td className="tabular-nums" style={{ padding: '12px 0 12px 0', color: '#6b6560' }}>{r.cost}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-xs mt-4" style={{ color: '#9ca3af' }}>
+              Costs based on mid-grade latex interior paint ($30-$60/gal). Semi-gloss or high gloss finishes add 15-25%. Primer not included.
+            </p>
+          </section>
+
           {/* FAQ — editorial */}
           <section className="pb-4">
             <h2 className={`${cormorant.className} font-semibold tracking-tight mb-10`} style={{ fontSize: '28px', color: '#0a0a0a', borderBottom: '2px solid #0a0a0a', paddingBottom: '12px' }}>
@@ -369,7 +419,7 @@ export default function PaintCalculatorPage() {
             </h2>
             <div>
               {faqs.map((item, i) => (
-                <div key={i} style={{ borderTop: i === 0 ? 'none' : '1px solid #d6d3cd', padding: '22px 0' }}>
+                <div key={i} className="faq-answer" style={{ borderTop: i === 0 ? 'none' : '1px solid #d6d3cd', padding: '22px 0' }}>
                   <h3 className={`${cormorant.className} font-semibold tracking-tight mb-2`} style={{ fontSize: '20px', color: '#0a0a0a' }}>
                     {item.q}
                   </h3>
@@ -377,6 +427,40 @@ export default function PaintCalculatorPage() {
                 </div>
               ))}
               <div style={{ borderTop: '1px solid #d6d3cd' }} />
+            </div>
+          </section>
+
+          {/* Related Guides — internal links */}
+          <section className="pb-4">
+            <div style={{ borderBottom: '2px solid #0a0a0a', paddingBottom: '12px', marginBottom: '20px' }}>
+              <h2 className={`${cormorant.className} font-semibold tracking-tight`} style={{ fontSize: '28px', color: '#0a0a0a' }}>
+                Related Guides
+              </h2>
+            </div>
+            <div className="space-y-4">
+              {[
+                { href: '/blog/how-much-paint-do-i-need-a-definitive-guide', title: 'How Much Paint Do I Need? A Definitive Guide', desc: 'Room-by-room estimates, finish selection, and common painting mistakes.' },
+                { href: '/blog/color-drenching-small-spaces', title: 'Color Drenching in Small Spaces: 2026\'s Boldest Paint Trend', desc: 'How to paint walls, ceiling, and trim the same color for a bold, cohesive look.' },
+                { href: '/blog/how-to-decorate-small-kitchen', title: 'How Should You Decorate a Small Kitchen?', desc: '7 smart decoration ideas including paint color strategies for compact kitchens.' },
+                { href: '/blog/how-to-decorate-windowless-room', title: 'How to Decorate a Room with No Windows', desc: 'Paint color techniques and lighting tricks to make windowless rooms feel brighter.' },
+                { href: '/blog/apartment-lighting-no-overhead-light', title: 'How to Light an Apartment with No Overhead Lighting', desc: 'Room-by-room lighting guide that complements your paint color choices.' },
+              ].map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="block no-underline group"
+                >
+                  <div className="flex items-start gap-3 py-2">
+                    <span style={{ color: '#B8965A', marginTop: '2px', fontSize: '14px' }}>&rarr;</span>
+                    <div>
+                      <p className="text-sm font-medium group-hover:underline" style={{ color: '#0a0a0a', textUnderlineOffset: '3px' }}>
+                        {link.title}
+                      </p>
+                      <p className="text-xs mt-0.5" style={{ color: '#9ca3af' }}>{link.desc}</p>
+                    </div>
+                  </div>
+                </Link>
+              ))}
             </div>
           </section>
 

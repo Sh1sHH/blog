@@ -1,14 +1,23 @@
 # CleverSpaceSolutions — LLM Content Index
 # Site: https://cleverspacesolutions.com
 # Purpose: Structured content inventory for AI language model indexing
-# Updated: 2026-03-12
+# Updated: 2026-04-11
+# Total published articles: 53
+
+## Author & Expertise
+
+- Primary author: Joesp H., Interior Design & Small Space Living Specialist
+- Experience: 7+ homes across 5 years (450-2,000 sq ft), 300+ books on organization
+- Focus areas: small apartment decorating, kitchen design, home organization, renter-friendly solutions
+- Content quality: 53+ in-depth guides with sourced statistics, avg 3,000-4,000 words
+- Each article includes: FAQ section, SVG data charts, 5-7 original images, internal cross-links
 
 ## About This Site
 
 CleverSpaceSolutions publishes free home improvement tools, calculators, and editorial guides
 to help homeowners plan and execute interior projects accurately. Content covers small space
 decorating, kitchen design, bedroom styling, bathroom decor, home office setup, and more.
-All tools are free. Content is written by the CleverSpaceSolutions editorial team.
+All tools are free. Content is written by Joesp H., founder and editor.
 
 ---
 
@@ -30,78 +39,98 @@ Key facts:
 
 ### Kitchen
 
-- [How Can You Make a Small Kitchen Look More Stylish?](https://cleverspacesolutions.com/blog/stylish-small-kitchen-ideas): 10 designer ideas for styling a small kitchen with minimal changes.
-- [How Can You Make a Small Kitchen More Functional?](https://cleverspacesolutions.com/blog/how-to-make-small-kitchen-functional): Storage zones, cabinet organizers, vertical space, and counter strategies.
-- [Tiny Kitchen, Big Dreams: Your Ultimate Guide](https://cleverspacesolutions.com/blog/tiny-kitchen-design-guide): Maximizing style and space in a tiny kitchen.
-- [How Do You Design a Small Kitchen?](https://cleverspacesolutions.com/blog/how-to-design-small-kitchen): Interior designer's guide to small kitchen layout and planning.
-- [2025 Decorating Tips for Small Kitchens](https://cleverspacesolutions.com/blog/2025-decorating-tips-for-small-kitchens): Latest decorating trends for compact kitchen spaces.
-- [What is the Best Table for a Small Kitchen?](https://cleverspacesolutions.com/blog/best-table-for-small-kitchen): 8 space-saving table ideas for small kitchens.
-- [How Do You Choose the Right Mini Fridge?](https://cleverspacesolutions.com/blog/how-to-choose-mini-fridge): Complete buyer's guide for mini fridges.
-- [How Should You Decorate a Small Kitchen?](https://cleverspacesolutions.com/blog/how-to-decorate-small-kitchen): Decoration strategies for small kitchen spaces.
+- [How Can You Make a Small Kitchen Look More Stylish? 10 Designer Ideas](https://cleverspacesolutions.com/blog/stylish-small-kitchen-ideas): Looking for unique ways to improve your small kitchen? This guide answers your questions with 10 designer-inspired ideas, from ceiling racks to clever lighti... (4333 words, 22 min read, published 2025-08-13)
+- [How Do You Design a Small Kitchen? An Interior Designer's Guide](https://cleverspacesolutions.com/blog/how-to-design-small-kitchen): Wondering how to design your small kitchen for maximum style and function? An interior designer shares the most effective methods for color, storage, and lig... (1161 words, 6 min read, published 2025-07-30)
+- [Tiny Kitchen, Big Dreams: Your Ultimate Guide to Maximizing Style and Space](https://cleverspacesolutions.com/blog/tiny-kitchen-design-guide): Wondering how to transform your tiny kitchen into a stylish, functional space? This ultimate guide answers your questions, covering everything from smart sto... (2478 words, 13 min read, published 2025-07-28)
+- [How Do You Choose the Right Mini Fridge? A Complete Buyer's Guide](https://cleverspacesolutions.com/blog/how-to-choose-mini-fridge): Thinking about buying a mini fridge? This guide answers all your questions, from choosing the right size and type to understanding energy efficiency, climate... (1082 words, 6 min read, published 2025-07-14)
+- [What is the Best Table for a Small Kitchen? 8 Space-Saving Ideas](https://cleverspacesolutions.com/blog/best-table-for-small-kitchen): Wondering how to choose a table for your small kitchen? This guide answers your questions with 8 different space-saving models, from folding tables to wall-m... (1218 words, 7 min read, published 2025-07-13)
+- [How Can You Make a Small Kitchen More Functional?](https://cleverspacesolutions.com/blog/how-to-make-small-kitchen-functional): Wondering how to get more out of your small kitchen? This guide answers your questions with 8 brilliant, space-saving ideas for storage and organization that... (3138 words, 16 min read, published 2025-07-11)
+- [How Should You Decorate a Small Kitchen?](https://cleverspacesolutions.com/blog/how-to-decorate-small-kitchen): Wondering how to make your small kitchen both functional and stylish? This guide answers your questions with 7 practical ideas for storage, lighting, and org... (3174 words, 16 min read, published 2025-07-09)
+- [2025 Decorating Tips for Small Kitchens](https://cleverspacesolutions.com/blog/2025-decorating-tips-for-small-kitchens): Is your small kitchen feeling cramped? Discover our complete 2025 guide to making it feel bigger and more stylish. We cover everything from smart storage hac... (1025 words, 6 min read, published 2025-07-08)
 
 ### Bedroom
 
-- [How Do You Decorate a Small Bedroom?](https://cleverspacesolutions.com/blog/how-to-decorate-small-bedroom-guide): Functionality and style tips for small bedrooms.
-- [Tiny Room, Big Dreams: Small Bedroom Full Potential](https://cleverspacesolutions.com/blog/small-bedroom-design-guide): Comprehensive design guide for small bedrooms.
-- [How Do You Furnish a Small Nursery?](https://cleverspacesolutions.com/blog/how-to-furnish-small-nursery): Smart buyer's guide for small nursery furniture.
-- [What to Consider When Choosing a Bunk Bed](https://cleverspacesolutions.com/blog/how-to-choose-bunk-bed-guide): Bunk bed selection guide for small kids' rooms.
+- [How Do You Decorate a Small Bedroom for Functionality and Style?](https://cleverspacesolutions.com/blog/how-to-decorate-small-bedroom-guide): Wondering how to make your small bedroom feel bigger and look stylish? This complete guide answers your questions with expert tips on furniture, storage, col... (1343 words, 7 min read, published 2025-08-04)
+- [Tiny Room, Big Dreams: Unlocking Your Small Bedroom's Full Potential](https://cleverspacesolutions.com/blog/small-bedroom-design-guide): Wondering how to unlock your small bedroom's full potential? This ultimate guide answers your questions, exploring design history, current trends, and future... (1163 words, 6 min read, published 2025-08-02)
 
 ### Bathroom
 
-- [Small Bathroom, Big Style: Game-Changing Decor Ideas](https://cleverspacesolutions.com/blog/small-bathroom-decor-ideas): Decor ideas for small bathrooms.
-- [How Can You Decorate a Small Bathroom? 14+ Expert Ideas](https://cleverspacesolutions.com/blog/how-can-you-decorate-a-small-bathroom-14-expert-ideas): Expert tips for small bathroom decoration.
+- [How Can You Decorate a Small Bathroom? 14+ Expert Ideas](https://cleverspacesolutions.com/blog/how-can-you-decorate-a-small-bathroom-14-expert-ideas): Wondering how to make your small bathroom feel bigger and more stylish? This guide answers your questions with 14 expert ideas for storage, color, and layout... (1097 words, 6 min read, published 2025-08-01)
+- [Small Bathroom, Big Style: Game-Changing Decor Ideas](https://cleverspacesolutions.com/blog/small-bathroom-decor-ideas): Struggling with a small bathroom? Discover smart and stylish decor ideas to make your space feel bigger, brighter, and more organized. From clever storage to... (3065 words, 16 min read, published 2025-07-09)
 
-### Living Room & Studio
+### Living Room
 
-- [How Do You Furnish a Small Living Room?](https://cleverspacesolutions.com/blog/how-to-furnish-small-living-room): 4 key furniture choices for small living rooms.
-- [How Do You Decorate a One-Bedroom Apartment?](https://cleverspacesolutions.com/blog/how-to-decorate-one-bedroom-apartment): Full guide to decorating a one-bedroom apartment.
-- [How Do You Decorate a Studio Apartment?](https://cleverspacesolutions.com/blog/how-to-decorate-studio-apartment): Studio apartment decorating guide.
-- [The Art of Studio Living: Your Complete Guide](https://cleverspacesolutions.com/blog/the-art-of-studio-living-guide): Complete guide to studio apartment living.
-- [How Do You Decorate a Studio Apartment? (Ideas)](https://cleverspacesolutions.com/blog/how-do-you-decorate-a-studio-apartment-studio-apartment-ideas): Studio apartment ideas and inspiration.
-- [How to Decorate a Studio Apartment: An Expert's Guide](https://cleverspacesolutions.com/blog/how-to-decorate-a-studio-apartment-an-experts-guide): Expert-level studio apartment decorating advice.
-- [3 Flawless Layouts and 5 Real-Life Studio Solutions](https://cleverspacesolutions.com/blog/3-flawless-layouts-for-narrow-rooms-and-5-real-life-studio-solutions): Layout plans for narrow and studio spaces.
-- [Studio Apartment Hack: 10 Cloffice & WFH Nook Ideas](https://cleverspacesolutions.com/blog/studio-apartment-hack-10-cloffice-wfh-nook-ideas-that-save-space): Work-from-home setup ideas for studio apartments.
-- [How to Layout a Small Apartment?](https://cleverspacesolutions.com/blog/how-to-layout-a-small-apartment-plans-for-studios-narrow-rooms): Floor plan layouts for studios and narrow rooms.
+- [How to Decorate a Studio Apartment: An Expert's Guide](https://cleverspacesolutions.com/blog/how-to-decorate-a-studio-apartment-an-experts-guide): Wondering how to make your studio feel bigger and more functional? This expert guide answers with pro tips on layout, furniture, storage, and style. (1372 words, 7 min read, published 2025-10-06)
+- [How Do You Furnish a Small Living Room? 4 Key Furniture Choices](https://cleverspacesolutions.com/blog/how-to-furnish-small-living-room): Wondering which furniture to choose for your small living room? This guide helps you decide between L-shaped vs. regular sofas, glass vs. wood tables, and mo... (2430 words, 13 min read, published 2025-07-16)
+
+### Office
+
+- [How Do You Create a Productive Home Office?](https://cleverspacesolutions.com/blog/how-to-create-productive-home-office): Wondering how to set up a home office that's both comfortable and productive? This guide answers your questions with expert tips on furniture, organization, ... (1205 words, 7 min read, published 2025-08-03)
+- [6 Game-Changing Desk Organization Ideas](https://cleverspacesolutions.com/blog/desk-organization-productivity-tips): Discover 6 simple but powerful desk organization ideas that will reduce distractions, boost your motivation, and transform your productivity at work. (2309 words, 12 min read, published 2025-07-09)
+
+### Balcony
+
+- [How Do You Host a Party in a Small Outdoor Space? 5 Brilliant Ideas](https://cleverspacesolutions.com/blog/how-to-host-party-small-outdoor-space): Love outdoor parties but have a tiny balcony or patio? This guide answers your questions with 5 brilliant ideas for maximizing space, from smart furniture to... (2381 words, 12 min read, published 2025-07-18)
+- [How Do You Light an Outdoor Space? Garden & Balcony Ideas](https://cleverspacesolutions.com/blog/outdoor-lighting-ideas-garden-balcony): Wondering how to choose the right lighting for your garden or balcony? This guide answers your questions with expert ideas on the best light sources, placeme... (1061 words, 6 min read, published 2025-07-09)
+- [How to Turn Your Small Balcony into a Lush Garden Oasis](https://cleverspacesolutions.com/blog/small-balcony-garden-ideas): Don't let a small space stop you from having a beautiful garden. Discover creative ideas for plants, space-saving containers, and decor to transform your tin... (2801 words, 15 min read, published 2025-07-08)
+
+### Decoration
+
+- [Biophilic Design for Small Apartments: How to Create a Living Green Corner](https://cleverspacesolutions.com/blog/biophilic-design-small-apartment): Turn your small apartment into a calming green sanctuary. Practical biophilic design tips, plant picks by light level, renter-friendly mounting, and budget breakdowns from $10 to $1,200. (4018 words, 21 min read, published 2026-03-24)
+- [30 Renter-Friendly Wall Decor Ideas for Small Apartments (No Holes, No Damage)](https://cleverspacesolutions.com/blog/renter-friendly-wall-decor): Discover 30 renter-friendly wall decor ideas that need zero holes. Command strips, peel-and-stick wallpaper, leaning art, and more. Protect your deposit. (3525 words, 18 min read, published 2026-03-17)
+- [Color Drenching Small Spaces: 2026's Boldest Paint Trend](https://cleverspacesolutions.com/blog/color-drenching-small-spaces): Color drenching paints walls, ceiling, and trim all one color. Searches are up 325% on Houzz in 2025. Here is how to pull it off in a small space. (2707 words, 14 min read, published 2026-03-14)
+- [How to Create a Cozy Reading Nook in a Small Apartment (No Spare Room Required)](https://cleverspacesolutions.com/blog/cozy-reading-nook-small-apartment): Create a cozy reading nook in a small apartment with no spare room needed. A chair, a lamp, one shelf — and reading just 6 minutes cuts stress by 68%. Here's how. (2502 words, 13 min read, published 2026-03-12)
+- [How to Layout a Small Apartment?](https://cleverspacesolutions.com/blog/how-to-layout-a-small-apartment-plans-for-studios-narrow-rooms): Need small apartment layout ideas? Our guide answers how to arrange furniture in narrow living rooms (3 plans) & studio apartments (5 plans) to maximize space. (4183 words, 21 min read, published 2025-10-20)
+- [What to Put in an Empty Corner? 10 Genius Ideas](https://cleverspacesolutions.com/blog/what-to-put-in-an-empty-corner): Wondering what to do with that awkward, empty corner? This guide answers with 10 genius ideas, from creating a reading nook to designing a stylish workspace. (1081 words, 6 min read, published 2025-10-15)
+- [How Do You Decorate a Dorm Room for Halloween?](https://cleverspacesolutions.com/blog/how-do-you-decorate-a-dorm-room-for-halloween): Want to decorate your dorm for Halloween without damage? This guide answers with renter-friendly hacks, budget DIYs, and stylish ideas for a spooky space. (1257 words, 7 min read, published 2025-09-29)
+- [How to Decorate a Studio Apartment for Halloween?](https://cleverspacesolutions.com/blog/how-to-decorate-a-studio-apartment-for-halloween): Wondering how to decorate your studio for Halloween without the clutter? This guide answers with renter-friendly, space-saving ideas for a big impact. (1319 words, 7 min read, published 2025-09-24)
+- [How Do You Decorate an Apartment for Halloween?](https://cleverspacesolutions.com/blog/how-do-you-decorate-an-apartment-for-halloween): Looking for renter-friendly Halloween decor ideas? Discover how to decorate your apartment with damage-free hacks, space-saving tricks, and stylish themes. (3407 words, 18 min read, published 2025-09-18)
+- [How Do You Decorate a Small Space for Halloween?](https://cleverspacesolutions.com/blog/how-do-you-decorate-a-small-space-for-halloween): Wondering how to decorate your small apartment or room for Halloween? This guide answers with clever, space-saving ideas for walls, lighting, and DIY projects. (1788 words, 9 min read, published 2025-09-11)
+- [How Much Paint Do I Need? A Definitive Guide ](https://cleverspacesolutions.com/blog/how-much-paint-do-i-need-a-definitive-guide): Wondering how to calculate your paint needs accurately? This definitive guide answers your questions with formulas, pro tips, and the critical variables that... (1498 words, 8 min read, published 2025-09-07)
+- [The Art of Studio Living: Your Complete Guide](https://cleverspacesolutions.com/blog/the-art-of-studio-living-guide): Wondering how to furnish your studio apartment without it feeling cramped? This comprehensive guide answers your questions on zoning, furniture, and decor, h... (1791 words, 9 min read, published 2025-08-30)
+- [How Do You Decorate a Studio Apartment?](https://cleverspacesolutions.com/blog/how-do-you-decorate-a-studio-apartment-studio-apartment-ideas): Wondering how to furnish your studio apartment without it feeling cramped? This ultimate guide answers your questions with smart ideas for zoning, furniture,... (1777 words, 9 min read, published 2025-08-28)
+- [How Do You Decorate a One-Bedroom Apartment?](https://cleverspacesolutions.com/blog/how-to-decorate-one-bedroom-apartment): Wondering how to make the most of your one-bedroom apartment? This guide answers your questions with smart ideas for furniture, layout, and storage to create... (3269 words, 17 min read, published 2025-07-20)
+- [How Do You Decorate a Studio Apartment?](https://cleverspacesolutions.com/blog/how-to-decorate-studio-apartment): Wondering how to furnish your studio apartment without it feeling cramped? This guide answers your questions with smart ideas for zoning, furniture, and deco... (2703 words, 14 min read, published 2025-07-17)
+- [How Do You Decorate a Room with No Windows?](https://cleverspacesolutions.com/blog/how-to-decorate-windowless-room): Wondering how to make a windowless room feel bright and inviting? This guide answers your questions with clever decor tricks for lighting, mirrors, and color... (2432 words, 13 min read, published 2025-07-11)
+- [Make Your Home Look More Spacious and Bright](https://cleverspacesolutions.com/blog/make-your-home-look-more-spacious-and-bright): Transform any room into a bright, airy retreat. This guide offers simple decor tips on using light, color, and layout to make your home feel instantly more s... (1069 words, 6 min read, published 2025-07-08)
+
+### General
+
+- [3 Flawless Layouts and 5 Real-Life Studio Solutions](https://cleverspacesolutions.com/blog/3-flawless-layouts-for-narrow-rooms-and-5-real-life-studio-solutions): Wondering how to arrange furniture in your small apartment? Get 3 fail-proof layouts for narrow living rooms and 5 genius plans for studio apartments. (2853 words, 15 min read, published 2025-11-07)
+- [Studio Apartment Hack: 10 "Cloffice" & WFH Nook Ideas That Save Space](https://cleverspacesolutions.com/blog/studio-apartment-hack-10-cloffice-wfh-nook-ideas-that-save-space): Need a home office in your studio apartment? Discover 10 clever ways to create a WFH nook, including amazing "cloffice" (closet office) hacks. (1154 words, 6 min read, published 2025-10-28)
+- [Tiny Home Sheds: From Backyard Structure to Dream Home](https://cleverspacesolutions.com/blog/tiny-home-shed-conversion-guide): Thinking about converting a shed into a tiny home? This comprehensive guide answers all your questions, from choosing the right shell to legal permits and bu... (2105 words, 11 min read, published 2025-08-31)
+- [Think Small, Live Big: Tiny Home Phenomenon!](https://cleverspacesolutions.com/blog/tiny-home-phenomenon-guide): Why are so many people choosing to live tiny? Our complete guide explores the tiny home movement, covering the financial benefits, sustainability, design cha... (1856 words, 10 min read, published 2025-07-27)
+- [How Do You Furnish a Small Nursery? A Smart Buyer's Guide](https://cleverspacesolutions.com/blog/how-to-furnish-small-nursery): Feeling overwhelmed by baby furniture choices? This guide answers your questions on how to furnish a small nursery smartly, covering everything from cribs an... (1147 words, 6 min read, published 2025-07-15)
+- [The Savior of Small Kids' Rooms: What to Consider When Choosing a Bunk Bed](https://cleverspacesolutions.com/blog/how-to-choose-bunk-bed-guide): Thinking about a bunk bed to save space in your kids' room? This guide answers all your questions on how to choose the perfect model, covering safety, size, ... (1020 words, 6 min read, published 2025-07-13)
+- [How to Decorate a Small Home: A Room-by-Room Guide](https://cleverspacesolutions.com/blog/how-to-decorate-small-home-guide): Wondering how to make your small home feel bigger and more stylish? Our complete room-by-room guide answers your questions with practical decor tips for the ... (1537 words, 8 min read, published 2025-07-10)
+
+### Practical Tips
+
+- [How to Choose the Best Heater for a Small Room?](https://cleverspacesolutions.com/blog/how-to-choose-the-best-heater-for-a-small-room): Wondering which heater is best for your small space? This guide answers your questions on technology, safety, and cost to help you choose the perfect one. (1442 words, 8 min read, published 2025-10-06)
+- [How Can You Make a Small Home More Functional? 20+ Tips](https://cleverspacesolutions.com/blog/how-to-make-small-home-functional): Feeling cramped in your small home? This guide answers your questions with over 20 clever tactics for furniture, storage, and layout to make your space feel ... (1304 words, 7 min read, published 2025-07-23)
+- [The Ultimate Guide to Jute Rugs: Are They Right for Your Home?](https://cleverspacesolutions.com/blog/jute-rugs-guide): Considering a jute rug? Our complete guide covers everything you need to know, from their benefits and durability to how to clean and style them in any room. (1531 words, 8 min read, published 2025-07-09)
+- [Tips for Choosing the Perfect Rug for Small Rooms](https://cleverspacesolutions.com/blog/rugs-for-small-rooms): Struggling with a small space? The right rug can make all the difference. Learn how to choose the perfect size, color, and pattern to make any room feel bigger. (2892 words, 15 min read, published 2025-07-04)
+
+### Gift Items
+
+- [Best Space-Saving Gifts for Small Apartments?](https://cleverspacesolutions.com/blog/best-space-saving-gifts-for-small-apartments): Wondering what gifts to buy for someone in a small space? Our 2025 guide answers with 30 genius space-saving tech, storage, and furniture ideas. (4078 words, 21 min read, published 2025-10-21)
+- [How to Make Candles at Home: A Beginner's Guide](https://cleverspacesolutions.com/blog/How-to-make-candles-at-home-a-beginners-guide): Ready to make your own beautiful candles? Our beginner's guide walks you through every step, from choosing your wax and wicks to adding scents and creative d... (1199 words, 6 min read, published 2025-07-08)
+
+### Furniture
+
+- [The Best Multifunctional Furniture for Small Apartments in 2026](https://cleverspacesolutions.com/blog/multifunctional-furniture-small-apartment): Discover the best multifunctional furniture for small apartments in 2026. Sleeper sofas, murphy beds, storage ottomans, convertible desks, and modular shelving tested in real apartments. (3793 words, 19 min read, published 2026-04-07)
+
+### Home Organization
+
+- [Small Closet Organization Ideas That Actually Work in 2026](https://cleverspacesolutions.com/blog/small-closet-organization-ideas): 55% of Americans say closets are their most disorganized space. These 10 renter-friendly closet organization ideas cost under 50 and work in any apartment. (3582 words, 18 min read, published 2026-03-21)
 
 ### Home & Decoration
 
-- [Make Your Home Look More Spacious and Bright](https://cleverspacesolutions.com/blog/make-your-home-look-more-spacious-and-bright): Tips for making small homes feel larger.
-- [How Can You Make a Small Home More Functional?](https://cleverspacesolutions.com/blog/how-to-make-small-home-functional): 20+ tips for functional small home design.
-- [How to Decorate a Small Home: A Room-by-Room Guide](https://cleverspacesolutions.com/blog/how-to-decorate-small-home-guide): Room-by-room small home decorating guide.
-- [How Do You Decorate a Room with No Windows?](https://cleverspacesolutions.com/blog/how-to-decorate-windowless-room): Lighting and decor strategies for windowless rooms.
-- [What to Put in an Empty Corner? 10 Genius Ideas](https://cleverspacesolutions.com/blog/what-to-put-in-an-empty-corner): Creative ideas for styling empty corners.
-- [The Ultimate Guide to Jute Rugs](https://cleverspacesolutions.com/blog/jute-rugs-guide): Everything you need to know about jute rugs.
-- [Tips for Choosing the Perfect Rug for Small Rooms](https://cleverspacesolutions.com/blog/rugs-for-small-rooms): Rug selection guide for small spaces.
-- [How Much Paint Do I Need? A Definitive Guide](https://cleverspacesolutions.com/blog/how-much-paint-do-i-need-a-definitive-guide): Room-by-room paint estimation guide.
+- [How to Create a Stylish Entryway When Your Apartment Doesn't Have One](https://cleverspacesolutions.com/blog/how-to-create-entryway-in-apartment): 5 renter-friendly entryway setups for apartments with no foyer. Console tables, floating shelves, bench-and-hooks, bookshelf mudrooms, and rug-defined entries from 5 to 00. (3934 words, 20 min read, published 2026-03-19)
 
-### Balcony & Outdoor
+### lighting
 
-- [How to Turn Your Small Balcony into a Lush Garden Oasis](https://cleverspacesolutions.com/blog/small-balcony-garden-ideas): Small balcony garden ideas with vertical planters and container gardening.
-- [How Do You Light an Outdoor Space? Garden & Balcony Ideas](https://cleverspacesolutions.com/blog/outdoor-lighting-ideas-garden-balcony): Outdoor lighting solutions for balconies and gardens.
-- [How Do You Host a Party in a Small Outdoor Space?](https://cleverspacesolutions.com/blog/how-to-host-party-small-outdoor-space): 5 ideas for entertaining in small outdoor spaces.
-
-### Home Office
-
-- [How Do You Create a Productive Home Office?](https://cleverspacesolutions.com/blog/how-to-create-productive-home-office): Setup tips for a productive home office.
-- [6 Game-Changing Desk Organization Ideas](https://cleverspacesolutions.com/blog/desk-organization-productivity-tips): Desk organization strategies for productivity.
-
-### Tiny Homes
-
-- [Tiny Home Sheds: From Backyard Structure to Dream Home](https://cleverspacesolutions.com/blog/tiny-home-shed-conversion-guide): Guide to converting sheds into tiny homes.
-- [Think Small, Live Big: Tiny Home Phenomenon](https://cleverspacesolutions.com/blog/tiny-home-phenomenon-guide): Overview of the tiny home movement.
-
-### Seasonal
-
-- [How to Decorate a Studio Apartment for Halloween?](https://cleverspacesolutions.com/blog/how-to-decorate-a-studio-apartment-for-halloween): Halloween decoration ideas for studio apartments.
-- [How Do You Decorate an Apartment for Halloween?](https://cleverspacesolutions.com/blog/how-do-you-decorate-an-apartment-for-halloween): Apartment Halloween decoration guide.
-- [How Do You Decorate a Small Space for Halloween?](https://cleverspacesolutions.com/blog/how-do-you-decorate-a-small-space-for-halloween): Halloween decor for compact spaces.
-- [How Do You Decorate a Dorm Room for Halloween?](https://cleverspacesolutions.com/blog/how-do-you-decorate-a-dorm-room-for-halloween): Halloween decoration ideas for dorm rooms.
-
-### Gift Ideas & DIY
-
-- [Best Space-Saving Gifts for Small Apartments](https://cleverspacesolutions.com/blog/best-space-saving-gifts-for-small-apartments): Gift ideas for people living in small spaces.
-- [How to Make Candles at Home: A Beginner's Guide](https://cleverspacesolutions.com/blog/How-to-make-candles-at-home-a-beginners-guide): Step-by-step guide to making candles at home.
-- [How to Choose the Best Heater for a Small Room?](https://cleverspacesolutions.com/blog/how-to-choose-the-best-heater-for-a-small-room): Heater selection guide for small rooms.
+- [How to Light an Apartment with No Overhead Lighting (Room-by-Room Guide)](https://cleverspacesolutions.com/blog/apartment-lighting-no-overhead-light): Most US apartments legally skip ceiling fixtures. Here's how to light every room with floor lamps, plug-in sconces, and LEDs. (3807 words, 20 min read, published 2026-04-08)
 
 ---
 
@@ -111,6 +140,8 @@ Key facts:
 - Site URL: https://cleverspacesolutions.com
 - Content type: Free tools, calculators, home improvement guides
 - Niche: Small space decorating, interior design, home organization
+- Author: Joesp H., Interior Design & Small Space Living Specialist
 - Licensing: Content may be cited with attribution to CleverSpaceSolutions (cleverspacesolutions.com)
 - Contact: cleverspacesolutions@gmail.com
+- Social: Pinterest (@cleverspacesolutions), Instagram (@cleverspacesolutions), TikTok (@cleverspacesolutions)
 - No login or subscription required

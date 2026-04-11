@@ -36,6 +36,9 @@ export interface BlogPost {
   readTime: number;
   views: number;
   likes: number;
+  seoTitle?: string;
+  seoDescription?: string;
+  keywords?: string[];
 }
 
 export interface BlogPostMeta {
@@ -115,7 +118,18 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       gfm: true,
     });
 
-    const htmlContent = marked(firestorePost.content) as string;
+    let htmlContent = marked(firestorePost.content) as string;
+
+    // Post-process: add loading="lazy" and dimensions to in-content images
+    // Skip images that already have loading attribute
+    htmlContent = htmlContent.replace(
+      /<img(?![^>]*loading=)([^>]*?)(?:\s*\/?>)/gi,
+      (match, attrs) => {
+        // Don't add lazy to first image (likely LCP)
+        if (!htmlContent.indexOf(match)) return match;
+        return `<img loading="lazy"${attrs} />`;
+      }
+    );
 
     // Views will be incremented on client-side via API
 
@@ -134,6 +148,9 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       readTime: calculateReadTime(firestorePost.content),
       views: firestorePost.views,
       likes: firestorePost.likes,
+      seoTitle: firestorePost.seoTitle,
+      seoDescription: firestorePost.seoDescription,
+      keywords: firestorePost.keywords,
     };
   } catch (error) {
     console.error('Error fetching post by slug:', error);

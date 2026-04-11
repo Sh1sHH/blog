@@ -32,16 +32,16 @@ const categoryMapping: { [key: string]: string } = {
 };
 
 const categoryMeta: { [key: string]: { sub: string; description: string } } = {
-  'Practical Tips':  { sub: 'Smart Solutions',    description: 'Actionable guides and expert advice for a more organized, efficient everyday life at home.' },
-  'Decoration':      { sub: 'Style & Aesthetics',  description: 'Design inspiration and decoration ideas to transform every corner of your living space.' },
-  'Gift Items':      { sub: 'For Every Budget',    description: 'Thoughtful gift picks and home décor recommendations for the people you care about.' },
-  'Kitchen':         { sub: 'Cook & Organize',     description: 'Kitchen organization tips, small kitchen ideas, and functional design upgrades.' },
-  'Bathroom':        { sub: 'Refresh & Renew',     description: 'Bathroom décor, storage hacks, and design ideas for every budget and style.' },
-  'Living Room':     { sub: 'Gather & Relax',      description: 'Living room arrangement ideas, furniture tips, and cozy décor inspiration.' },
-  'Office':          { sub: 'Work from Home',       description: 'Home office setup guides, desk organization, and productivity-boosting space ideas.' },
-  'Bedroom':         { sub: 'Rest & Restore',      description: 'Bedroom decoration, storage solutions, and design ideas for a calm, personal retreat.' },
-  'Balcony':         { sub: 'Outdoor Living',       description: 'Small balcony garden ideas, outdoor décor, and compact patio solutions.' },
-  'General':         { sub: 'All Topics',           description: 'A mix of home improvement ideas, lifestyle tips, and space-saving inspiration.' },
+  'Practical Tips':  { sub: 'Smart Solutions',    description: 'Actionable organization guides and expert home tips tested in real apartments. Browse storage hacks, cleaning routines, and space-saving strategies.' },
+  'Decoration':      { sub: 'Style & Aesthetics',  description: 'Small space decoration ideas from renter-friendly wall art to color drenching. Transform every corner of your apartment with proven design tips.' },
+  'Gift Items':      { sub: 'For Every Budget',    description: 'Thoughtful gift picks and space-saving home accessories for people living in small apartments. Curated ideas from $10 to $200.' },
+  'Kitchen':         { sub: 'Cook & Organize',     description: 'Small kitchen organization tips, layout ideas, backsplash inspiration, and functional design upgrades. Make your compact kitchen work harder.' },
+  'Bathroom':        { sub: 'Refresh & Renew',     description: 'Small bathroom decor ideas, clever storage hacks, and budget-friendly design upgrades. Maximize style in your compact bathroom space.' },
+  'Living Room':     { sub: 'Gather & Relax',      description: 'Small living room layout ideas, furniture arrangement tips, wall decor inspiration, and cozy styling. Create a functional living space you love.' },
+  'Office':          { sub: 'Work from Home',       description: 'Small home office setup guides, desk organization ideas, and cloffice hacks for studio apartments. Build a productive workspace in any corner.' },
+  'Bedroom':         { sub: 'Rest & Restore',      description: 'Small bedroom layout ideas, storage solutions, and cozy decor tips. Design a calm, functional retreat even in the tiniest room.' },
+  'Balcony':         { sub: 'Outdoor Living',       description: 'Small balcony garden ideas, patio furniture picks, outdoor lighting tips, and entertaining hacks for compact outdoor spaces.' },
+  'General':         { sub: 'All Topics',           description: 'Home improvement ideas, lifestyle tips, and space-saving inspiration for small apartments. Browse our complete collection of expert guides.' },
 };
 
 interface CategoryPageProps {
@@ -68,7 +68,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   const meta = categoryMeta[category];
 
   return {
-    title: `${category} — CleverSpaceSolutions`,
+    title: `${category} Ideas & Tips | CleverSpaceSolutions`,
     description: meta?.description ?? `Browse all ${category} articles on CleverSpaceSolutions.`,
     alternates: {
       canonical: `https://cleverspacesolutions.com/categories/${params.category}`,
@@ -92,8 +92,41 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const posts = allPosts.filter(p => p.category === category && p.published);
   const meta = categoryMeta[category] ?? { sub: 'Articles', description: '' };
 
+  // CollectionPage + BreadcrumbList JSON-LD for category pages
+  const collectionJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": `${category} Articles | CleverSpaceSolutions`,
+    "description": meta.description,
+    "url": `https://cleverspacesolutions.com/categories/${params.category}`,
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "CleverSpaceSolutions",
+      "url": "https://cleverspacesolutions.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "CleverSpaceSolutions",
+      "url": "https://cleverspacesolutions.com"
+    },
+    "inLanguage": "en-US",
+    "numberOfItems": posts.length
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cleverspacesolutions.com" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://cleverspacesolutions.com/blog" },
+      { "@type": "ListItem", "position": 3, "name": category, "item": `https://cleverspacesolutions.com/categories/${params.category}` },
+    ]
+  };
+
   return (
     <div className="min-h-screen bg-slate-50">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
 
       {/* ── HERO BAND ── */}
       <div className="bg-white border-b border-slate-100">

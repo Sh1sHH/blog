@@ -76,7 +76,12 @@ export default function RootLayout({
     "@type": "Organization",
     "name": "CleverSpaceSolutions",
     "url": "https://cleverspacesolutions.com",
-    "logo": "https://cleverspacesolutions.com/images/navbar/logo2.webp",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://cleverspacesolutions.com/images/navbar/logo2.webp",
+      "width": 512,
+      "height": 512
+    },
     "description": "Tired of clutter? Discover clever storage solutions & organization ideas for small spaces. Turn your tiny home into a tidy, organized oasis. Reclaim your space!",
     "slogan": "Reclaim your space!",
     "contactPoint": {
@@ -94,12 +99,22 @@ export default function RootLayout({
     "name": "CleverSpaceSolutions",
     "url": "https://cleverspacesolutions.com",
     "description": "Tired of clutter? Discover clever storage solutions & organization ideas for small spaces. Turn your tiny home into a tidy, organized oasis.",
-    "inLanguage": "en-US"
+    "inLanguage": "en-US",
+    "publisher": {
+      "@type": "Organization",
+      "name": "CleverSpaceSolutions",
+      "url": "https://cleverspacesolutions.com"
+    }
   };
 
   return (
     <html lang="en">
       <head>
+        {/* Preconnect to critical third-party origins for LCP */}
+        <link rel="preconnect" href="https://res.cloudinary.com" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+
         {/* Google Analytics */}
         <Script
           strategy="afterInteractive"

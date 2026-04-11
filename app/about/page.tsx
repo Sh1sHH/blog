@@ -44,6 +44,9 @@ export default function AboutPage() {
             "name": "Joesp H.",
             "url": "https://cleverspacesolutions.com/about",
             "description": "Home organization specialist and founder of CleverSpaceSolutions. Helps people create organized, functional small spaces.",
+            "jobTitle": "Interior Design & Small Space Living Specialist",
+            "knowsAbout": ["small space design", "apartment decorating", "home organization", "interior design for renters", "kitchen organization", "bedroom styling"],
+            "image": "https://cleverspacesolutions.com/images/navbar/logo2.webp",
             "sameAs": [
               "https://pinterest.com/cleverspacesolutions/",
               "https://www.instagram.com/cleverspacesolutions/",

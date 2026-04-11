@@ -5,6 +5,15 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  async redirects() {
+    return [
+      {
+        source: '/blog/How-to-make-candles-at-home-a-beginners-guide',
+        destination: '/blog/how-to-make-candles-at-home-a-beginners-guide',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

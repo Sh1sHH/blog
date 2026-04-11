@@ -1,4 +1,4 @@
-import { getPostBySlug, getAllPosts, getLatestPosts } from '@/lib/blog';
+import { getPostBySlug, getAllPosts, getRelatedPosts } from '@/lib/blog';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import Image from 'next/image';
@@ -52,17 +52,29 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   }
 
+  const rawTitle = post.seoTitle || post.title;
+  const suffix = ' | CleverSpaceSolutions';
+  // Cap title to 60 chars total: if title + suffix > 60, use shorter suffix or truncate
+  const metaTitle = rawTitle.length + suffix.length <= 60
+    ? rawTitle
+    : rawTitle.length <= 57
+      ? rawTitle
+      : rawTitle.substring(0, 57);
+  const metaDescription = post.seoDescription || post.description;
+
   return {
-    title: `${post.title} | CleverSpaceSolutions`,
-    description: post.description,
-    keywords: post.tags,
+    title: metaTitle.length + suffix.length <= 60
+      ? `${metaTitle}${suffix}`
+      : `${metaTitle} | CSS`,
+    description: metaDescription,
+    keywords: post.keywords?.length ? post.keywords : post.tags,
     authors: [{ name: post.author }],
     alternates: {
       canonical: `https://cleverspacesolutions.com/blog/${post.slug}`,
     },
     openGraph: {
-      title: post.title,
-      description: post.description,
+      title: metaTitle,
+      description: metaDescription,
       type: 'article',
       url: `https://cleverspacesolutions.com/blog/${post.slug}`,
       publishedTime: post.date,
@@ -78,8 +90,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     },
     twitter: {
       card: 'summary_large_image',
-      title: post.title,
-      description: post.description,
+      title: metaTitle,
+      description: metaDescription,
       images: [post.image],
     },
   };
@@ -92,8 +104,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
-  // Get latest posts (excluding current post)
-  const latestPosts = await getLatestPosts(post.slug, 3);
+  // Get related posts based on category and tag relevance
+  const latestPosts = await getRelatedPosts(post.slug, post.category, post.tags, 3);
 
   // Extract FAQ pairs from post content for FAQPage schema
   function extractFAQs(html: string) {
@@ -129,6 +141,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       "@type": "Person",
       "name": post.author,
       "url": "https://cleverspacesolutions.com/about",
+      "jobTitle": "Interior Design & Small Space Living Specialist",
+      "knowsAbout": ["small space design", "apartment decorating", "home organization", "interior design for renters"],
+      "affiliation": {
+        "@type": "Organization",
+        "name": "CleverSpaceSolutions",
+        "url": "https://cleverspacesolutions.com"
+      },
       "sameAs": [
         "https://cleverspacesolutions.com/about"
       ]
@@ -171,18 +190,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     ],
   };
 
-  const faqJsonLd = faqs.length > 0 ? {
+  // Speakable schema - tells AI which passages are most citable
+  const speakableJsonLd = {
     "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": faqs.map(({ question, answer }) => ({
-      "@type": "Question",
-      "name": question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": answer
-      }
-    }))
-  } : null;
+    "@type": "WebPage",
+    "speakable": {
+      "@type": "SpeakableSpecification",
+      "cssSelector": [".tldr-box", ".faq-section h3 + p", "article > p:first-of-type", "blockquote"]
+    },
+    "url": `https://cleverspacesolutions.com/blog/${post.slug}`
+  };
 
   return (
     <>
@@ -195,12 +212,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      {faqJsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-        />
-      )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(speakableJsonLd) }}
+      />
       
       {/* Client-side view tracking */}
       <ViewTracker slug={post.slug} />
@@ -306,6 +321,34 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
           </div>
         )}
+
+        {/* Author Bio Box - E-E-A-T Signal */}
+        <div className="mt-10 md:mt-14 pt-6 md:pt-8 border-t border-gray-200">
+          <div className="flex items-start gap-4 md:gap-5 bg-slate-50 rounded-2xl p-5 md:p-6">
+            <Link href="/about" className="shrink-0">
+              <Image
+                src="/images/navbar/logo2.webp"
+                alt="Joesp H. - CleverSpaceSolutions"
+                width={64}
+                height={64}
+                className="rounded-full object-cover"
+              />
+            </Link>
+            <div>
+              <Link href="/about" className="no-underline">
+                <h3 className="text-base md:text-lg font-semibold text-gray-900 hover:text-blue-700 transition-colors">
+                  Written by {post.author}
+                </h3>
+              </Link>
+              <p className="text-xs md:text-sm text-gray-500 mt-0.5 mb-2">
+                Interior Design &amp; Small Space Living Specialist
+              </p>
+              <p className="text-sm text-gray-600 leading-relaxed">
+                Former marketing manager turned full-time home optimizer. After living in 7 homes ranging from 450 to 2,000 sq ft, I started CleverSpaceSolutions to help people create organized, functional spaces on real budgets.
+              </p>
+            </div>
+          </div>
+        </div>
 
         {/* Other Articles Section */}
         {latestPosts.length > 0 && (
