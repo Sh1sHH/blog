@@ -1,5 +1,39 @@
 # CleverSpaceSolutions — Project Instructions
 
+## Pillar & Cluster Mimarisi (SEO Temel)
+
+Site, topical authority için **8 pillar** etrafında organize edilmiştir. Her yeni yazı tam olarak bir pillar'a bağlanmak zorundadır.
+
+**Pillar'lar:**
+1. `small-kitchen` → pillar post: `stylish-small-kitchen-ideas`
+2. `studio-apartment` → pillar post: `how-to-decorate-studio-apartment`
+3. `small-living-room` → pillar post: `how-to-furnish-small-living-room`
+4. `small-bedroom` → pillar post: `small-bedroom-design-guide`
+5. `small-bathroom` → pillar post: `small-bathroom-decor-ideas`
+6. `small-balcony` → pillar post: `small-balcony-garden-ideas`
+7. `home-office` → pillar post: `desk-organization-productivity-tips`
+8. `tiny-house` → pillar post: `tiny-home-phenomenon-guide`
+
+**Veri katmanı:**
+- `data/pillar-map.json` — tüm postların pillar/cluster/supporting atamaları
+- `lib/pillars.ts` — helper fonksiyonlar
+- `components/blog/PillarRelated.tsx` — her blog sayfasının altında otomatik olarak pillar/kardeş postları render eder (SSG'de çalışır, sıfır runtime maliyet)
+
+**Yeni yazı yazarken ZORUNLU kurallar:**
+1. Yeni yazı hangi pillar'a ait karar ver. Pillar post'a içerikte **en az 1 inline link** ver (natural anchor text ile, ilk 3 paragrafın içinde olmalı — SEO ağırlığı en yüksek).
+2. Aynı cluster'dan 2-3 kardeş postuna inline link ver (yine natural anchor).
+3. Yazı oluşturulup Firebase'e yüklendikten sonra **`data/pillar-map.json`'a yeni slug'ı ekle** (role: "cluster", doğru pillar key'i ile).
+4. PillarRelated component otomatik render edeceği için manuel "related posts" bölümü ekleme.
+
+**Pillar post'u expand ederken:**
+- Pillar post'ları 2500w+ olmak zorunda. Expand ederken cluster kardeşlerine 3-5 inline link ver — pillar'dan cluster'a link akışı SEO için önemli.
+
+**Zayıf pillar'lar (öncelikle beslenmeli):**
+- `small-living-room`: 1 post (sadece pillar), acil cluster yazıları gerek
+- `home-office`: 2 post
+- `small-bathroom`: 2 post
+- `small-balcony`: 3 post
+
 ## Blog Yazma Otomasyonu (Adım Adım)
 
 Yeni blog yazısı oluşturma akışı:
@@ -20,6 +54,7 @@ Yeni blog yazısı oluşturma akışı:
    - Internal link sayısı (5-10 arası)
    - IMAGE marker sayısı (5-7)
    - Kelime sayısı (3000-4000)
+   - **SVG chart'larda boş satır olmamalı** — `<svg>` ile `</svg>` arasında hiçbir boş satır (`\n\n`) bulunmamalı. `lib/blog.ts` içeriği `marked()` üzerinden geçiriyor ve boş satır marked'ın HTML bloğunu kapattığını zannetmesine yol açıyor; bunun sonucunda `<rect>`/`<text>` element'leri parçalanıp chart bozuluyor (bkz. kitchen-backsplash bug, 2026-04-12). Yorum satırları (`<!-- -->`) sorun değil, ama yorumun öncesinde/sonrasında boş satır bırakma.
 5. **Görselleri üret** — `node scripts/generate-blog-images.js {slug}-content.html`
    - Gemini AI ile görsel üretir, Cloudinary'e yükler
    - IMAGE marker'ları `<figure>` tag'leriyle değiştirir
@@ -37,9 +72,26 @@ Yeni blog yazısı oluşturma akışı:
    - Production: `PINTEREST_SANDBOX=false`, gerçek board ID ve production token gerekli
    - Pin: Cloudinary'deki pin görseli + blog URL + description + hashtag'ler
 9. **BLOG-QUEUE.md güncelle** — Durumu "✅ Yazıldı" olarak değiştir
-10. **Bu dosyaya (CLAUDE.md) yapılanları kaydet** — Aşağıdaki log bölümüne ekle
+10. **`data/pillar-map.json`'a yeni post'u ekle** — Doğru pillar'ı seç, role: "cluster" (nadir durumda "supporting"). Pillar guidance için yukarıdaki "Pillar & Cluster Mimarisi" bölümüne bak. Eklemeyi unutursan PillarRelated component yazıyı cluster'a bağlayamaz ve SEO kazancı kaybolur.
+11. **Bu dosyaya (CLAUDE.md) yapılanları kaydet** — Aşağıdaki log bölümüne ekle
 
 ## Yapılan İşlemler Logu
+
+### 2026-04-11 — Blog #9: kitchen-backsplash-ideas-small-kitchen
+- **Konu:** Kitchen Backsplash Ideas for Small Kitchens: Budget-Friendly Designs That Pop
+- **Adımlar:**
+  1. BLOG-QUEUE.md'den #9 seçildi (cluster verisine dayalı yeni sıra, 40K+ volume)
+  2. blog-researcher agent ile 15 istatistik araştırıldı (Houzz 2026, NKBA 2026, Zonda 2025, Angi, Fixr, Census/iPropertyManagement, NAHB, RentCafe, DataIntelo, Stickwoll/HomeGuide)
+  3. ~3,467 kelimelik HTML içerik yazıldı (9 H2 bölüm, 12 backsplash fikri, 5 FAQ, 2 SVG chart, 7 IMAGE marker, 9 unique internal link)
+  4. Kalite kontrolü geçti (em-dash: 0, çözülmemiş link: 0, IMAGE: 7, internal link: 10)
+  5. `generate-blog-images.js` ile 7 görsel üretildi ve Cloudinary'e yüklendi
+  6. `create-post.js` ile Firebase'e yüklendi (ID: 7rpzNEQhp7ITZpFxgrve)
+  7. `generate-pins.js` ile Pinterest pin kapak görseli üretildi ve Firebase `image` alanı güncellendi
+     - URL: https://res.cloudinary.com/dvmvs8s9t/image/upload/v1775903958/pinterest-pins/pin_kitchen-backsplash-ideas-small-kitchen.webp
+  8. `generate-llms-txt.js` ile llms.txt güncellendi (54 post)
+  9. BLOG-QUEUE.md durumu "✅ Yazıldı" olarak güncellendi
+- **URL:** /blog/kitchen-backsplash-ideas-small-kitchen
+- **Durum:** Yayında (Pinterest pin bekliyor)
 
 ### 2026-04-07 — Blog #7: multifunctional-furniture-small-apartment
 - **Konu:** The Best Multifunctional Furniture for Small Apartments in 2026

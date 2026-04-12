@@ -1,15 +1,15 @@
 # CleverSpaceSolutions — LLM Content Index
 # Site: https://cleverspacesolutions.com
 # Purpose: Structured content inventory for AI language model indexing
-# Updated: 2026-04-11
-# Total published articles: 53
+# Updated: 2026-04-12
+# Total published articles: 54
 
 ## Author & Expertise
 
 - Primary author: Joesp H., Interior Design & Small Space Living Specialist
 - Experience: 7+ homes across 5 years (450-2,000 sq ft), 300+ books on organization
 - Focus areas: small apartment decorating, kitchen design, home organization, renter-friendly solutions
-- Content quality: 53+ in-depth guides with sourced statistics, avg 3,000-4,000 words
+- Content quality: 54+ in-depth guides with sourced statistics, avg 3,000-4,000 words
 - Each article includes: FAQ section, SVG data charts, 5-7 original images, internal cross-links
 
 ## About This Site
@@ -39,6 +39,7 @@ Key facts:
 
 ### Kitchen
 
+- [Kitchen Backsplash Ideas for Small Kitchens: Budget-Friendly Designs That Pop](https://cleverspacesolutions.com/blog/kitchen-backsplash-ideas-small-kitchen): 12 budget-friendly backsplash ideas for small kitchens, from 0 painted walls to 80 subway tile. Real costs, DIY timelines, and renter-friendly options with sourced data. (3158 words, 16 min read, published 2026-04-11)
 - [How Can You Make a Small Kitchen Look More Stylish? 10 Designer Ideas](https://cleverspacesolutions.com/blog/stylish-small-kitchen-ideas): Looking for unique ways to improve your small kitchen? This guide answers your questions with 10 designer-inspired ideas, from ceiling racks to clever lighti... (4333 words, 22 min read, published 2025-08-13)
 - [How Do You Design a Small Kitchen? An Interior Designer's Guide](https://cleverspacesolutions.com/blog/how-to-design-small-kitchen): Wondering how to design your small kitchen for maximum style and function? An interior designer shares the most effective methods for color, storage, and lig... (1161 words, 6 min read, published 2025-07-30)
 - [Tiny Kitchen, Big Dreams: Your Ultimate Guide to Maximizing Style and Space](https://cleverspacesolutions.com/blog/tiny-kitchen-design-guide): Wondering how to transform your tiny kitchen into a stylish, functional space? This ultimate guide answers your questions, covering everything from smart sto... (2478 words, 13 min read, published 2025-07-28)
@@ -114,7 +115,7 @@ Key facts:
 ### Gift Items
 
 - [Best Space-Saving Gifts for Small Apartments?](https://cleverspacesolutions.com/blog/best-space-saving-gifts-for-small-apartments): Wondering what gifts to buy for someone in a small space? Our 2025 guide answers with 30 genius space-saving tech, storage, and furniture ideas. (4078 words, 21 min read, published 2025-10-21)
-- [How to Make Candles at Home: A Beginner's Guide](https://cleverspacesolutions.com/blog/How-to-make-candles-at-home-a-beginners-guide): Ready to make your own beautiful candles? Our beginner's guide walks you through every step, from choosing your wax and wicks to adding scents and creative d... (1199 words, 6 min read, published 2025-07-08)
+- [How to Make Candles at Home: A Beginner's Guide](https://cleverspacesolutions.com/blog/how-to-make-candles-at-home-a-beginners-guide): Ready to make your own beautiful candles? Our beginner's guide walks you through every step, from choosing your wax and wicks to adding scents and creative d... (1199 words, 6 min read, published 2025-07-08)
 
 ### Furniture
 

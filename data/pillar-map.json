@@ -1,0 +1,119 @@
+{
+  "_comment": "Pillar & Cluster architecture for cleverspacesolutions.com. See CLAUDE.md for rules. Each post is mapped to exactly one pillar with a role (pillar | cluster | supporting). 'supporting' posts are cross-pillar or off-topic content that still surface in related blocks where relevant.",
+  "_updated": "2026-04-12",
+  "pillars": {
+    "small-kitchen": {
+      "name": "Small Kitchen",
+      "slug": "stylish-small-kitchen-ideas",
+      "description": "Design, decor, and function for small and tiny kitchens.",
+      "targetKeywords": ["small kitchen ideas", "tiny kitchen design", "kitchen backsplash ideas"]
+    },
+    "studio-apartment": {
+      "name": "Studio & Small Apartment",
+      "slug": "how-to-decorate-studio-apartment",
+      "description": "Layout, decor, and life in studio and small apartments.",
+      "targetKeywords": ["studio apartment ideas", "small apartment decor", "apartment layout"]
+    },
+    "small-living-room": {
+      "name": "Small Living Room",
+      "slug": "how-to-furnish-small-living-room",
+      "description": "Furniture, layout, and style for small living rooms.",
+      "targetKeywords": ["small living room ideas", "living room layout", "living room storage"]
+    },
+    "small-bedroom": {
+      "name": "Small Bedroom",
+      "slug": "small-bedroom-design-guide",
+      "description": "Design, storage, and decor for small and tiny bedrooms.",
+      "targetKeywords": ["small bedroom ideas", "small bedroom design", "bedroom storage"]
+    },
+    "small-bathroom": {
+      "name": "Small Bathroom",
+      "slug": "small-bathroom-decor-ideas",
+      "description": "Decor, storage, and style for small bathrooms.",
+      "targetKeywords": ["small bathroom ideas", "small bathroom decor", "bathroom storage"]
+    },
+    "small-balcony": {
+      "name": "Small Balcony & Outdoor",
+      "slug": "small-balcony-garden-ideas",
+      "description": "Balcony, patio, and outdoor decor for small spaces.",
+      "targetKeywords": ["small balcony ideas", "small patio ideas", "apartment patio ideas"]
+    },
+    "home-office": {
+      "name": "Home Office & Productivity",
+      "slug": "desk-organization-productivity-tips",
+      "description": "Home office setup, desk organization, and productivity in small spaces.",
+      "targetKeywords": ["home office ideas", "tiny home office", "desk organization"]
+    },
+    "tiny-house": {
+      "name": "Tiny House & Small Homes",
+      "slug": "tiny-home-phenomenon-guide",
+      "description": "Tiny house living, small home design, and space optimization.",
+      "targetKeywords": ["tiny house ideas", "tiny home design", "small house plans"]
+    }
+  },
+  "posts": {
+    "stylish-small-kitchen-ideas": { "pillar": "small-kitchen", "role": "pillar" },
+    "kitchen-backsplash-ideas-small-kitchen": { "pillar": "small-kitchen", "role": "cluster" },
+    "tiny-kitchen-design-guide": { "pillar": "small-kitchen", "role": "cluster" },
+    "how-to-design-small-kitchen": { "pillar": "small-kitchen", "role": "cluster" },
+    "how-to-make-small-kitchen-functional": { "pillar": "small-kitchen", "role": "cluster" },
+    "how-to-decorate-small-kitchen": { "pillar": "small-kitchen", "role": "cluster" },
+    "best-table-for-small-kitchen": { "pillar": "small-kitchen", "role": "cluster" },
+    "how-to-choose-mini-fridge": { "pillar": "small-kitchen", "role": "cluster" },
+    "2025-decorating-tips-for-small-kitchens": { "pillar": "small-kitchen", "role": "cluster", "note": "Date-stamped, refresh title to evergreen" },
+
+    "how-to-decorate-studio-apartment": { "pillar": "studio-apartment", "role": "pillar" },
+    "how-to-decorate-a-studio-apartment-an-experts-guide": { "pillar": "studio-apartment", "role": "cluster", "note": "Merge candidate — duplicate of pillar" },
+    "how-do-you-decorate-a-studio-apartment-studio-apartment-ideas": { "pillar": "studio-apartment", "role": "cluster", "note": "Merge candidate — duplicate of pillar" },
+    "the-art-of-studio-living-guide": { "pillar": "studio-apartment", "role": "cluster", "note": "Merge candidate — duplicate of pillar" },
+    "how-to-layout-a-small-apartment-plans-for-studios-narrow-rooms": { "pillar": "studio-apartment", "role": "cluster" },
+    "3-flawless-layouts-for-narrow-rooms-and-5-real-life-studio-solutions": { "pillar": "studio-apartment", "role": "cluster" },
+    "how-to-decorate-one-bedroom-apartment": { "pillar": "studio-apartment", "role": "cluster" },
+    "apartment-lighting-no-overhead-light": { "pillar": "studio-apartment", "role": "cluster" },
+    "biophilic-design-small-apartment": { "pillar": "studio-apartment", "role": "cluster" },
+    "multifunctional-furniture-small-apartment": { "pillar": "studio-apartment", "role": "cluster" },
+    "how-to-create-entryway-in-apartment": { "pillar": "studio-apartment", "role": "cluster" },
+    "renter-friendly-wall-decor": { "pillar": "studio-apartment", "role": "cluster" },
+    "color-drenching-small-spaces": { "pillar": "studio-apartment", "role": "cluster" },
+    "cozy-reading-nook-small-apartment": { "pillar": "studio-apartment", "role": "cluster" },
+    "best-space-saving-gifts-for-small-apartments": { "pillar": "studio-apartment", "role": "cluster" },
+    "small-closet-organization-ideas": { "pillar": "studio-apartment", "role": "cluster" },
+    "studio-apartment-hack-10-cloffice-wfh-nook-ideas-that-save-space": { "pillar": "studio-apartment", "role": "cluster" },
+    "how-to-decorate-windowless-room": { "pillar": "studio-apartment", "role": "cluster" },
+    "what-to-put-in-an-empty-corner": { "pillar": "studio-apartment", "role": "cluster" },
+
+    "how-to-furnish-small-living-room": { "pillar": "small-living-room", "role": "pillar" },
+
+    "small-bedroom-design-guide": { "pillar": "small-bedroom", "role": "pillar", "note": "Needs expansion (1165w → 2500w+)" },
+    "how-to-decorate-small-bedroom-guide": { "pillar": "small-bedroom", "role": "cluster", "note": "Merge candidate — duplicate of pillar" },
+    "how-to-furnish-small-nursery": { "pillar": "small-bedroom", "role": "cluster" },
+    "how-to-choose-bunk-bed-guide": { "pillar": "small-bedroom", "role": "cluster" },
+
+    "small-bathroom-decor-ideas": { "pillar": "small-bathroom", "role": "pillar" },
+    "how-can-you-decorate-a-small-bathroom-14-expert-ideas": { "pillar": "small-bathroom", "role": "cluster" },
+
+    "small-balcony-garden-ideas": { "pillar": "small-balcony", "role": "pillar" },
+    "how-to-host-party-small-outdoor-space": { "pillar": "small-balcony", "role": "cluster" },
+    "outdoor-lighting-ideas-garden-balcony": { "pillar": "small-balcony", "role": "cluster" },
+
+    "desk-organization-productivity-tips": { "pillar": "home-office", "role": "pillar" },
+    "how-to-create-productive-home-office": { "pillar": "home-office", "role": "cluster", "note": "Expand to 2500w+" },
+
+    "tiny-home-phenomenon-guide": { "pillar": "tiny-house", "role": "pillar" },
+    "tiny-home-shed-conversion-guide": { "pillar": "tiny-house", "role": "cluster" },
+    "how-to-make-small-home-functional": { "pillar": "tiny-house", "role": "cluster" },
+    "how-to-decorate-small-home-guide": { "pillar": "tiny-house", "role": "cluster" },
+
+    "how-do-you-decorate-an-apartment-for-halloween": { "pillar": "studio-apartment", "role": "supporting", "tag": "seasonal-halloween" },
+    "how-to-decorate-a-studio-apartment-for-halloween": { "pillar": "studio-apartment", "role": "supporting", "tag": "seasonal-halloween" },
+    "how-do-you-decorate-a-small-space-for-halloween": { "pillar": "studio-apartment", "role": "supporting", "tag": "seasonal-halloween" },
+    "how-do-you-decorate-a-dorm-room-for-halloween": { "pillar": "studio-apartment", "role": "supporting", "tag": "seasonal-halloween" },
+
+    "how-much-paint-do-i-need-a-definitive-guide": { "pillar": "small-kitchen", "role": "supporting", "tag": "tool-adjacent" },
+    "make-your-home-look-more-spacious-and-bright": { "pillar": "studio-apartment", "role": "supporting" },
+    "rugs-for-small-rooms": { "pillar": "studio-apartment", "role": "supporting" },
+    "jute-rugs-guide": { "pillar": "studio-apartment", "role": "supporting" },
+    "how-to-choose-the-best-heater-for-a-small-room": { "pillar": "studio-apartment", "role": "supporting" },
+    "how-to-make-candles-at-home-a-beginners-guide": { "pillar": "studio-apartment", "role": "supporting", "note": "Off-topic, pivot candidate. Slug renamed from capital-H on 2026-04-12 with 301 redirect in next.config.js." }
+  }
+}

@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import ShareButton from '@/components/ui/share-button';
 import AffiliateDisclosure from '@/components/ui/affiliate-disclosure';
 import ViewTracker from '@/components/blog/ViewTracker';
+import PillarRelated from '@/components/blog/PillarRelated';
 import { hasAffiliateLinks } from '@/lib/utils';
 
 interface BlogPostPageProps {
@@ -300,6 +301,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="prose prose-sm md:prose-base lg:prose-lg prose-gray w-full max-w-none prose-headings:font-bold prose-p:text-gray-700 prose-p:leading-relaxed prose-img:rounded-lg prose-img:shadow-md prose-img:max-w-full">
           <div dangerouslySetInnerHTML={{ __html: post.content }} />
         </div>
+
+        {/* Pillar & Cluster internal linking — SEO topical authority */}
+        <PillarRelated currentSlug={post.slug} />
 
         {/* Affiliate Disclosure - Tags kısmının üstünde */}
         {hasAffiliateLinks(post.content) && (
