@@ -1,0 +1,224 @@
+{
+  "_comment": "Pinterest-optimized save-bait copy for each blog post. Consumed by scripts/generate-pins.js. Blog titles are SEO-tuned; pin titles need curiosity + specificity + emotion to earn saves. Each hook can optionally include a 'scene' field — a hand-crafted visual concept that overrides the generic category scene for richer Gemini prompts. See PINTEREST-STRATEGY.md §3 for rationale.",
+  "_updated": "2026-04-13",
+  "_patterns": {
+    "curiosity_number": "{number} {thing} That {outcome}",
+    "benefit_specific": "How I {outcome} In My {size}/{budget}",
+    "mistake_list": "{number} {room} Mistakes That Make It Look {negative}",
+    "authority_reveal": "What I Wish I Knew Before {action}",
+    "before_after": "The {thing} Hack That {transformation}"
+  },
+  "_moods": {
+    "cozy-warm": "Moody natural light, warm ivory/caramel/rust tones, layered textiles, candles, deep shadows. Evokes an aspirational evening feeling. Best for bedroom/reading/lighting content.",
+    "scandi-bright": "Bright natural daylight, white walls, light oak, clean minimal. Legacy default — good for tutorial/functional content.",
+    "earthy-neutral": "Soft morning light, beige/terracotta/sage tones, linen textures, dried florals. Feels organic and calming. Best for biophilic/balcony/nursery content.",
+    "editorial-moody": "Dramatic side-light, matte dark walls, brass accents, shadow play. Feels expensive and tailored. Best for color-drenching/small-living-room.",
+    "bright-fresh": "Overcast diffuse light, cool whites, pale blue/green accents, crisp styling. Best for organization/storage/bathroom content."
+  },
+  "_sceneGuide": "Write scenes as if directing a photographer: specify the hero object, the surrounding elements, camera angle, and what's in the frame. 30-60 words. Imagen 4 responds well to concrete nouns + spatial relationships.",
+
+  "hooks": {
+    "kitchen-backsplash-ideas-small-kitchen": {
+      "primary": "12 Budget Kitchen Backsplash Ideas That Make Small Kitchens Look Expensive",
+      "alternatives": [
+        "The Peel-and-Stick Backsplash That Transformed My Rental Kitchen (Under $100)",
+        "Small Kitchen? These 12 Backsplash Ideas Add Character Without a Reno"
+      ],
+      "description": "Budget kitchen backsplash ideas that transform small kitchens on a renter's budget. From peel-and-stick to thrifted tile — save this for your next weekend project.",
+      "hashtags": ["smallkitchen", "kitchenbacksplash", "rentalkitchen", "budgetdecor", "kitchenideas"],
+      "mood": "cozy-warm"
+    },
+    "multifunctional-furniture-small-apartment": {
+      "primary": "15 Multifunctional Furniture Pieces That Saved My Tiny Apartment",
+      "alternatives": [
+        "Small Apartment? These Hidden-Storage Furniture Picks Actually Work",
+        "The Multifunctional Furniture Guide I Wish I Had Before Moving In"
+      ],
+      "description": "Tested in real 400 sq ft apartments. The multifunctional furniture pieces that genuinely save space (and the ones that don't). Save this before your next furniture haul.",
+      "hashtags": ["smallapartment", "multifunctionalfurniture", "apartmenttherapy", "spacesaving", "smallspaces"],
+      "mood": "scandi-bright"
+    },
+    "apartment-lighting-no-overhead-light": {
+      "primary": "How I Lit My Dark Apartment Without Installing a Single Overhead Light",
+      "alternatives": [
+        "The 3-Lamp Rule That Saved My Windowless Apartment",
+        "Rental With No Overhead Lights? Here's the Exact Lighting Plan I Use"
+      ],
+      "description": "Room-by-room lighting plan for rental apartments with no ceiling fixtures. Plug-in pendants, layered lamps, warm bulbs — the exact setup that makes a dim space feel alive. Save for your next move.",
+      "hashtags": ["apartmentlighting", "rentalfriendly", "smallapartment", "lightingtips", "cozyhome"],
+      "mood": "cozy-warm"
+    },
+    "biophilic-design-small-apartment": {
+      "primary": "How to Build a Green Corner That Makes Your Apartment Feel Alive",
+      "alternatives": [
+        "The Biophilic Apartment Makeover That Only Took a Weekend",
+        "7 Indoor Plants That Thrive in Rental Apartments (Low Light Friendly)"
+      ],
+      "description": "Create an indoor jungle corner in your small apartment — even if you're a plant beginner. The low-light species that forgive renters, and how to arrange them for max impact.",
+      "hashtags": ["biophilicdesign", "indoorplants", "smallapartment", "apartmentplants", "urbanjungle"],
+      "mood": "earthy-neutral"
+    },
+    "small-closet-organization-ideas": {
+      "primary": "23 Small Closet Organization Ideas That Doubled My Storage",
+      "alternatives": [
+        "The $40 Closet System That Fit All My Clothes (Tiny Apartment Approved)",
+        "Small Closet? These Organization Ideas Actually Hold Up Long Term"
+      ],
+      "description": "Real small-closet organization systems tested in 5 sq ft of hanging space. Double-rod hacks, vertical shelf dividers, and the exact tools that made my clothes fit. Save this before your next declutter.",
+      "hashtags": ["closetorganization", "smallcloset", "organizationhacks", "tinyapartment", "decluttering"],
+      "mood": "bright-fresh"
+    },
+    "how-to-create-entryway-in-apartment": {
+      "primary": "How to Fake an Entryway in an Apartment That Doesn't Have One",
+      "alternatives": [
+        "No Foyer? Here's How to Create a Real Entryway in a 400 Sq Ft Apartment",
+        "The $100 Entryway Setup Every Small Apartment Needs"
+      ],
+      "description": "Create a functional entryway where none existed. Exact pieces, layouts, and zoning tricks for apartments with a door that opens straight into the living room. Save this setup.",
+      "hashtags": ["entrywayideas", "smallapartment", "apartmentdecor", "entrywaydecor", "apartmenthacks"],
+      "mood": "cozy-warm"
+    },
+    "renter-friendly-wall-decor": {
+      "primary": "30 Renter-Friendly Wall Decor Ideas (Zero Holes, Zero Deposit Loss)",
+      "alternatives": [
+        "Your Landlord Will Never Know: 30 No-Damage Wall Decor Ideas",
+        "The Wall Decor Hacks That Made My Rental Feel Like Home"
+      ],
+      "description": "Every renter needs to see this. 30 wall decor ideas that leave zero damage — from command hooks to tension rods to peel-and-stick paneling. Save your deposit and save this pin.",
+      "hashtags": ["renterfriendly", "walldecor", "apartmenttherapy", "nodamage", "rentalideas"],
+      "mood": "cozy-warm"
+    },
+    "color-drenching-small-spaces": {
+      "primary": "Color Drenching Is the Trick That Makes Small Rooms Look Bigger",
+      "alternatives": [
+        "Why Designers Paint Every Surface the Same Color (Color Drenching Guide)",
+        "The 2026 Paint Trend That Actually Works in Tiny Apartments"
+      ],
+      "description": "Color drenching — painting walls, ceiling, and trim the same shade — is the small-space trick designers swear by. Here's how to pull it off without making your apartment feel like a cave.",
+      "hashtags": ["colordrenching", "paintideas", "smallspaces", "2026trends", "interiordesign"],
+      "mood": "editorial-moody"
+    },
+    "cozy-reading-nook-small-apartment": {
+      "primary": "How to Build a Cozy Reading Nook in a 500 Sq Ft Apartment",
+      "alternatives": [
+        "The Corner You're Wasting Could Be Your New Reading Nook",
+        "7 Reading Nook Ideas That Don't Need a Spare Room"
+      ],
+      "description": "Turn an unused corner, window, or closet into the coziest reading nook in your apartment. Exact cushion, lighting, and shelf setups that work in tiny spaces. Save this one.",
+      "hashtags": ["readingnook", "cozyhome", "smallapartment", "apartmentdecor", "bookishdecor"],
+      "mood": "cozy-warm"
+    },
+
+    "small-bedroom-design-guide": {
+      "primary": "The Small Bedroom Setup That Made 100 Sq Ft Feel Like a Hotel Suite",
+      "alternatives": [
+        "Tiny Bedroom? These Layout Tricks Actually Make It Feel Bigger",
+        "7 Small Bedroom Ideas I Wish I'd Tried First"
+      ],
+      "description": "Small bedroom design secrets from real 100-150 sq ft spaces. Bed placement, storage hacks, mirror tricks — the exact combo that makes tiny bedrooms feel intentional instead of cramped.",
+      "hashtags": ["smallbedroom", "bedroomideas", "bedroomlayout", "smallspaces", "bedroomdecor"],
+      "mood": "cozy-warm"
+    },
+    "how-to-furnish-small-living-room": {
+      "primary": "How to Furnish a Small Living Room Without It Feeling Stuffed",
+      "alternatives": [
+        "The Small Living Room Layout Rule Every Designer Uses",
+        "12 Sq Ft of Living Room? Here's the Exact Furniture Plan"
+      ],
+      "description": "Small living room furnishing guide. The sofa sizes, coffee table dimensions, and zoning tricks that keep tiny living rooms functional. Save this before you buy anything.",
+      "hashtags": ["smalllivingroom", "livingroomlayout", "smallspaces", "livingroomideas", "apartmentliving"],
+      "mood": "editorial-moody"
+    },
+    "small-balcony-garden-ideas": {
+      "primary": "Turn Your Tiny Balcony Into a Garden Oasis (Even If You're a Plant Killer)",
+      "alternatives": [
+        "The 4x6 Balcony Garden That Produces More Than My Yard Did",
+        "Small Balcony? These Plant + Layout Ideas Actually Work"
+      ],
+      "description": "Real small balcony garden transformations. The forgiving plant picks, vertical layouts, and container tricks for 4x6 ft apartment balconies. Save for spring.",
+      "hashtags": ["balconygarden", "smallbalcony", "apartmentgarden", "containergarden", "urbangardening"],
+      "mood": "earthy-neutral"
+    },
+
+    "_queue_best-sofas-small-spaces": {
+      "primary": "The 7 Best Sofas for Small Apartments (Tested for a Year in 400 Sq Ft)",
+      "alternatives": [
+        "I Tried 10 Small-Space Sofas — These Are the Only 7 Worth Buying",
+        "Small Living Room? These Sectional Picks Actually Fit"
+      ],
+      "description": "Year-long test of the best sofas and sectionals for small apartments under 500 sq ft. Exact dimensions, prices, and the ones to skip. Save before you shop.",
+      "hashtags": ["smallapartment", "sofaguide", "smallspaces", "livingroomideas", "apartmenttherapy"],
+      "mood": "cozy-warm"
+    },
+    "_queue_small-bedroom-layout-ideas": {
+      "primary": "How to Arrange Furniture in a 100 Sq Ft Bedroom (With Actual Floor Plans)",
+      "alternatives": [
+        "The Small Bedroom Layout That Gave Me Back My Floor Space",
+        "5 Small Bedroom Layouts That Work (Plus the 3 That Don't)"
+      ],
+      "description": "Real floor plans for tiny bedrooms. Where to put the bed, dresser, and desk in 100-150 sq ft rooms. Save this before your next rearrange.",
+      "hashtags": ["smallbedroom", "bedroomlayout", "smallspaces", "bedroomideas", "floorplans"],
+      "mood": "cozy-warm"
+    },
+    "_queue_small-bedroom-storage-ideas": {
+      "primary": "Small Bedroom With No Closet? 20 Storage Ideas That Actually Work",
+      "alternatives": [
+        "The Under-Bed Storage Setup That Saved My Tiny Bedroom",
+        "No Closet, No Problem: Small Bedroom Storage Hacks"
+      ],
+      "description": "Clever storage ideas for bedrooms with zero closet space. Under-bed systems, vertical wall units, and hidden furniture picks. Save this.",
+      "hashtags": ["bedroomstorage", "smallbedroom", "noclosetsolutions", "storagehacks", "smallspaces"],
+      "mood": "bright-fresh"
+    },
+    "_queue_space-saving-storage-furniture": {
+      "primary": "The 15 Space-Saving Storage Furniture Pieces Worth the Money",
+      "alternatives": [
+        "Hidden Storage Furniture That Saved My 500 Sq Ft Apartment",
+        "Storage Ottomans, Cabinets & Beds: What Actually Works"
+      ],
+      "description": "Storage furniture roundup tested in real small apartments. The pieces that hide the most, look the best, and last the longest. Save for your next Target run.",
+      "hashtags": ["storagefurniture", "smallapartment", "spacesaving", "hiddenstorage", "apartmenttherapy"],
+      "mood": "scandi-bright"
+    },
+    "_queue_small-living-room-storage-ideas": {
+      "primary": "Small Living Room Storage Ideas That Don't Look Like Storage",
+      "alternatives": [
+        "12 Hidden Storage Solutions for Tiny Living Rooms",
+        "The Living Room Storage Hacks That Made My Space Feel Bigger"
+      ],
+      "description": "Living room storage that blends in — media units, hidden ottomans, wall systems. Real setups from apartments under 150 sq ft. Save this before your next organize.",
+      "hashtags": ["livingroomstorage", "smalllivingroom", "hiddenstorage", "apartmentstorage", "smallspaces"],
+      "mood": "editorial-moody"
+    },
+    "_queue_small-kitchen-storage-ideas": {
+      "primary": "Tiny Kitchen? These 18 Storage Ideas Tripled My Cabinet Space",
+      "alternatives": [
+        "The Pull-Out Drawer Hack That Saved My Small Kitchen",
+        "Small Kitchen Storage Ideas That Renters Can Actually Use"
+      ],
+      "description": "Small kitchen storage tested in real 40 sq ft galley kitchens. Every drawer divider, wall rack, and pull-out that actually earns its space. Save before your next declutter.",
+      "hashtags": ["smallkitchen", "kitchenstorage", "kitchenorganization", "storagehacks", "rentalkitchen"],
+      "mood": "bright-fresh"
+    },
+    "_queue_chill-aesthetic-room-ideas": {
+      "primary": "The Chill Aesthetic Room Formula (That Actually Feels Cozy, Not Cold)",
+      "alternatives": [
+        "How to Get the Chill Aesthetic Room Look for Under $200",
+        "5 Chill Room Ideas That Hit Pinterest's 2026 Aesthetic"
+      ],
+      "description": "The chill aesthetic room breakdown — exact palette, textures, and lighting that give you the look without the Pinterest gap. Save this for your next rearrange.",
+      "hashtags": ["chillaesthetic", "roomdecor", "aestheticroom", "cozybedroom", "bedroomaesthetic"],
+      "mood": "cozy-warm"
+    },
+    "_queue_guest-bedroom-ideas-small-spaces": {
+      "primary": "How to Turn Any Small Room Into a Guest-Ready Bedroom in a Weekend",
+      "alternatives": [
+        "The Guest Bedroom Setup That Makes 80 Sq Ft Feel Luxurious",
+        "No Guest Room? Here's How I Made Mine Work"
+      ],
+      "description": "Make any small room guest-ready in under 48 hours. Sofa beds that actually sleep well, bedding tricks, and the 5 things every guest wishes you had. Save this.",
+      "hashtags": ["guestbedroom", "smallguestroom", "guestroom", "smallspaces", "bedroomideas"],
+      "mood": "cozy-warm"
+    }
+  }
+}

@@ -16,6 +16,10 @@ import {
   RefreshCw,
   Upload,
   RotateCcw,
+  Sparkles,
+  ChevronDown,
+  ChevronUp,
+  AlertTriangle,
 } from 'lucide-react';
 
 interface Board {
@@ -70,6 +74,17 @@ export default function PinterestAdmin() {
   // Custom pin images per post
   const [customPinImages, setCustomPinImages] = useState<Record<string, string>>({});
   const [uploadingSlug, setUploadingSlug] = useState<string | null>(null);
+
+  // Fresh pin mode: per-post editable title/description/keywords from pin-hooks.json alternatives
+  const [freshPinMode, setFreshPinMode] = useState<Record<string, boolean>>({});
+  const [freshPinData, setFreshPinData] = useState<
+    Record<
+      string,
+      { title: string; description: string; keywords: string; variantIndex?: number }
+    >
+  >({});
+  const [fetchingVariant, setFetchingVariant] = useState<string | null>(null);
+  const [variantMessage, setVariantMessage] = useState<Record<string, string>>({});
 
   // Handle OAuth callback code
   useEffect(() => {
@@ -248,15 +263,141 @@ export default function PinterestAdmin() {
     });
   }
 
-  async function createPin(post: Post) {
+  function getUsedVariants(slug: string): number[] {
+    if (typeof window === 'undefined') return [];
+    try {
+      const stored = localStorage.getItem(`pinterest_used_${slug}`);
+      return stored ? JSON.parse(stored) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function addUsedVariant(slug: string, index: number) {
+    if (typeof window === 'undefined') return;
+    const used = getUsedVariants(slug);
+    if (!used.includes(index)) {
+      used.push(index);
+      localStorage.setItem(`pinterest_used_${slug}`, JSON.stringify(used));
+    }
+  }
+
+  function clearUsedVariants(slug: string) {
+    if (typeof window === 'undefined') return;
+    localStorage.removeItem(`pinterest_used_${slug}`);
+  }
+
+  async function toggleFreshPin(post: Post) {
+    const isOpen = freshPinMode[post.slug];
+
+    if (isOpen) {
+      setFreshPinMode(prev => ({ ...prev, [post.slug]: false }));
+      return;
+    }
+
+    setFetchingVariant(post.slug);
+    setVariantMessage(prev => {
+      const next = { ...prev };
+      delete next[post.slug];
+      return next;
+    });
+
+    try {
+      const used = getUsedVariants(post.slug);
+      const response = await fetch(
+        `/api/pinterest/fresh-variant?slug=${encodeURIComponent(post.slug)}&used=${used.join(',')}`,
+      );
+      const data = await response.json();
+
+      if (response.ok) {
+        setFreshPinData(prev => ({
+          ...prev,
+          [post.slug]: {
+            title: data.title,
+            description: data.description,
+            keywords: (data.keywords || []).join(', '),
+            variantIndex: data.variantIndex,
+          },
+        }));
+        setVariantMessage(prev => ({
+          ...prev,
+          [post.slug]: `Variant ${data.variantIndex + 1} of ${data.totalVariants} — edit freely to differentiate from previous pins.`,
+        }));
+      } else {
+        // no_hook or exhausted — open empty form with message
+        setFreshPinData(prev => ({
+          ...prev,
+          [post.slug]: prev[post.slug] || {
+            title: '',
+            description: '',
+            keywords: '',
+          },
+        }));
+        setVariantMessage(prev => ({
+          ...prev,
+          [post.slug]: data.message || data.error || 'Could not fetch variant.',
+        }));
+      }
+
+      setFreshPinMode(prev => ({ ...prev, [post.slug]: true }));
+    } catch (err: any) {
+      setVariantMessage(prev => ({
+        ...prev,
+        [post.slug]: err.message || 'Failed to fetch variant.',
+      }));
+      setFreshPinMode(prev => ({ ...prev, [post.slug]: true }));
+    } finally {
+      setFetchingVariant(null);
+    }
+  }
+
+  function updateFreshPinField(
+    slug: string,
+    field: 'title' | 'description' | 'keywords',
+    value: string,
+  ) {
+    setFreshPinData(prev => ({
+      ...prev,
+      [slug]: {
+        ...(prev[slug] || { title: '', description: '', keywords: '' }),
+        [field]: value,
+      },
+    }));
+  }
+
+  async function createPin(post: Post, fresh = false) {
     if (!accessToken || !selectedBoard) return;
 
     setPinningSlug(post.slug);
 
     try {
-      const keywords = (post.keywords || post.tags || []).slice(0, 5);
-      const hashtags = keywords.map((k: string) => `#${k.replace(/\s+/g, '')}`).join(' ');
-      const description = `${post.description}\n\n${hashtags}`.trim();
+      let title: string;
+      let description: string;
+      let variantIndex: number | undefined;
+
+      if (fresh && freshPinData[post.slug]) {
+        const fd = freshPinData[post.slug];
+        const keywords = fd.keywords
+          .split(',')
+          .map(k => k.trim())
+          .filter(Boolean)
+          .slice(0, 5);
+        const hashtags = keywords
+          .map((k: string) => `#${k.replace(/\s+/g, '')}`)
+          .join(' ');
+        title = fd.title;
+        description = hashtags
+          ? `${fd.description}\n\n${hashtags}`.trim()
+          : fd.description.trim();
+        variantIndex = fd.variantIndex;
+      } else {
+        const keywords = (post.keywords || post.tags || []).slice(0, 5);
+        const hashtags = keywords
+          .map((k: string) => `#${k.replace(/\s+/g, '')}`)
+          .join(' ');
+        title = post.title;
+        description = `${post.description}\n\n${hashtags}`.trim();
+      }
 
       const response = await fetch('/api/pinterest/pin', {
         method: 'POST',
@@ -266,7 +407,7 @@ export default function PinterestAdmin() {
         },
         body: JSON.stringify({
           board_id: selectedBoard,
-          title: post.title,
+          title,
           description,
           link: `https://cleverspacesolutions.com/blog/${post.slug}`,
           image_url: customPinImages[post.slug] || post.image || '',
@@ -277,6 +418,11 @@ export default function PinterestAdmin() {
 
       if (!response.ok) {
         throw new Error(data.error || 'Failed to create pin');
+      }
+
+      // Record which hook variant was used so the next Fresh Pin click picks a different one
+      if (fresh && typeof variantIndex === 'number') {
+        addUsedVariant(post.slug, variantIndex);
       }
 
       setPinResults(prev => [
@@ -474,117 +620,241 @@ export default function PinterestAdmin() {
                 return (
                   <div
                     key={post.slug}
-                    className="flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-slate-300 transition-colors"
+                    className="p-4 rounded-lg border border-slate-200 hover:border-slate-300 transition-colors"
                   >
-                    <div className="flex items-center space-x-4 flex-1 min-w-0">
-                      {/* Pin Image Preview + Upload */}
-                      <div className="flex-shrink-0 space-y-1.5">
-                        <div className={`w-16 h-24 rounded-lg bg-slate-100 overflow-hidden relative ${hasCustomImage ? 'ring-2 ring-red-400' : ''}`}>
-                          {pinImage ? (
-                            <img
-                              src={pinImage}
-                              alt={post.title}
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center">
-                              <ImageIcon className="w-6 h-6 text-slate-400" />
-                            </div>
-                          )}
-                          {isUploading && (
-                            <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                              <Loader2 className="w-5 h-5 text-white animate-spin" />
-                            </div>
-                          )}
-                          {hasCustomImage && (
-                            <span className="absolute top-0.5 left-0.5 bg-red-500 text-white text-[8px] px-1 rounded font-bold">PIN</span>
-                          )}
-                        </div>
-                        <div className="flex gap-1">
-                          <label className="cursor-pointer flex-1">
-                            <input
-                              type="file"
-                              accept="image/*"
-                              className="hidden"
-                              disabled={isUploading}
-                              onChange={(e) => {
-                                const file = e.target.files?.[0];
-                                if (file) handlePinImageUpload(post.slug, file);
-                                e.target.value = '';
-                              }}
-                            />
-                            <span className="flex items-center justify-center w-full px-1 py-0.5 text-[10px] text-slate-500 hover:text-red-600 hover:bg-red-50 rounded border border-slate-200 transition-colors">
-                              <Upload className="w-2.5 h-2.5 mr-0.5" />
-                              Change
-                            </span>
-                          </label>
-                          {hasCustomImage && (
-                            <button
-                              onClick={() => resetPinImage(post.slug)}
-                              className="flex items-center justify-center px-1 py-0.5 text-[10px] text-slate-400 hover:text-slate-600 rounded border border-slate-200 transition-colors"
-                              title="Reset to original"
-                            >
-                              <RotateCcw className="w-2.5 h-2.5" />
-                            </button>
-                          )}
-                        </div>
-                      </div>
-
-                      <div className="min-w-0 flex-1">
-                        <p className="font-medium text-slate-900 text-sm truncate">
-                          {post.title}
-                        </p>
-                        <div className="flex items-center space-x-2 mt-1">
-                          <Link2 className="w-3 h-3 text-slate-400" />
-                          <span className="text-xs text-slate-500 truncate">
-                            /blog/{post.slug}
-                          </span>
-                        </div>
-                        <Badge variant="secondary" className="mt-1 text-xs">
-                          {post.category}
-                        </Badge>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center space-x-3 ml-4">
-                      {/* Pin result status */}
-                      {result && (
-                        <div className="flex items-center space-x-1">
-                          {result.success ? (
-                            <>
-                              <CheckCircle2 className="w-4 h-4 text-green-500" />
-                              <span className="text-xs text-green-600">Pinned</span>
-                            </>
-                          ) : (
-                            <>
-                              <XCircle className="w-4 h-4 text-red-500" />
-                              <span className="text-xs text-red-600" title={result.error}>
-                                Failed
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-4 flex-1 min-w-0">
+                        {/* Pin Image Preview + Upload */}
+                        <div className="flex-shrink-0 space-y-1.5">
+                          <div className={`w-16 h-24 rounded-lg bg-slate-100 overflow-hidden relative ${hasCustomImage ? 'ring-2 ring-red-400' : ''}`}>
+                            {pinImage ? (
+                              <img
+                                src={pinImage}
+                                alt={post.title}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center">
+                                <ImageIcon className="w-6 h-6 text-slate-400" />
+                              </div>
+                            )}
+                            {isUploading && (
+                              <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                                <Loader2 className="w-5 h-5 text-white animate-spin" />
+                              </div>
+                            )}
+                            {hasCustomImage && (
+                              <span className="absolute top-0.5 left-0.5 bg-red-500 text-white text-[8px] px-1 rounded font-bold">PIN</span>
+                            )}
+                          </div>
+                          <div className="flex gap-1">
+                            <label className="cursor-pointer flex-1">
+                              <input
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                disabled={isUploading}
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0];
+                                  if (file) handlePinImageUpload(post.slug, file);
+                                  e.target.value = '';
+                                }}
+                              />
+                              <span className="flex items-center justify-center w-full px-1 py-0.5 text-[10px] text-slate-500 hover:text-red-600 hover:bg-red-50 rounded border border-slate-200 transition-colors">
+                                <Upload className="w-2.5 h-2.5 mr-0.5" />
+                                Change
                               </span>
+                            </label>
+                            {hasCustomImage && (
+                              <button
+                                onClick={() => resetPinImage(post.slug)}
+                                className="flex items-center justify-center px-1 py-0.5 text-[10px] text-slate-400 hover:text-slate-600 rounded border border-slate-200 transition-colors"
+                                title="Reset to original"
+                              >
+                                <RotateCcw className="w-2.5 h-2.5" />
+                              </button>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="min-w-0 flex-1">
+                          <p className="font-medium text-slate-900 text-sm truncate">
+                            {post.title}
+                          </p>
+                          <div className="flex items-center space-x-2 mt-1">
+                            <Link2 className="w-3 h-3 text-slate-400" />
+                            <span className="text-xs text-slate-500 truncate">
+                              /blog/{post.slug}
+                            </span>
+                          </div>
+                          <Badge variant="secondary" className="mt-1 text-xs">
+                            {post.category}
+                          </Badge>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center space-x-2 ml-4">
+                        {/* Pin result status */}
+                        {result && (
+                          <div className="flex items-center space-x-1">
+                            {result.success ? (
+                              <>
+                                <CheckCircle2 className="w-4 h-4 text-green-500" />
+                                <span className="text-xs text-green-600">Pinned</span>
+                              </>
+                            ) : (
+                              <>
+                                <XCircle className="w-4 h-4 text-red-500" />
+                                <span className="text-xs text-red-600" title={result.error}>
+                                  Failed
+                                </span>
+                              </>
+                            )}
+                          </div>
+                        )}
+
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => toggleFreshPin(post)}
+                          disabled={fetchingVariant === post.slug}
+                          className="border-amber-300 text-amber-700 hover:bg-amber-50 hover:text-amber-800"
+                        >
+                          {fetchingVariant === post.slug ? (
+                            <>
+                              <Loader2 className="w-3 h-3 mr-1 animate-spin" />
+                              Loading
+                            </>
+                          ) : (
+                            <>
+                              <Sparkles className="w-3 h-3 mr-1" />
+                              Fresh
+                              {freshPinMode[post.slug] ? (
+                                <ChevronUp className="w-3 h-3 ml-1" />
+                              ) : (
+                                <ChevronDown className="w-3 h-3 ml-1" />
+                              )}
                             </>
                           )}
-                        </div>
-                      )}
+                        </Button>
 
-                      <Button
-                        size="sm"
-                        onClick={() => createPin(post)}
-                        disabled={isPinning || !pinImage}
-                        className="bg-red-600 hover:bg-red-700 text-white"
-                      >
-                        {isPinning ? (
-                          <>
-                            <Loader2 className="w-3 h-3 mr-1 animate-spin" />
-                            Pinning...
-                          </>
-                        ) : (
-                          <>
-                            <Send className="w-3 h-3 mr-1" />
-                            Pin it
-                          </>
-                        )}
-                      </Button>
+                        <Button
+                          size="sm"
+                          onClick={() => createPin(post)}
+                          disabled={isPinning || !pinImage}
+                          className="bg-red-600 hover:bg-red-700 text-white"
+                        >
+                          {isPinning && !freshPinMode[post.slug] ? (
+                            <>
+                              <Loader2 className="w-3 h-3 mr-1 animate-spin" />
+                              Pinning...
+                            </>
+                          ) : (
+                            <>
+                              <Send className="w-3 h-3 mr-1" />
+                              Pin it
+                            </>
+                          )}
+                        </Button>
+                      </div>
                     </div>
+
+                    {/* Fresh Pin Editor */}
+                    {freshPinMode[post.slug] && (
+                      <div className="mt-4 pt-4 border-t border-slate-200 space-y-3">
+                        {variantMessage[post.slug] && (
+                          <div className="flex items-start space-x-2 p-2.5 bg-amber-50 border border-amber-200 rounded text-xs text-amber-900">
+                            <AlertTriangle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                            <span>{variantMessage[post.slug]}</span>
+                          </div>
+                        )}
+
+                        <div>
+                          <label className="text-xs font-medium text-slate-700 block mb-1">
+                            Title <span className="text-slate-400">(max 100)</span>
+                          </label>
+                          <input
+                            type="text"
+                            value={freshPinData[post.slug]?.title || ''}
+                            onChange={(e) => updateFreshPinField(post.slug, 'title', e.target.value)}
+                            maxLength={100}
+                            className="w-full px-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                            placeholder="Fresh pin title — different hook than the first pin"
+                          />
+                          <p className="text-[10px] text-slate-400 mt-0.5 text-right">
+                            {(freshPinData[post.slug]?.title || '').length} / 100
+                          </p>
+                        </div>
+
+                        <div>
+                          <label className="text-xs font-medium text-slate-700 block mb-1">
+                            Description <span className="text-slate-400">(max 500)</span>
+                          </label>
+                          <textarea
+                            value={freshPinData[post.slug]?.description || ''}
+                            onChange={(e) => updateFreshPinField(post.slug, 'description', e.target.value)}
+                            maxLength={500}
+                            rows={4}
+                            className="w-full px-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none"
+                            placeholder="Emphasize a different benefit or angle than your first pin"
+                          />
+                          <p className="text-[10px] text-slate-400 mt-0.5 text-right">
+                            {(freshPinData[post.slug]?.description || '').length} / 500
+                          </p>
+                        </div>
+
+                        <div>
+                          <label className="text-xs font-medium text-slate-700 block mb-1">
+                            Keywords <span className="text-slate-400">(comma-separated, max 5)</span>
+                          </label>
+                          <input
+                            type="text"
+                            value={freshPinData[post.slug]?.keywords || ''}
+                            onChange={(e) => updateFreshPinField(post.slug, 'keywords', e.target.value)}
+                            className="w-full px-3 py-2 text-sm border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                            placeholder="small bedroom, studio layout, space saving"
+                          />
+                        </div>
+
+                        <div className="flex items-center justify-between pt-1">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              clearUsedVariants(post.slug);
+                              setVariantMessage(prev => ({
+                                ...prev,
+                                [post.slug]: 'Variant history cleared — next Fresh click starts from the primary hook.',
+                              }));
+                            }}
+                            className="text-[11px] text-slate-400 hover:text-slate-600 underline"
+                          >
+                            Reset variant history
+                          </button>
+                          <Button
+                            size="sm"
+                            onClick={() => createPin(post, true)}
+                            disabled={
+                              isPinning ||
+                              !pinImage ||
+                              !freshPinData[post.slug]?.title?.trim()
+                            }
+                            className="bg-amber-600 hover:bg-amber-700 text-white"
+                          >
+                            {isPinning ? (
+                              <>
+                                <Loader2 className="w-3 h-3 mr-1 animate-spin" />
+                                Creating...
+                              </>
+                            ) : (
+                              <>
+                                <Sparkles className="w-3 h-3 mr-1" />
+                                Create Fresh Pin
+                              </>
+                            )}
+                          </Button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 );
               })}
